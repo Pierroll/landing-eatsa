@@ -915,3 +915,85 @@ if (specModal) {
 }
 
 console.log('✨ Product Specifications Modal System Loaded!');
+
+const translateAll = (lang) => {
+  document.querySelectorAll("[data-translate]").forEach((element) => {
+    const key = element.getAttribute("data-translate");
+    if (translations[lang] && translations[lang][key]) {
+      // If the element has children, translate only the text nodes
+      if (element.children.length > 0) {
+        // Find the text node that is a direct child of the element
+        const textNode = Array.from(element.childNodes).find(
+          (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+        );
+        if (textNode) {
+          textNode.textContent = translations[lang][key];
+        }
+      } else {
+        element.textContent = translations[lang][key];
+      }
+    }
+  });
+};
+
+// ============================================
+// LANGUAGE SWITCHER
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    const languageSwitcher = document.getElementById('language-switcher');
+    if (!languageSwitcher) return;
+
+    const button = document.getElementById('language-switcher-button');
+    const dropdown = document.getElementById('language-switcher-dropdown');
+    const options = dropdown.querySelectorAll('a');
+
+    const translatePage = (lang) => {
+        translateAll(lang);
+
+        document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-translate-placeholder');
+            if (translations[lang] && translations[lang][key]) {
+                element.placeholder = translations[lang][key];
+            }
+        });
+    };
+    
+    button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        dropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!languageSwitcher.contains(event.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+
+    options.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            const buttonImg = button.querySelector('img');
+            const buttonSpan = button.querySelector('span');
+            const thisImg = this.querySelector('img');
+
+            // Update button content
+            if (buttonImg && thisImg) {
+                buttonImg.src = thisImg.src;
+                buttonImg.alt = thisImg.alt;
+            }
+            if (buttonSpan) {
+                buttonSpan.textContent = lang.toUpperCase();
+            }
+
+            // Close dropdown
+            dropdown.classList.add('hidden');
+
+            // Translate the page
+            translatePage(lang);
+        });
+    });
+
+    // Initial translation
+    translatePage('es');
+});

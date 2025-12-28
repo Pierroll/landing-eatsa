@@ -26,20 +26,33 @@
 
                 <!-- Navigation -->
                 <nav class="hidden md:flex items-center space-x-12">
-                    <a href="#productos" class="text-lg text-white/80 hover:text-white transition-colors">Productos</a>
-                    <a href="#origen" class="text-lg text-white/80 hover:text-white transition-colors">Origen</a>
-                    <a href="#certificaciones" class="text-lg text-white/80 hover:text-white transition-colors">Certificaciones</a>
-                    <a href="#proceso" class="text-lg text-white/80 hover:text-white transition-colors">Proceso</a>
-                    <a href="#contacto" class="text-lg text-white/80 hover:text-white transition-colors">Contacto</a>
+                    <a href="#productos" class="text-lg text-white/80 hover:text-white transition-colors" data-translate="nav_products">Productos</a>
+                    <a href="#origen" class="text-lg text-white/80 hover:text-white transition-colors" data-translate="nav_origin">Origen</a>
+                    <a href="#certificaciones" class="text-lg text-white/80 hover:text-white transition-colors" data-translate="nav_certifications">Certificaciones</a>
+                    <a href="#proceso" class="text-lg text-white/80 hover:text-white transition-colors" data-translate="nav_process">Proceso</a>
+                    <a href="#contacto" class="text-lg text-white/80 hover:text-white transition-colors" data-translate="nav_contact">Contacto</a>
                 </nav>
 
                 <!-- Language & CTA -->
                 <div class="flex items-center space-x-4">
-                    <select class="text-sm border border-white/50 rounded px-2 py-1 bg-primary text-white">
-                        <option value="es">ES</option>
-                        <option value="en">EN</option>
-                    </select>
-                    <button id="header-price-btn" class="btn-inverted open-price-modal">Solicitar Precios</button>
+                    <div class="relative" id="language-switcher">
+                        <button id="language-switcher-button" class="flex items-center space-x-2 text-sm border border-white/50 rounded px-2 py-1 bg-primary text-white">
+                            <img src="../public/images/downloaded/espana.png" alt="Español" class="w-5 h-5 rounded-full">
+                            <span>ES</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="language-switcher-dropdown" class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20 hidden">
+                            <a href="#" class="flex items-center space-x-3 px-4 py-2 text-gray-800 hover:bg-gray-100" data-lang="es">
+                                <img src="../public/images/downloaded/espana.png" alt="Español" class="w-5 h-5 rounded-full">
+                                <span>Español</span>
+                            </a>
+                            <a href="#" class="flex items-center space-x-3 px-4 py-2 text-gray-800 hover:bg-gray-100" data-lang="en">
+                                <img src="../public/images/downloaded/reino-unido.png" alt="English" class="w-5 h-5 rounded-full">
+                                <span>English</span>
+                            </a>
+                        </div>
+                    </div>
+                    <button id="header-price-btn" class="btn-inverted open-price-modal" data-translate="header_price_btn">Solicitar Precios</button>
                     <button class="md:hidden p-2 text-white">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -62,11 +75,11 @@
         
         <div class="relative z-10 container mx-auto px-4 text-center md:text-left">
             <div class="max-w-4xl">
-                <h1 class="text-4xl md:text-6xl font-playfair font-bold text-white mb-6 leading-tight">
+                <h1 class="text-4xl md:text-6xl font-playfair font-bold text-white mb-6 leading-tight" data-translate="hero_title">
                     Cacao Fino de Aroma
-                    <span class="block text-accent">Directo de la Amazonía Peruana</span>
+                    <span class="block text-accent" data-translate="hero_subtitle">Directo de la Amazonía Peruana</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl">
+                <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl" data-translate="hero_description">
                     Trazabilidad completa, certificaciones internacionales y calidad garantizada para importadores y fabricantes de chocolate de todo el mundo.
                 </p>
                 
@@ -74,24 +87,24 @@
                 <div class="flex flex-wrap justify-center md:justify-start gap-8 mb-8 text-white hero-stats">
                     <div class="text-center">
                         <div class="text-3xl font-bold text-accent stat-number">10+</div>
-                        <div class="text-sm">Años de Experiencia</div>
+                        <div class="text-sm" data-translate="hero_experience">Años de Experiencia</div>
                     </div>
                     <div class="text-center">
                         <div class="text-3xl font-bold text-accent stat-number">100+</div>
-                        <div class="text-sm">Productores</div>
+                        <div class="text-sm" data-translate="hero_producers">Productores</div>
                     </div>
                     <div class="text-center">
                         <div class="text-3xl font-bold text-accent stat-number">100+</div>
-                        <div class="text-sm">Toneladas/Mes</div>
+                        <div class="text-sm" data-translate="hero_tons_per_month">Toneladas/Mes</div>
                     </div>
                 </div>
 
                 <!-- CTAs -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <button id="hero-price-btn" class="btn-accent text-lg px-8 py-4 open-price-modal">
+                    <button id="hero-price-btn" class="btn-accent text-lg px-8 py-4 open-price-modal" data-translate="hero_request_prices">
                         Solicitar Precios
                     </button>
-                    <a href="#productos" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all">
+                    <a href="#productos" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all" data-translate="hero_see_products">
                         Ver Productos
                     </a>
                 </div>
@@ -103,10 +116,10 @@
     <section id="origen" class="py-20 bg-surface">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6" data-translate="origin_title">
                     Nuestro Origen: Nuevo Progreso, Tocache, San Martín - Corazón de la Amazonía Peruana
                 </h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto" data-translate="origin_subtitle">
                     Ubicados estratégicamente en la provincia cacaotera más importante de la región, donde las condiciones climáticas perfectas crean productos de calidad excepcional.
                 </p>
             </div>
@@ -125,7 +138,7 @@
                             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                 <div class="relative">
                                     <div class="w-6 h-6 bg-accent rounded-full border-4 border-white shadow-lg animate-pulse"></div>
-                                    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded shadow-lg text-sm font-semibold whitespace-nowrap">
+                                    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded shadow-lg text-sm font-semibold whitespace-nowrap" data-translate="origin_map_marker">
                                          Nuevo Progreso - Tocache - San Martín
                                     </div>
                                 </div>
@@ -133,37 +146,37 @@
 
                             <!-- Climate Data Overlays -->
                             <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3">
-                                <div class="text-xs font-semibold text-primary mb-1">Datos Climáticos</div>
+                                <div class="text-xs font-semibold text-primary mb-1" data-translate="origin_climate_data">Datos Climáticos</div>
                                 <div class="space-y-1 text-xs">
                                     <div class="flex justify-between">
-                                        <span>Altitud:</span>
+                                        <span data-translate="origin_altitude">Altitud:</span>
                                         <span class="font-semibold">490 m.s.n.m.</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Temperatura:</span>
+                                        <span data-translate="origin_temperature">Temperatura:</span>
                                         <span class="font-semibold">21-33°C (promedio 26°C)</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Precipitación:</span>
-                                        <span class="font-semibold">Alta (zona tropical húmeda)</span>
+                                        <span data-translate="origin_precipitation">Precipitación:</span>
+                                        <span class="font-semibold" data-translate="origin_precipitation_value">Alta (zona tropical húmeda)</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3">
-                                <div class="text-xs font-semibold text-primary mb-1">Calidad del Suelo</div>
+                                <div class="text-xs font-semibold text-primary mb-1" data-translate="origin_soil_quality">Calidad del Suelo</div>
                                 <div class="space-y-1 text-xs">
                                     <div class="flex justify-between">
                                         <span>pH:</span>
                                         <span class="font-semibold">6.0-6.5 (ideal para cacao)</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Materia Orgánica:</span>
-                                        <span class="font-semibold">Alta</span>
+                                        <span data-translate="origin_organic_matter">Materia Orgánica:</span>
+                                        <span class="font-semibold" data-translate="origin_organic_matter_value">Alta</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span>Drenaje:</span>
-                                        <span class="font-semibold">Excelente</span>
+                                        <span data-translate="origin_drainage">Drenaje:</span>
+                                        <span class="font-semibold" data-translate="origin_drainage_value">Excelente</span>
                                     </div>
                                 </div>
                             </div>
@@ -174,26 +187,26 @@
                 <!-- Origin Details -->
                 <div class="space-y-8">
                     <div>
-                        <h3 class="text-2xl font-playfair font-bold text-primary mb-4">Ubicación Privilegiada</h3>
-                        <p class="text-text-secondary mb-6">
+                        <h3 class="text-2xl font-playfair font-bold text-primary mb-4" data-translate="origin_privileged_location">Ubicación Privilegiada</h3>
+                        <p class="text-text-secondary mb-6" data-translate="origin_privileged_location_desc">
                             Nuevo Progreso se encuentra en el corazón de la selva amazónica peruana, una zona privilegiada para el cultivo de cacao fino de aroma que crea microclimas perfectos para productos tropicales premium.
                         </p>
                         
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-white p-4 rounded-lg shadow">
                                 <div class="text-2xl font-bold text-accent mb-1">8°45'S</div>
-                                <div class="text-sm text-text-secondary">Latitud Sur</div>
+                                <div class="text-sm text-text-secondary" data-translate="origin_latitude">Latitud Sur</div>
                             </div>
                             <div class="bg-white p-4 rounded-lg shadow">
                                 <div class="text-2xl font-bold text-accent mb-1">76°32'W</div>
-                                <div class="text-sm text-text-secondary">Longitud Oeste</div>
+                                <div class="text-sm text-text-secondary" data-translate="origin_longitude">Longitud Oeste</div>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-2xl font-playfair font-bold text-primary mb-4">Compromiso Comunitario</h3>
-                        <p class="text-text-secondary mb-4">
+                        <h3 class="text-2xl font-playfair font-bold text-primary mb-4" data-translate="origin_community_commitment">Compromiso Comunitario</h3>
+                        <p class="text-text-secondary mb-4" data-translate="origin_community_commitment_desc">
                             Trabajamos directamente con más de 150 familias productoras locales, garantizando prácticas sostenibles y comercio justo que beneficia a toda la comunidad.
                         </p>
                         
@@ -204,8 +217,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="font-semibold text-primary">150+ Familias</div>
-                                <div class="text-sm text-text-secondary">Productores asociados</div>
+                                <div class="font-semibold text-primary" data-translate="origin_families">150+ Familias</div>
+                                <div class="text-sm text-text-secondary" data-translate="origin_associated_producers">Productores asociados</div>
                             </div>
                         </div>
                     </div>
@@ -218,10 +231,10 @@
     <section id="productos" class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6" data-translate="products_title">
                     Nuestros Productos Premium de la Amazonía
                 </h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto" data-translate="products_subtitle">
                     Cada producto viene con especificaciones técnicas completas, certificaciones internacionales y calendario de cosecha.
                 </p>
             </div>
@@ -234,32 +247,32 @@
                              alt="Granos de cacao fino de aroma peruano recién cosechados mostrando su calidad premium" 
                              class="w-full h-48 object-cover"
                              onerror="this.src='https://images.pexels.com/photos/4022092/pexels-photo-4022092.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
-                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold" data-translate="products_premium">
                             Premium
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-3">Cacao Fino de Aroma</h3>
+                        <h3 class="text-xl font-bold text-primary mb-3" data-translate="products_cacao_title">Cacao Fino de Aroma</h3>
                         <div class="space-y-2 text-sm text-text-secondary mb-4">
                             <div class="flex justify-between">
-                                <span>Humedad:</span>
+                                <span data-translate="products_humidity">Humedad:</span>
                                 <span class="font-semibold">≤ 7%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Fermentación:</span>
+                                <span data-translate="products_fermentation">Fermentación:</span>
                                 <span class="font-semibold">≥ 80%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Defectos:</span>
+                                <span data-translate="products_defects">Defectos:</span>
                                 <span class="font-semibold">≤ 3%</span>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Fair Trade</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_organic">Orgánico</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_fair_trade">Fair Trade</span>
                             <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">HACCP</span>
                         </div>
-                        <button class="w-full btn-primary open-spec-modal" data-product-id="cacao-fino-aroma">Ver Especificaciones</button>
+                        <button class="w-full btn-primary open-spec-modal" data-product-id="cacao-fino-aroma" data-translate="products_see_specs">Ver Especificaciones</button>
                     </div>
                 </div>
 
@@ -270,31 +283,31 @@
                              alt="Granos de café de altura cultivados en las montañas de la Amazonía peruana" 
                              class="w-full h-48 object-cover"
                              onerror="this.src='https://images.pixabay.com/photo/2016/11/29/12/54/coffee-1869820_1280.jpg'; this.onerror=null;">
-                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold" data-translate="products_altitude_coffee_tag">
                             Altura
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-3">Café de Altura</h3>
+                        <h3 class="text-xl font-bold text-primary mb-3" data-translate="products_altitude_coffee_title">Café de Altura</h3>
                         <div class="space-y-2 text-sm text-text-secondary mb-4">
                             <div class="flex justify-between">
-                                <span>Altitud:</span>
+                                <span data-translate="products_altitude_coffee_altitude">Altitud:</span>
                                 <span class="font-semibold">1200-1800m</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Humedad:</span>
+                                <span data-translate="products_humidity">Humedad:</span>
                                 <span class="font-semibold">≤ 12%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Puntaje SCA:</span>
+                                <span data-translate="products_sca_score">Puntaje SCA:</span>
                                 <span class="font-semibold">≥ 84</span>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Rainforest</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_organic">Orgánico</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_rainforest">Rainforest</span>
                         </div>
-                        <button class="w-full btn-primary open-spec-modal" data-product-id="cafe-altura">Ver Especificaciones</button>
+                        <button class="w-full btn-primary open-spec-modal" data-product-id="cafe-altura" data-translate="products_see_specs">Ver Especificaciones</button>
                     </div>
                 </div>
 
@@ -305,32 +318,32 @@
                              alt="Nibs de cacao tostados de alta calidad listos para uso industrial" 
                              class="w-full h-48 object-cover"
                              onerror="this.src='https://images.pexels.com/photos/4022092/pexels-photo-4022092.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
-                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold" data-translate="products_premium">
                             Premium
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-3">Nibs de Cacao</h3>
+                        <h3 class="text-xl font-bold text-primary mb-3" data-translate="products_nibs_title">Nibs de Cacao</h3>
                         <div class="space-y-2 text-sm text-text-secondary mb-4">
                             <div class="flex justify-between">
-                                <span>Humedad:</span>
+                                <span data-translate="products_humidity">Humedad:</span>
                                 <span class="font-semibold">≤ 3%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Tamaño:</span>
+                                <span data-translate="products_size">Tamaño:</span>
                                 <span class="font-semibold">2-8mm</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Pureza:</span>
+                                <span data-translate="products_purity">Pureza:</span>
                                 <span class="font-semibold">≥ 99%</span>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Tostado</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_organic">Orgánico</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_roasted">Tostado</span>
                             <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">HACCP</span>
                         </div>
-                        <button class="w-full btn-primary open-spec-modal" data-product-id="nibs-cacao">Ver Especificaciones</button>
+                        <button class="w-full btn-primary open-spec-modal" data-product-id="nibs-cacao" data-translate="products_see_specs">Ver Especificaciones</button>
                     </div>
                 </div>
 
@@ -341,32 +354,32 @@
                              alt="Chocolate artesanal peruano elaborado con cacao fino de aroma" 
                              class="w-full h-48 object-cover"
                              onerror="this.src='https://images.pexels.com/photos/65882/chocolate-dark-coffee-confiserie-65882.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
-                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+                        <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold" data-translate="products_artisanal">
                             Artesanal
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-3">Chocolate de Cacao</h3>
+                        <h3 class="text-xl font-bold text-primary mb-3" data-translate="products_chocolate_title">Chocolate de Cacao</h3>
                         <div class="space-y-2 text-sm text-text-secondary mb-4">
                             <div class="flex justify-between">
-                                <span>Contenido Cacao:</span>
+                                <span data-translate="products_cacao_content">Contenido Cacao:</span>
                                 <span class="font-semibold">70-85%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Presentación:</span>
-                                <span class="font-semibold">Barras/Bulk</span>
+                                <span data-translate="products_presentation">Presentación:</span>
+                                <span class="font-semibold" data-translate="products_presentation_value">Barras/Bulk</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Origen:</span>
-                                <span class="font-semibold">100% Peruano</span>
+                                <span data-translate="products_origin">Origen:</span>
+                                <span class="font-semibold" data-translate="products_origin_value">100% Peruano</span>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Single Origin</span>
-                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Fair Trade</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_organic">Orgánico</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_single_origin">Single Origin</span>
+                            <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="products_fair_trade">Fair Trade</span>
                         </div>
-                        <button class="w-full btn-primary open-spec-modal" data-product-id="chocolate-cacao">Ver Especificaciones</button>
+                        <button class="w-full btn-primary open-spec-modal" data-product-id="chocolate-cacao" data-translate="products_see_specs">Ver Especificaciones</button>
                     </div>
                 </div>
             </div>
@@ -377,10 +390,10 @@
     <section class="py-20 bg-surface">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6" data-translate="problem_title">
                     Los Desafíos del Abastecimiento de Productos Tropicales Premium
                 </h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto" data-translate="problem_subtitle">
                     Los importadores enfrentan constantes problemas de calidad, trazabilidad y confiabilidad en la cadena de suministro.
                 </p>
             </div>
@@ -392,9 +405,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-primary mb-4">Inconsistencia de Calidad</h3>
+                    <h3 class="text-xl font-bold text-primary mb-4" data-translate="problem_quality_title">Inconsistencia de Calidad</h3>
                     <div class="text-3xl font-bold text-error mb-2 stat-number">45%</div>
-                    <p class="text-text-secondary">de los lotes no cumplen especificaciones técnicas</p>
+                    <p class="text-text-secondary" data-translate="problem_quality_desc">de los lotes no cumplen especificaciones técnicas</p>
                 </div>
 
                 <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -403,9 +416,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-primary mb-4">Falta de Trazabilidad</h3>
+                    <h3 class="text-xl font-bold text-primary mb-4" data-translate="problem_traceability_title">Falta de Trazabilidad</h3>
                     <div class="text-3xl font-bold text-warning mb-2 stat-number">60%</div>
-                    <p class="text-text-secondary">de proveedores no pueden rastrear origen</p>
+                    <p class="text-text-secondary" data-translate="problem_traceability_desc">de proveedores no pueden rastrear origen</p>
                 </div>
 
                 <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -414,9 +427,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-primary mb-4">Certificaciones Incompletas</h3>
+                    <h3 class="text-xl font-bold text-primary mb-4" data-translate="problem_certifications_title">Certificaciones Incompletas</h3>
                     <div class="text-3xl font-bold text-error mb-2 stat-number">70%</div>
-                    <p class="text-text-secondary">carece de certificaciones internacionales</p>
+                    <p class="text-text-secondary" data-translate="problem_certifications_desc">carece de certificaciones internacionales</p>
                 </div>
             </div>
         </div>
@@ -572,10 +585,10 @@
     <section class="py-20 bg-surface">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6" data-translate="export_title">
                     Capacidad de Exportación y Logística
                 </h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto" data-translate="export_subtitle">
                     Infraestructura completa y servicios especializados para garantizar entregas puntuales y productos en perfectas condiciones.
                 </p>
             </div>
@@ -589,29 +602,29 @@
                 <!-- Capacity & Services -->
                 <div class="space-y-8">
                     <div>
-                        <h3 class="text-2xl font-playfair font-bold text-primary mb-6">Nuestra Capacidad</h3>
+                        <h3 class="text-2xl font-playfair font-bold text-primary mb-6" data-translate="export_capacity_title">Nuestra Capacidad</h3>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-white p-6 rounded-lg shadow text-center">
                                 <div class="text-3xl font-bold text-accent mb-2 stat-number">100+</div>
-                                <div class="text-sm text-text-secondary">Toneladas/Mes</div>
+                                <div class="text-sm text-text-secondary" data-translate="export_tons_per_month">Toneladas/Mes</div>
                             </div>
                             <div class="bg-white p-6 rounded-lg shadow text-center">
                                 <div class="text-3xl font-bold text-accent mb-2 stat-number">5+</div>
-                                <div class="text-sm text-text-secondary">Países Atendidos</div>
+                                <div class="text-sm text-text-secondary" data-translate="export_countries_served">Países Atendidos</div>
                             </div>
                             <div class="bg-white p-6 rounded-lg shadow text-center">
                                 <div class="text-3xl font-bold text-accent mb-2 stat-number">48h</div>
-                                <div class="text-sm text-text-secondary">Tiempo de Respuesta</div>
+                                <div class="text-sm text-text-secondary" data-translate="export_response_time">Tiempo de Respuesta</div>
                             </div>
                             <div class="bg-white p-6 rounded-lg shadow text-center">
                                 <div class="text-3xl font-bold text-accent mb-2 stat-number">99.8%</div>
-                                <div class="text-sm text-text-secondary">Entregas a Tiempo</div>
+                                <div class="text-sm text-text-secondary" data-translate="export_on_time_deliveries">Entregas a Tiempo</div>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-2xl font-playfair font-bold text-primary mb-6">Servicios Adicionales</h3>
+                        <h3 class="text-2xl font-playfair font-bold text-primary mb-6" data-translate="export_additional_services">Servicios Adicionales</h3>
                         <div class="space-y-4">
                             <div class="flex items-start space-x-3">
                                 <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center flex-shrink-0 mt-1">
@@ -620,8 +633,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold text-primary">Servicios de Maquila</h4>
-                                    <p class="text-sm text-text-secondary">Procesamiento personalizado según especificaciones del cliente</p>
+                                    <h4 class="font-semibold text-primary" data-translate="export_maquila_services">Servicios de Maquila</h4>
+                                    <p class="text-sm text-text-secondary" data-translate="export_maquila_services_desc">Procesamiento personalizado según especificaciones del cliente</p>
                                 </div>
                             </div>
                             
@@ -632,8 +645,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold text-primary">Consultoría Técnica</h4>
-                                    <p class="text-sm text-text-secondary">Asesoramiento en selección de productos y especificaciones</p>
+                                    <h4 class="font-semibold text-primary" data-translate="export_technical_consulting">Consultoría Técnica</h4>
+                                    <p class="text-sm text-text-secondary" data-translate="export_technical_consulting_desc">Asesoramiento en selección de productos y especificaciones</p>
                                 </div>
                             </div>
                             
@@ -644,8 +657,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold text-primary">Desarrollo Personalizado</h4>
-                                    <p class="text-sm text-text-secondary">Creación de productos específicos para necesidades únicas</p>
+                                    <h4 class="font-semibold text-primary" data-translate="export_custom_development">Desarrollo Personalizado</h4>
+                                    <p class="text-sm text-text-secondary" data-translate="export_custom_development_desc">Creación de productos específicos para necesidades únicas</p>
                                 </div>
                             </div>
                         </div>
@@ -659,10 +672,10 @@
     <section id="proceso" class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6" data-translate="process_title">
                     Proceso y Trazabilidad Completa
                 </h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto" data-translate="process_subtitle">
                     Desde la semilla hasta su mesa, cada paso está documentado y verificado para garantizar la máxima calidad y transparencia.
                 </p>
             </div>
@@ -678,11 +691,11 @@
                         <div class="relative flex items-center">
                             <div class="flex-1 pr-8 text-right">
                                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                                    <h3 class="text-xl font-bold text-primary mb-3">1. Cultivo y Cosecha</h3>
-                                    <p class="text-text-secondary mb-4">Selección de plantas madre, cultivo orgánico y cosecha en punto óptimo de maduración por productores certificados.</p>
+                                    <h3 class="text-xl font-bold text-primary mb-3" data-translate="process_step1_title">1. Cultivo y Cosecha</h3>
+                                    <p class="text-text-secondary mb-4" data-translate="process_step1_desc">Selección de plantas madre, cultivo orgánico y cosecha en punto óptimo de maduración por productores certificados.</p>
                                     <div class="flex justify-end space-x-2">
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">GPS Tracking</span>
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Registro Diario</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step1_tag1">GPS Tracking</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step1_tag2">Registro Diario</span>
                                     </div>
                                 </div>
                             </div>
@@ -704,11 +717,11 @@
                             </div>
                             <div class="flex-1 pl-8">
                                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                                    <h3 class="text-xl font-bold text-primary mb-3">2. Procesamiento Primario</h3>
-                                    <p class="text-text-secondary mb-4">Fermentación controlada, secado natural y selección manual bajo estrictos protocolos de calidad y trazabilidad.</p>
+                                    <h3 class="text-xl font-bold text-primary mb-3" data-translate="process_step2_title">2. Procesamiento Primario</h3>
+                                    <p class="text-text-secondary mb-4" data-translate="process_step2_desc">Fermentación controlada, secado natural y selección manual bajo estrictos protocolos de calidad y trazabilidad.</p>
                                     <div class="flex space-x-2">
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Control de Temperatura</span>
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Análisis Diario</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step2_tag1">Control de Temperatura</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step2_tag2">Análisis Diario</span>
                                     </div>
                                 </div>
                             </div>
@@ -718,11 +731,11 @@
                         <div class="relative flex items-center">
                             <div class="flex-1 pr-8 text-right">
                                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                                    <h3 class="text-xl font-bold text-primary mb-3">3. Control de Calidad</h3>
-                                    <p class="text-text-secondary mb-4">Análisis físico-químicos, pruebas microbiológicas y evaluación sensorial en laboratorio certificado.</p>
+                                    <h3 class="text-xl font-bold text-primary mb-3" data-translate="process_step3_title">3. Control de Calidad</h3>
+                                    <p class="text-text-secondary mb-4" data-translate="process_step3_desc">Análisis físico-químicos, pruebas microbiológicas y evaluación sensorial en laboratorio certificado.</p>
                                     <div class="flex justify-end space-x-2">
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Lab Certificado</span>
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Certificados</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step3_tag1">Lab Certificado</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step3_tag2">Certificados</span>
                                     </div>
                                 </div>
                             </div>
@@ -744,11 +757,11 @@
                             </div>
                             <div class="flex-1 pl-8">
                                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                                    <h3 class="text-xl font-bold text-primary mb-3">4. Empaque y Exportación</h3>
-                                    <p class="text-text-secondary mb-4">Empaque especializado, documentación completa y envío con seguimiento en tiempo real hasta destino final.</p>
+                                    <h3 class="text-xl font-bold text-primary mb-3" data-translate="process_step4_title">4. Empaque y Exportación</h3>
+                                    <p class="text-text-secondary mb-4" data-translate="process_step4_desc">Empaque especializado, documentación completa y envío con seguimiento en tiempo real hasta destino final.</p>
                                     <div class="flex space-x-2">
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Tracking GPS</span>
-                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Documentación</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step4_tag1">Tracking GPS</span>
+                                        <span class="bg-success/10 text-success px-2 py-1 rounded text-xs" data-translate="process_step4_tag2">Documentación</span>
                                     </div>
                                 </div>
                             </div>
@@ -812,7 +825,7 @@
 
             <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <!-- Testimonial 1 -->
-                <div class="bg-white p-8 rounded-lg shadow-lg">
+            <!--    <div class="bg-white p-8 rounded-lg shadow-lg">
                     <div class="flex items-center mb-6">
                         <img src="../public/images/downloaded/12.jpg" 
                              alt="Michael Johnson, Director de Compras de Premium Chocolate Co." 
@@ -854,10 +867,10 @@
     <section id="contacto" class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6" data-translate="contact_title">
                     Solicite Información y Muestras
                 </h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto" data-translate="contact_subtitle">
                     Complete el formulario y nuestro equipo comercial se pondrá en contacto en menos de 24 horas con información detallada y muestras gratuitas.
                 </p>
             </div>
@@ -871,20 +884,20 @@
 
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">Nombre Completo *</label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_full_name">Nombre Completo *</label>
                             <input type="text" name="full_name" class="form-field w-full" placeholder="Ej: Juan Carlos Pérez" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">Empresa *</label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_company">Empresa *</label>
                             <input type="text" name="company" class="form-field w-full" placeholder="Ej: Chocolate Premium S.A." required>
                         </div>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">País *</label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_country">País *</label>
                             <select name="country" class="form-field w-full" required>
-                                <option value="">Seleccione su país</option>
+                                <option value="" data-translate="contact_form_select_country">Seleccione su país</option>
                                 <option value="PE">Perú</option>
                                 <option value="US">Estados Unidos</option>
                                 <option value="CA">Canadá</option>
@@ -901,49 +914,49 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">Email Corporativo *</label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_email">Email Corporativo *</label>
                             <input type="email" name="email" class="form-field w-full" placeholder="compras@empresa.com" required>
                         </div>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">Teléfono con WhatsApp <span class="text-xs text-text-secondary font-normal ml-1">(Opcional)</span></label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_phone">Teléfono con WhatsApp <span class="text-xs text-text-secondary font-normal ml-1" data-translate="contact_form_optional">(Opcional)</span></label>
                             <input type="tel" name="phone" class="form-field w-full" placeholder="+1 555 123 4567">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">Cargo/Posición <span class="text-xs text-text-secondary font-normal ml-1">(Opcional)</span></label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_position">Cargo/Posición <span class="text-xs text-text-secondary font-normal ml-1" data-translate="contact_form_optional">(Opcional)</span></label>
                             <input type="text" name="position" class="form-field w-full" placeholder="Ej: Director de Compras">
                         </div>
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-sm font-semibold text-primary mb-2">Productos de Interés *</label>
+                        <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_interested_products">Productos de Interés *</label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                             <label class="flex items-center">
                                 <input type="checkbox" name="products" class="mr-2" value="cacao">
-                                <span class="text-sm">Cacao Fino de Aroma</span>
+                                <span class="text-sm" data-translate="contact_form_product_cacao">Cacao Fino de Aroma</span>
                             </label>
                             <label class="flex items-center">
                                 <input type="checkbox" name="products" class="mr-2" value="cafe">
-                                <span class="text-sm">Café de Altura</span>
+                                <span class="text-sm" data-translate="contact_form_product_coffee">Café de Altura</span>
                             </label>
                             <label class="flex items-center">
                                 <input type="checkbox" name="products" class="mr-2" value="jengibre">
-                                <span class="text-sm">Jengibre Fresco</span>
+                                <span class="text-sm" data-translate="contact_form_product_ginger">Jengibre Fresco</span>
                             </label>
                             <label class="flex items-center">
                                 <input type="checkbox" name="products" class="mr-2" value="frutas">
-                                <span class="text-sm">Frutas Tropicales</span>
+                                <span class="text-sm" data-translate="contact_form_product_fruits">Frutas Tropicales</span>
                             </label>
                         </div>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">Volumen Mensual Estimado <span class="text-xs text-text-secondary font-normal ml-1">(Opcional)</span></label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_monthly_volume">Volumen Mensual Estimado <span class="text-xs text-text-secondary font-normal ml-1" data-translate="contact_form_optional">(Opcional)</span></label>
                             <select name="volume" class="form-field w-full">
-                                <option value="">Seleccione volumen</option>
+                                <option value="" data-translate="contact_form_select_volume">Seleccione volumen</option>
                                 <option value="1-5">1-5 Toneladas</option>
                                 <option value="5-20">5-20 Toneladas</option>
                                 <option value="20-50">20-50 Toneladas</option>
@@ -951,38 +964,38 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-primary mb-2">Tipo de Negocio <span class="text-xs text-text-secondary font-normal ml-1">(Opcional)</span></label>
+                            <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_business_type">Tipo de Negocio <span class="text-xs text-text-secondary font-normal ml-1" data-translate="contact_form_optional">(Opcional)</span></label>
                             <select name="business_type" class="form-field w-full">
-                                <option value="">Seleccione tipo</option>
-                                <option value="manufacturer">Fabricante de Chocolate</option>
-                                <option value="importer">Importador/Distribuidor</option>
-                                <option value="retailer">Retail Especializado</option>
-                                <option value="processor">Procesador de Alimentos</option>
-                                <option value="other">Otro</option>
+                                <option value="" data-translate="contact_form_select_business_type">Seleccione tipo</option>
+                                <option value="manufacturer" data-translate="contact_form_business_type_manufacturer">Fabricante de Chocolate</option>
+                                <option value="importer" data-translate="contact_form_business_type_importer">Importador/Distribuidor</option>
+                                <option value="retailer" data-translate="contact_form_business_type_retailer">Retail Especializado</option>
+                                <option value="processor" data-translate="contact_form_business_type_processor">Procesador de Alimentos</option>
+                                <option value="other" data-translate="contact_form_business_type_other">Otro</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-sm font-semibold text-primary mb-2">Mensaje Detallado <span class="text-xs text-text-secondary font-normal ml-1">(Opcional)</span></label>
-                        <textarea name="message" class="form-field w-full h-32" placeholder="Describa sus necesidades específicas, certificaciones requeridas, especificaciones técnicas, plazos de entrega, etc."></textarea>
+                        <label class="block text-sm font-semibold text-primary mb-2" data-translate="contact_form_message">Mensaje Detallado <span class="text-xs text-text-secondary font-normal ml-1" data-translate="contact_form_optional">(Opcional)</span></label>
+                        <textarea name="message" class="form-field w-full h-32" data-translate-placeholder="contact_form_message_placeholder" placeholder="Describa sus necesidades específicas, certificaciones requeridas, especificaciones técnicas, plazos de entrega, etc."></textarea>
                     </div>
 
                     <div class="mb-6">
                         <label class="flex items-start">
                             <input type="checkbox" name="terms" class="mr-3 mt-1" required>
-                            <span class="text-sm text-text-secondary">
+                            <span class="text-sm text-text-secondary" data-translate="contact_form_terms">
                                 Acepto recibir información comercial de EATSA y confirmo que los datos proporcionados son correctos. 
-                                <a href="#" class="text-primary underline">Ver política de privacidad</a>
+                                <a href="#" class="text-primary underline" data-translate="contact_form_privacy_policy">Ver política de privacidad</a>
                             </span>
                         </label>
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn-primary text-lg px-12 py-4">
+                        <button type="submit" class="btn-primary text-lg px-12 py-4" data-translate="contact_form_submit">
                             Enviar Solicitud de Información
                         </button>
-                        <p class="text-sm text-text-secondary mt-4">
+                        <p class="text-sm text-text-secondary mt-4" data-translate="contact_form_response_time">
                             Respuesta garantizada en menos de 24 horas • Muestras gratuitas disponibles
                         </p>
                     </div>
@@ -995,10 +1008,10 @@
     <section class="py-20 bg-surface">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6" data-translate="company_info_title">
                     Información de Contacto
                 </h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto" data-translate="company_info_subtitle">
                     Múltiples canales de comunicación para atender sus consultas comerciales las 24 horas.
                 </p>
             </div>
@@ -1007,7 +1020,7 @@
                 <!-- Contact Details -->
                 <div class="space-y-8">
                     <div>
-                        <h3 class="text-2xl font-playfair font-bold text-primary mb-6">EXPORTADORA AMAZÓNICA TROPICAL S.A.C.</h3>
+                        <h3 class="text-2xl font-playfair font-bold text-primary mb-6" data-translate="company_name">EXPORTADORA AMAZÓNICA TROPICAL S.A.C.</h3>
                         
                         <div class="space-y-4">
                             <div class="flex items-start space-x-4">
@@ -1018,7 +1031,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-primary mb-1">Oficina Principal</h4>
+                                    <h4 class="font-bold text-primary mb-1" data-translate="company_info_main_office">Oficina Principal</h4>
                                     <p class="text-text-secondary">
                                         Av Marginal s/n esquina con Carlos Honores<br>
                                         Nuevo Progreso Tocache San Martin Perú, 22551
@@ -1033,11 +1046,11 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-primary mb-1">Emails Comerciales</h4>
+                                    <h4 class="font-bold text-primary mb-1" data-translate="company_info_emails">Emails Comerciales</h4>
                                     <p class="text-text-secondary">
-                                        <a href="mailto:gerencia@amazonicatropical.com" class="text-accent hover:underline">gerencia@amazonicatropical.com</a> (Gerencia)<br>
-                                        <a href="mailto:subgerencia@amazonicatropical.com" class="text-accent hover:underline">subgerencia@amazonicatropical.com</a> (Sub-Gerencia)<br>
-                                        <a href="mailto:comercial@amazonicatropical.com" class="text-accent hover:underline">comercial@amazonicatropical.com</a> (Comercial)
+                                        <a href="mailto:gerencia@amazonicatropical.com" class="text-accent hover:underline">gerencia@amazonicatropical.com</a> <span data-translate="company_info_management">(Gerencia)</span><br>
+                                        <a href="mailto:subgerencia@amazonicatropical.com" class="text-accent hover:underline">subgerencia@amazonicatropical.com</a> <span data-translate="company_info_submanagement">(Sub-Gerencia)</span><br>
+                                        <a href="mailto:comercial@amazonicatropical.com" class="text-accent hover:underline">comercial@amazonicatropical.com</a> <span data-translate="company_info_commercial">(Comercial)</span>
                                     </p>
                                 </div>
                             </div>
@@ -1049,10 +1062,10 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-primary mb-1">Teléfonos</h4>
+                                    <h4 class="font-bold text-primary mb-1" data-translate="company_info_phones">Teléfonos</h4>
                                     <p class="text-text-secondary">
-                                        <a href="tel:+51980228368" class="text-accent hover:underline">+51 980 228 368</a> (WhatsApp Internacional)<br>
-                                        <a href="tel:+51930369251" class="text-accent hover:underline">+51 930 369 251</a> (Oficina Principal)
+                                        <a href="tel:+51980228368" class="text-accent hover:underline">+51 980 228 368</a> <span data-translate="company_info_whatsapp_international">(WhatsApp Internacional)</span><br>
+                                        <a href="tel:+51930369251" class="text-accent hover:underline">+51 930 369 251</a> <span data-translate="company_info_main_office_phone">(Oficina Principal)</span>
                                     </p>
                                 </div>
                             </div>
@@ -1064,8 +1077,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-primary mb-1">Horarios de Atención</h4>
-                                    <p class="text-text-secondary">
+                                    <h4 class="font-bold text-primary mb-1" data-translate="company_info_hours">Horarios de Atención</h4>
+                                    <p class="text-text-secondary" data-translate="company_info_hours_desc">
                                         Lunes a Viernes: 8:00 AM - 6:00 PM (GMT-5)<br>
                                         Sábados: 8:00 AM - 1:00 PM (GMT-5)<br>
                                         WhatsApp 24/7 para consultas urgentes
@@ -1077,7 +1090,7 @@
 
                     <!-- Social Media -->
                     <div>
-                        <h4 class="font-bold text-primary mb-4">Síguenos en Redes Sociales</h4>
+                        <h4 class="font-bold text-primary mb-4" data-translate="company_info_social_media">Síguenos en Redes Sociales</h4>
                         <div class="flex space-x-4">
                             <a href="javascript:void(0)" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white hover:bg-primary-700 transition-colors">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1120,7 +1133,7 @@
                         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                             <div class="relative">
                                 <div class="w-8 h-8 bg-accent rounded-full border-4 border-white shadow-lg animate-pulse"></div>
-                                <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white px-4 py-2 rounded shadow-lg text-sm font-semibold whitespace-nowrap text-primary">
+                                <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white px-4 py-2 rounded shadow-lg text-sm font-semibold whitespace-nowrap text-primary" data-translate="company_info_map_marker">
                                     EATSA - Oficina Principal
                                 </div>
                             </div>
@@ -1140,7 +1153,7 @@
                         </div>
 
                         <div class="absolute bottom-4 left-4 z-10">
-                            <button class="bg-accent text-primary px-4 py-2 rounded shadow font-semibold hover:bg-accent-700 transition-colors">
+                            <button class="bg-accent text-primary px-4 py-2 rounded shadow font-semibold hover:bg-accent-700 transition-colors" data-translate="company_info_get_directions">
                                 Obtener Direcciones
                             </button>
                         </div>
@@ -1416,6 +1429,7 @@
         </div>
     </div>
 
+    <script src="../public/js/translations.js"></script>
     <script src="../public/js/main.js"></script>
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 
