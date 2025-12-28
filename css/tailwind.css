@@ -1,0 +1,570 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: theme('colors.text.primary');
+    background-color: theme('colors.background');
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: theme('colors.text.primary');
+  }
+
+  .font-accent {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 ease-out;
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.15);
+  }
+
+  .btn-primary:hover {
+    @apply bg-primary-700 transform -translate-y-1 scale-105;
+    box-shadow: 0 8px 20px rgba(45, 80, 22, 0.3);
+  }
+
+  .btn-primary:active {
+    @apply transform scale-95;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-primary px-6 py-3 rounded-lg font-semibold transition-all duration-300 ease-out;
+    box-shadow: 0 4px 12px rgba(218, 165, 32, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-accent::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .btn-accent:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  .btn-accent:hover {
+    @apply bg-accent-700 transform -translate-y-1 scale-105;
+    box-shadow: 0 8px 20px rgba(218, 165, 32, 0.3);
+  }
+
+  .btn-accent:active {
+    @apply transform scale-95;
+  }
+
+  .btn-inverted {
+    @apply bg-white text-primary px-6 py-2 rounded-lg font-semibold transition-all duration-300 ease-out border-2 border-white;
+  }
+
+  .btn-inverted:hover {
+    @apply bg-transparent text-white transform scale-105;
+  }
+
+  .certification-card {
+    @apply border-2 border-accent rounded-lg p-4 bg-white transition-all duration-300 ease-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .certification-card:hover {
+    @apply transform -translate-y-2 rotate-1;
+    box-shadow: 0 8px 24px rgba(218, 165, 32, 0.2);
+  }
+
+  .form-field {
+    @apply border border-border rounded-lg px-4 py-3 transition-all duration-300 ease-out;
+  }
+
+  .form-field:focus {
+    @apply border-primary outline-none ring-2 ring-primary ring-opacity-20 transform scale-102;
+  }
+
+  /* ============================================
+     ANIMACIONES DE SCROLL - FADE IN VARIANTS
+     ============================================ */
+  
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in-down {
+    opacity: 0;
+    transform: translateY(-40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-down.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .fade-in-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scale-in {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .rotate-in {
+    opacity: 0;
+    transform: rotate(-5deg) scale(0.95);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .rotate-in.visible {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  /* ============================================
+     ANIMACIONES HERO SECTION
+     ============================================ */
+  
+  @keyframes heroFadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes heroSlideRight {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes heroZoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes floatAnimation {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-title {
+    animation: heroFadeInUp 1s ease-out 0.2s both;
+  }
+
+  .hero-subtitle {
+    animation: heroFadeInUp 1s ease-out 0.4s both;
+  }
+
+  .hero-stats {
+    animation: heroSlideRight 1s ease-out 0.6s both;
+  }
+
+  .hero-cta {
+    animation: heroZoomIn 0.8s ease-out 0.8s both;
+  }
+
+  .float-animation {
+    animation: floatAnimation 3s ease-in-out infinite;
+  }
+
+  /* ============================================
+     ANIMACIONES DE CARDS DE PRODUCTOS
+     ============================================ */
+  
+  @keyframes cardFlipIn {
+    from {
+      opacity: 0;
+      transform: rotateY(-20deg) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: rotateY(0) translateY(0);
+    }
+  }
+
+  .product-card {
+    animation: cardFlipIn 0.6s ease-out both;
+    transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  }
+
+  .product-card:nth-child(1) { animation-delay: 0.1s; }
+  .product-card:nth-child(2) { animation-delay: 0.2s; }
+  .product-card:nth-child(3) { animation-delay: 0.3s; }
+  .product-card:nth-child(4) { animation-delay: 0.4s; }
+
+  .product-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .product-card:hover img {
+    transform: scale(1.1);
+  }
+
+  .product-card img {
+    transition: transform 0.5s ease-out;
+  }
+
+  /* ============================================
+     ANIMACIÓN DE ESTADÍSTICAS (COUNTER)
+     ============================================ */
+  
+  @keyframes countUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .stat-number {
+    animation: countUp 0.8s ease-out both;
+  }
+
+  /* ============================================
+     TIMELINE ANIMATIONS
+     ============================================ */
+  
+  @keyframes drawLine {
+    from {
+      height: 0;
+    }
+    to {
+      height: 100%;
+    }
+  }
+
+  @keyframes pulseDot {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.7);
+    }
+    50% {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 10px rgba(218, 165, 32, 0);
+    }
+  }
+
+  .timeline-line {
+    animation: drawLine 2s ease-out forwards;
+  }
+
+  .timeline-dot {
+    animation: pulseDot 2s ease-out infinite;
+  }
+
+  .timeline-card {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .timeline-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-card:nth-child(even) {
+    transform: translateX(50px);
+  }
+
+  .timeline-card:nth-child(even).visible {
+    transform: translateX(0);
+  }
+
+  /* ============================================
+     CERTIFICACIONES CON BADGE ANIMATION
+     ============================================ */
+  
+  @keyframes badgeBounce {
+    0%, 100% { transform: scale(1) rotate(0); }
+    25% { transform: scale(1.1) rotate(-5deg); }
+    75% { transform: scale(1.1) rotate(5deg); }
+  }
+
+  .certification-badge {
+    transition: all 0.3s ease-out;
+  }
+
+  .certification-badge:hover {
+    animation: badgeBounce 0.6s ease-out;
+    filter: brightness(1.1);
+  }
+
+  /* ============================================
+     PARALLAX & SCROLL EFFECTS
+     ============================================ */
+  
+  .parallax-slow {
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+
+  /* ============================================
+     MODAL ANIMATIONS
+     ============================================ */
+  
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes modalSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  #form-feedback-modal {
+    animation: modalFadeIn 0.3s ease-out;
+  }
+
+  #form-feedback-modal .bg-white,
+  #price-request-modal .bg-white {
+    animation: modalSlideUp 0.4s ease-out;
+  }
+
+  #form-feedback-modal.hidden,
+  #price-request-modal.hidden {
+    animation: modalFadeIn 0.2s ease-in reverse;
+  }
+
+  /* ============================================
+     LOADING & SHIMMER EFFECTS
+     ============================================ */
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* ============================================
+     RIPPLE EFFECT
+     ============================================ */
+  
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ripple::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    pointer-events: none;
+  }
+
+  .ripple:active::before {
+    animation: ripple 0.6s ease-out;
+  }
+
+  /* ============================================
+     HOVER GLOW EFFECTS
+     ============================================ */
+  
+  .glow-on-hover {
+    position: relative;
+    transition: all 0.3s ease-out;
+  }
+
+  .glow-on-hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(218, 165, 32, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+  }
+
+  .glow-on-hover:hover::after {
+    opacity: 1;
+  }
+
+  /* ============================================
+     STAGGER ANIMATIONS (para listas)
+     ============================================ */
+  
+  .stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  .stagger-item:nth-child(1) { animation-delay: 0.1s; }
+  .stagger-item:nth-child(2) { animation-delay: 0.2s; }
+  .stagger-item:nth-child(3) { animation-delay: 0.3s; }
+  .stagger-item:nth-child(4) { animation-delay: 0.4s; }
+  .stagger-item:nth-child(5) { animation-delay: 0.5s; }
+  .stagger-item:nth-child(6) { animation-delay: 0.6s; }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ============================================
+     TEXT ANIMATIONS
+     ============================================ */
+  
+  @keyframes typeWriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  .typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typeWriter 3s steps(40) 1s both;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #2D5016, #DAA520, #2D5016);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 4s ease infinite;
+  }
+
+  /* ============================================
+     MICRO-INTERACTIONS
+     ============================================ */
+  
+  .bounce-on-hover {
+    transition: transform 0.3s ease-out;
+  }
+
+  .bounce-on-hover:hover {
+    animation: gentleBounce 0.6s ease-out;
+  }
+
+  @keyframes gentleBounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-8px); }
+    50% { transform: translateY(-4px); }
+    75% { transform: translateY(-6px); }
+  }
+
+  /* ============================================
+     UTILITY CLASSES
+     ============================================ */
+  
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
+  .delay-600 { animation-delay: 0.6s; }
+  .delay-700 { animation-delay: 0.7s; }
+  .delay-800 { animation-delay: 0.8s; }
+
+  .transform-gpu {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+}

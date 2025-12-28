@@ -1,0 +1,58 @@
+<!-- Logistics Calculator - COMENTADO TEMPORALMENTE -->
+<!--
+<div class="bg-white rounded-lg shadow-lg p-8">
+    <h3 class="text-2xl font-playfair font-bold text-primary mb-6">Calculadora de Logística</h3>
+    <div class="space-y-4">
+        <div>
+            <label class="block text-sm font-semibold text-primary mb-2">País de Destino</label>
+            <select class="form-field w-full">
+                <option>Estados Unidos</option>
+                <option>Alemania</option>
+                <option>Japón</option>
+                <option>Países Bajos</option>
+                <option value="Francia">Francia</option>
+            </select>
+        </div>
+        
+        <div>
+            <label class="block text-sm font-semibold text-primary mb-2">Producto</label>
+            <select class="form-field w-full">
+                <option>Cacao Fino de Aroma</option>
+                <option>Café de Altura</option>
+                <option>Jengibre Fresco</option>
+                <option>Frutas Tropicales</option>
+            </select>
+        </div>
+        
+        <div>
+            <label class="block text-sm font-semibold text-primary mb-2">Cantidad (Toneladas)</label>
+            <input type="range" min="1" max="50" value="10" class="w-full">
+            <div class="flex justify-between text-sm text-text-secondary mt-1">
+                <span>1</span>
+                <span class="font-semibold">10 Toneladas</span>
+                <span>50</span>
+            </div>
+        </div>
+        
+        <button class="btn-primary w-full">Calcular Costos y Tiempos</button>
+        
+        <div class="mt-6 p-4 bg-surface rounded-lg">
+            <h4 class="font-bold text-primary mb-3">Estimación de Envío</h4>
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                    <span>Tiempo de Entrega:</span>
+                    <span class="font-semibold">18-22 días</span>
+                    </div>
+                <div class="flex justify-between">
+                    <span>Documentación:</span>
+                    <span class="font-semibold">Incluida</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Costo Estimado:</span>
+                    <span class="font-semibold text-accent">$2,450 USD</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
