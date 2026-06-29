@@ -6,6 +6,7 @@ import '@fontsource-variable/dm-sans';
 import SEO from '@components/SEO.astro';
 import CartWidget from '@components/CartWidget.astro';
 import CartDrawer from '@components/CartDrawer.astro';
+import { ViewTransitions } from 'astro:transitions';
 
 import { siteConfig } from '@data/site';
 
@@ -31,6 +32,7 @@ const {
     <meta name="generator" content={Astro.generator} />
     
     <SEO title={title} description={description} lang={lang} />
+    <ViewTransitions />
   </head>
   <body class="bg-crema text-ebano font-body">
     <slot />

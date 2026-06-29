@@ -67,16 +67,16 @@ export function getWhatsAppUrl() {
   const items = Object.values(cart.get());
   if (items.length === 0) return '#';
 
-  // TODO: Actualizar con el número real de WhatsApp de EATSA (código de país sin el +)
-  const phone = '51999999999'; 
+  // Configuración del número de destino real de EATSA
+  const WHATSAPP_NUMBER = '51980228368';
   
-  let text = '¡Hola EATSA! Me interesa cotizar los siguientes productos:%0A%0A';
+  let text = '¡Hola EATSA! Vengo desde la página web empresarial y me interesa cotizar los siguientes productos:\n\n';
   
   items.forEach(item => {
-    text += `- ${item.name}: ${item.quantity} Tonelada(s)%0A`;
+    text += `- ${item.name}: ${item.quantity} Tonelada(s)\n`;
   });
   
-  text += '%0AQuedo a la espera de su respuesta para coordinar. Gracias.';
+  text += '\nQuedo a la espera de su respuesta para coordinar. Gracias.';
   
-  return `https://wa.me/${phone}?text=${text}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }

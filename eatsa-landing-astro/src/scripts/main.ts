@@ -10,17 +10,24 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     // If it's a cross-page anchor like /es/#productos, let standard navigation happen
     if (href.startsWith('/')) return;
     
+    // Si la URL generada es un enlace externo (como WhatsApp), dejar que el navegador lo maneje
+    if (href.startsWith('http')) return;
+    
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      const headerOffset = 100;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    try {
+      const target = document.querySelector(href);
+      if (target) {
+        const headerOffset = 100;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: prefersReducedMotion() ? 'auto' : 'smooth'
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: prefersReducedMotion() ? 'auto' : 'smooth'
+        });
+      }
+    } catch (err) {
+      // Ignorar errores si el href no es un selector válido
     }
   });
 });

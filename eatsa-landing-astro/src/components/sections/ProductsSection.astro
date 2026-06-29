@@ -93,9 +93,9 @@ try {
         <p class="mt-2 max-w-md text-gris-medio">{t('products.emptyDescription' as any)}</p>
       </div>
     ) : (
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto stagger-children" data-products-grid>
+      <div class="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto stagger-children" data-products-grid>
         {activeProducts.map((product) => (
-          <div class="product-card-wrapper">
+          <div class="product-card-wrapper w-full sm:w-[calc(50%-1rem)] lg:w-[340px]">
             <ProductCard
               name={product.name}
               tag={product.tag}
