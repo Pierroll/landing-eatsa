@@ -1,0 +1,80 @@
+---
+import type { Locale } from '@types';
+
+/**
+ * Componente SEO centralizado.
+ * Inyecta todos los meta tags relevantes y genera hreflang alternates
+ * automáticamente para /es/ y /en/.
+ *
+ * Uso desde MainLayout:
+ *   <SEO title="..." description="..." lang="es" />
+ */
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+  /** Imagen OG absoluta o relativa (se resuelve a URL absoluta). */
+  ogImage?: string;
+  /** Evita indexación (ej. páginas 404, staging). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  lang,
+  ogImage = '/images/downloaded/1.jpg',
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://amazonicatropical.com');
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogUrlAbs = new URL(ogImage, site).href;
+
+// Alternates hreflang para SEO multi-idioma.
+// El pathname viene como /es/... o /en/... → reemplazamos el prefijo.
+const pathWithoutLang = Astro.url.pathname.replace(/^\/(es|en)\/?/, '/');
+const hrefEs = new URL(`/es${pathWithoutLang === '/' ? '' : pathWithoutLang}`, site).href;
+const hrefEn = new URL(`/en${pathWithoutLang === '/' ? '' : pathWithoutLang}`, site).href;
+---
+
+{/* Canonical */}
+<link rel="canonical" href={canonical} />
+
+{/* Robots */}
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow" />
+)}
+
+{/* Descripción + autor */}
+<meta name="description" content={description} />
+<meta name="author" content="EATSA — Exportadora Amazónica Tropical S.A.C." />
+<meta
+  name="keywords"
+  content="cacao peruano, cacao fino de aroma, exportación cacao, productos tropicales, amazonía peruana, chocolate premium, fair trade cacao, B2B cacao"
+/>
+
+{/* Open Graph / Facebook */}
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogUrlAbs} />
+<meta property="og:locale" content={lang === 'es' ? 'es_PE' : 'en_US'} />
+<meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_PE'} />
+
+{/* Twitter */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonical} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogUrlAbs} />
+
+{/* hreflang alternates (multi-idioma) */}
+<link rel="alternate" hreflang="es" href={hrefEs} />
+<link rel="alternate" hreflang="en" href={hrefEn} />
+<link rel="alternate" hreflang="x-default" href={hrefEs} />
+
+<title>{title}</title>

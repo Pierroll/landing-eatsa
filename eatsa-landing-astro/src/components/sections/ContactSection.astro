@@ -1,0 +1,191 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+import { contactForm } from '@data/site';
+import Container from '@components/ui/Container.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import Button from '@components/ui/Button.astro';
+
+/**
+ * Formulario B2B de contacto.
+ * POSTea a /api/contact (API route server-side con Resend).
+ *
+ * 🛡️ HONEYPOT: el campo `company_website` NO usa type="hidden" (los bots avanzados
+ *    leen eso). Se oculta vía CSS absolute off-screen para que parezca un campo
+ *    real a un bot que parsea HTML, pero es invisible/inaccesible para humanos.
+ *    La validación correspondiente vive en src/pages/api/contact.ts.
+ */
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+
+const countryLabels: Record<string, { es: string; en: string }> = {
+  PE: { es: 'Perú', en: 'Peru' },
+  US: { es: 'Estados Unidos', en: 'United States' },
+  CA: { es: 'Canadá', en: 'Canada' },
+  GB: { es: 'Reino Unido', en: 'United Kingdom' },
+  DE: { es: 'Alemania', en: 'Germany' },
+  FR: { es: 'Francia', en: 'France' },
+  IT: { es: 'Italia', en: 'Italy' },
+  ES: { es: 'España', en: 'Spain' },
+  MY: { es: 'Malasia', en: 'Malaysia' },
+  JP: { es: 'Japón', en: 'Japan' },
+  NL: { es: 'Países Bajos', en: 'Netherlands' },
+  AU: { es: 'Australia', en: 'Australia' },
+  OTHER: { es: 'Otro', en: 'Other' },
+};
+
+const volumeLabels: Record<string, TranslationKey> = {
+  '1-5': 'contact.form.volume', // reutiliza label base; el value va en option text
+  '5-20': 'contact.form.volume',
+  '20-50': 'contact.form.volume',
+  '50+': 'contact.form.volume',
+};
+
+const businessLabels: Record<string, { es: string; en: string }> = {
+  manufacturer: { es: 'Fabricante', en: 'Manufacturer' },
+  importer: { es: 'Importador', en: 'Importer' },
+  retailer: { es: 'Minorista', en: 'Retailer' },
+  processor: { es: 'Procesador', en: 'Processor' },
+  other: { es: 'Otro', en: 'Other' },
+};
+
+const productLabels: Record<string, TranslationKey> = {
+  cacao: 'products.cacao.name',
+  cafe: 'products.cafe.name',
+  jengibre: 'products.jengibre.name',
+  frutas: 'products.frutas.name',
+};
+---
+
+<section id="contacto" class="section-cream py-24">
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-2">
+      <!-- Columna izquierda: header + info -->
+      <div>
+        <SectionHeader
+          title={t('contact.title' as any)}
+          subtitle={t('contact.subtitle' as any)}
+          align="left"
+        />
+      </div>
+
+      <!-- Columna derecha: formulario -->
+      <div class=" card p-8">
+        <form id="contact-form" action="/api/contact" method="POST" class="flex flex-col gap-4" novalidate>
+          {/* Honeypot — oculto vía CSS, NO type="hidden" */}
+          <input
+            type="text"
+            name="company_website"
+            class="absolute -left-[9999px] opacity-0 pointer-events-none"
+            tabindex="-1"
+            aria-hidden="true"
+          />
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="full_name" class="mb-1.5 block text-sm font-medium text-ebano">
+                {t('contact.form.name' as any)} *
+              </label>
+              <input id="full_name" name="full_name" type="text" required class="form-field" />
+            </div>
+            <div>
+              <label for="company" class="mb-1.5 block text-sm font-medium text-ebano">
+                {t('contact.form.company' as any)} *
+              </label>
+              <input id="company" name="company" type="text" required class="form-field" />
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="email" class="mb-1.5 block text-sm font-medium text-ebano">
+                {t('contact.form.email' as any)} *
+              </label>
+              <input id="email" name="email" type="email" required class="form-field" />
+            </div>
+            <div>
+              <label for="phone" class="mb-1.5 block text-sm font-medium text-ebano">
+                {t('contact.form.phone' as any)}
+              </label>
+              <input id="phone" name="phone" type="tel" class="form-field" />
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="country" class="mb-1.5 block text-sm font-medium text-ebano">
+                {t('contact.form.country' as any)} *
+              </label>
+              <select id="country" name="country" required class="form-field">
+                <option value="">—</option>
+                {contactForm.countries.map((code) => (
+                  <option value={code}>{countryLabels[code]?.[lang] ?? code}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label for="business_type" class="mb-1.5 block text-sm font-medium text-ebano">
+                {t('contact.form.businessType' as any)}
+              </label>
+              <select id="business_type" name="business_type" class="form-field">
+                <option value="">—</option>
+                {contactForm.businessTypes.map((bt) => (
+                  <option value={bt}>{businessLabels[bt]?.[lang] ?? bt}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Productos de interés (checkboxes) */}
+          <div>
+            <span class="mb-2 block text-sm font-medium text-ebano">
+              {t('contact.form.products' as any)}
+            </span>
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {contactForm.productOptions.map((p) => (
+                <label class="flex cursor-pointer items-center gap-2 rounded-btn border border-gris-claro bg-crema px-3 py-2 text-sm transition-colors hover:border-verde">
+                  <input type="checkbox" name="products" value={p} class="accent-verde" />
+                  {t(productLabels[p] as any)}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Volumen */}
+          <div>
+            <label for="volume" class="mb-1.5 block text-sm font-medium text-ebano">
+              {t('contact.form.volume' as any)}
+            </label>
+            <select id="volume" name="volume" class="form-field">
+              <option value="">—</option>
+              {contactForm.volumes.map((v) => (
+                <option value={v}>{v} t/mes</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Mensaje */}
+          <div>
+            <label for="message" class="mb-1.5 block text-sm font-medium text-ebano">
+              {t('contact.form.message' as any)} *
+            </label>
+            <textarea id="message" name="message" rows="4" required class="form-field resize-none"></textarea>
+          </div>
+
+          {/* Términos */}
+          <label class="flex cursor-pointer items-start gap-2 text-sm text-ebano/80">
+            <input type="checkbox" name="terms" required class="mt-0.5 accent-verde" />
+            {t('contact.form.terms' as any)}
+          </label>
+
+          {/* Feedback + submit */}
+          <div id="form-feedback" class="hidden rounded-btn p-3 text-sm" role="alert"></div>
+
+          <Button type="submit" variant="primary" class="w-full">
+            {t('contact.form.submit' as any)}
+          </Button>
+        </form>
+      </div>
+    </div>
+  </Container>
+</section>

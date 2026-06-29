@@ -1,0 +1,14 @@
+---
+import { cn } from '@lib/utils';
+import type { ContainerProps } from '@types';
+
+// Contenedor estándar: max-width 1200px + padding responsive (48px desktop / 24px mobile).
+// Todas las secciones deben envolver su contenido con este componente para
+// garantizar alineación consistente del eje de lectura.
+const { class: className } = Astro.props as ContainerProps;
+const classes = cn('container-base', className);
+---
+
+<div class={classes}>
+  <slot />
+</div>

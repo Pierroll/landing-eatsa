@@ -1,0 +1,66 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+import { exportStats } from '@data/site';
+import { getCollection } from 'astro:content';
+import Container from '@components/ui/Container.astro';
+import { Image } from 'astro:assets';
+import exportCapacityImg from '../../assets/company/export-capacity.jpeg';
+
+/**
+ * Capacidad de Exportación: imagen + 4 stats + checklist de servicios.
+ */
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+
+const services = await getCollection('services');
+---
+
+<section class="section-cream py-24">
+  <Container>
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <!-- Imagen -->
+      <div class=" card relative overflow-hidden p-0">
+        <Image
+          src={exportCapacityImg}
+          alt={t('export.title' as any)}
+          class="h-full min-h-[400px] w-full object-cover"
+          loading="lazy"
+          width={600}
+          height={500}
+        />
+      </div>
+
+      <!-- Contenido -->
+      <div class="">
+        <h2 class="text-3xl sm:text-4xl">{t('export.title' as any)}</h2>
+        <p class="mt-4 text-ebano/75">{t('export.subtitle' as any)}</p>
+
+        <!-- Stats -->
+        <div class="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {exportStats.map((stat) => (
+            <div>
+              <div class="font-display text-3xl font-semibold text-verde">{stat.value}</div>
+              <div class="mt-1 text-xs text-gris-medio">{t(stat.labelKey as any)}</div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Servicios checklist -->
+        <div class="mt-8 flex flex-col gap-4">
+          {services.map((service) => (
+            <div class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-verde" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <h4 class="font-medium text-ebano">{t(service.data.titleKey as any)}</h4>
+                <p class="text-sm text-ebano/70">{t(service.data.descKey as any)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

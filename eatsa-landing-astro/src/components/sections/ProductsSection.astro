@@ -1,0 +1,157 @@
+---
+import type { Locale } from '@types';
+import { useTranslations } from '@i18n/ui';
+import Container from '@components/ui/Container.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import ProductCard from '@components/ProductCard.astro';
+import { getProductos } from '@/lib/db';
+
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+
+const allProducts = await getProductos();
+// Mostrar solo productos activos
+const activeProducts = allProducts.filter(p => p.status === 'activo');
+// Extraer tags únicos para filtros
+const uniqueTags = [...new Set(activeProducts.map(p => p.tag))];
+---
+
+<section id="productos" class="section-white py-24">
+  <Container>
+    <SectionHeader
+      title={t('products.title' as any)}
+      subtitle={t('products.subtitle' as any)}
+      align="center"
+      class="mb-12"
+    />
+
+    <!-- Toolbar: filtros + search + sort -->
+    <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-products-toolbar>
+      <!-- Filtros por tag (pills) -->
+      <div class="flex flex-wrap gap-2" data-filter-pills>
+        <button class="filter-pill active" data-filter="all">{t('products.filterAll' as any)}</button>
+        {uniqueTags.map(tag => (
+          <button class="filter-pill" data-filter={tag}>{tag}</button>
+        ))}
+      </div>
+
+      <!-- Search + sort -->
+      <div class="flex items-center gap-3">
+        <input
+          type="search"
+          class="form-field w-48 sm:w-56"
+          placeholder={t('products.searchPlaceholder' as any)}
+          data-search-input
+        />
+        <select class="form-field w-auto" data-sort-select>
+          <option value="default">{t('products.sortLabel' as any)}</option>
+          <option value="name-asc">{t('products.sortAZ' as any)}</option>
+          <option value="name-desc">{t('products.sortZA' as any)}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Mensaje sin resultados (filtros) -->
+    <p class="hidden text-center text-gris-medio py-16 col-span-full" data-no-results>
+      No se encontraron productos con los filtros seleccionados.
+    </p>
+
+    <!-- Grid de productos -->
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto stagger-children" data-products-grid>
+      {activeProducts.length === 0 ? (
+        <p class="text-center col-span-full text-gris-medio py-12">{t('products.empty' as any)}</p>
+      ) : activeProducts.map((product) => (
+        <div class="product-card-wrapper">
+          <ProductCard
+            name={product.name}
+            tag={product.tag}
+            image={product.image}
+            specs={product.specs || []}
+            attributes={product.attributes || []}
+            productId={product.id}
+            seeSpecsKey={'products.seeSpecs' as any}
+            lang={lang}
+          />
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const grid = document.querySelector('[data-products-grid]');
+    const noResults = document.querySelector('[data-no-results]');
+    const pills = document.querySelectorAll('.filter-pill');
+    const searchInput = document.querySelector('[data-search-input]') as HTMLInputElement;
+    const sortSelect = document.querySelector('[data-sort-select]') as HTMLSelectElement;
+    if (!grid || !searchInput || !noResults) return;
+
+    // Guardar estado original de las cards (name y tag)
+    const cards = Array.from(grid.querySelectorAll('.product-card-wrapper'));
+    const cardData = cards.map(card => {
+      const inner = card.querySelector('.card');
+      const nameEl = inner?.querySelector('h3');
+      return {
+        el: card,
+        name: nameEl?.textContent?.trim().toLowerCase() || '',
+        tag: inner?.querySelector('.badge-tag')?.textContent?.trim() || '',
+      };
+    });
+
+    const applyFilters = () => {
+      const activeFilter = document.querySelector('.filter-pill.active')?.getAttribute('data-filter') || 'all';
+      const query = searchInput.value.toLowerCase().trim();
+      const sort = sortSelect?.value || 'default';
+
+      let visible = cardData.filter(d => {
+        const matchTag = activeFilter === 'all' || d.tag === activeFilter;
+        const matchSearch = !query || d.name.includes(query);
+        return matchTag && matchSearch;
+      });
+
+      // Sort
+      if (sort === 'name-asc') visible.sort((a, b) => a.name.localeCompare(b.name));
+      if (sort === 'name-desc') visible.sort((a, b) => b.name.localeCompare(a.name));
+
+      // Mostrar/ocultar mensaje sin resultados
+      if (visible.length === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+
+      // Ocultar los que no coinciden
+      cardData.forEach(d => {
+        const isVisible = visible.includes(d);
+        (d.el as HTMLElement).classList.toggle('hidden', !isVisible);
+        (d.el as HTMLElement).style.opacity = isVisible ? '1' : '0';
+      });
+
+      // Reordenar manteniendo el orden del sort/filtro
+      if (sort !== 'default') {
+        const target = visible.map(d => d.el);
+        target.forEach(el => grid.appendChild(el));
+      }
+    };
+
+    // Pills de filtro
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    // Search con debounce
+    let debounceTimer: ReturnType<typeof setTimeout>;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(applyFilters, 200);
+    });
+
+    // Sort
+    sortSelect?.addEventListener('change', applyFilters);
+  });
+</script>

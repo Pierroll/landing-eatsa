@@ -1,0 +1,70 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+import { heroStats } from '@data/site';
+import Container from '@components/ui/Container.astro';
+import Button from '@components/ui/Button.astro';
+import Stat from '@components/ui/Stat.astro';
+
+/**
+ * Hero: imagen de fondo + título display + descripción + trust bar + 2 CTAs.
+ */
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+---
+
+<section class="relative flex min-h-screen items-center overflow-hidden pt-20" data-hero-section>
+  <!-- Imagen de fondo con overlay dramático -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="/assets/hero/cacao-hero.jpg"
+      alt="Cacao premium de la Amazonía peruana — granos de cacao fino de aroma en su origen"
+      class="h-full w-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+      sizes="100vw"
+      width="1920"
+      height="1080"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-ebano/85 via-ebano/70 to-ebano/50" />
+    <!-- Efecto de grano sutil -->
+    <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E')"></div>
+  </div>
+
+  <Container class="relative z-10 py-28">
+    <div class="max-w-3xl">
+      <!-- Badge origen con más presencia -->
+      <span class="mb-6 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 text-xs font-medium uppercase tracking-widest text-crema backdrop-blur-sm border border-crema/10" data-hero-animate>
+        <span class="h-1.5 w-1.5 rounded-full bg-dorado animate-pulse" aria-hidden="true"></span>
+        {t('hero.subtitle' as any)}
+      </span>
+
+      <!-- Título display — radicalmente más grande -->
+      <h1 class="mb-6 font-display text-6xl font-bold leading-[1.05] text-crema sm:text-7xl lg:text-8xl" data-hero-animate>
+        {t('hero.title' as any)}
+      </h1>
+
+      <!-- Descripción con más espacio -->
+      <p class="mb-10 max-w-2xl text-xl leading-relaxed text-crema/85" data-hero-animate>
+        {t('hero.description' as any)}
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4" data-hero-animate>
+        <Button variant="primary" id="hero-price-btn" size="lg">
+          {t('hero.requestPrices' as any)}
+        </Button>
+        <Button variant="secondary" href="#productos" size="lg" class="border-crema/40 text-crema hover:bg-crema/10">
+          {t('hero.seeProducts' as any)}
+        </Button>
+      </div>
+
+      <!-- Trust bar: stats con más peso visual -->
+      <div class="mt-16 grid grid-cols-3 gap-10 border-t border-crema/20 pt-10" data-hero-animate>
+        {heroStats.map((stat) => (
+          <Stat value={stat.value} label={t(stat.labelKey as any)} animated />
+        ))}
+      </div>
+    </div>
+  </Container>
+</section>

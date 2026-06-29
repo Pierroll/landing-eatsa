@@ -1,0 +1,23 @@
+---
+import { cn } from '@lib/utils';
+import type { ButtonProps } from '@types';
+
+const {
+  variant = 'primary',
+  href,
+  size = 'md',
+  type = 'button',
+  class: className,
+  ...rest
+} = Astro.props as ButtonProps;
+
+const base = variant === 'primary' ? 'btn-primary' : 'btn-secondary';
+const sizeClass = size === 'lg' ? 'text-lg px-8 py-4' : '';
+const classes = cn(base, sizeClass, className);
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class={classes} href={href} type={href ? undefined : type} {...rest}>
+  <slot />
+</Tag>

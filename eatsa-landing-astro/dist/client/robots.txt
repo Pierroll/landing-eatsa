@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap multi-idioma generado por @astrojs/sitemap
+Sitemap: https://amazonicatropical.com/sitemap-index.xml

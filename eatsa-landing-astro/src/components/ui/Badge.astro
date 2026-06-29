@@ -1,0 +1,24 @@
+---
+import { cn } from '@lib/utils';
+import type { BadgeProps } from '@types';
+
+const { variant = 'tag', label, class: className } = Astro.props as BadgeProps;
+
+// Variantes según design system:
+// - tag: etiqueta flotante de producto (Premium, Altura, Artesanal)
+// - attribute: badges de atributos (Orgánico, Fair Trade, HACCP)
+// - price: Dorado Antiguo — EXCLUSIVO precios. No reutilizar en otros contextos.
+const variantClass: Record<NonNullable<BadgeProps['variant']>, string> = {
+  tag: 'bg-dorado text-white',
+  attribute: 'bg-success/10 text-success',
+  price: 'bg-dorado/10 text-dorado font-medium',
+};
+
+const classes = cn(
+  'inline-flex items-center rounded-md px-2.5 py-1 text-xs font-medium',
+  variantClass[variant],
+  className,
+);
+---
+
+<span class={classes}>{label}</span>

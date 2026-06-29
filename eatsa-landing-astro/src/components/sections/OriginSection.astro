@@ -1,0 +1,104 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+import Container from '@components/ui/Container.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import { Image } from 'astro:assets';
+import mapImg from '../../assets/company/mapa-tocache.png';
+
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+
+const climateRows = [
+  { label: t('origin.climate.altitude' as any), value: t('origin.climate.altitude.value' as any) },
+  { label: t('origin.climate.temperature' as any), value: t('origin.climate.temperature.value' as any) },
+  { label: t('origin.climate.precipitation' as any), value: t('origin.climate.precipitation.value' as any) },
+];
+
+const soilRows = [
+  { label: t('origin.soil.ph' as any), value: t('origin.soil.ph.value' as any) },
+  { label: t('origin.soil.organic' as any), value: t('origin.soil.organic.value' as any) },
+  { label: t('origin.soil.drainage' as any), value: t('origin.soil.drainage.value' as any) },
+];
+---
+
+<section id="origen" class="section-cream py-24">
+  <Container>
+    <div class="flex flex-col items-center text-center">
+      <SectionHeader
+        eyebrow={t('origin.location' as any)}
+        title={t('origin.title' as any)}
+        subtitle={t('origin.subtitle' as any)}
+        align="center"
+        class="mb-16"
+      />
+    </div>
+
+    <div class="grid items-stretch gap-8 lg:grid-cols-2">
+      <!-- Mapa -->
+      <div class="card relative overflow-hidden p-0">
+        <Image
+          src={mapImg}
+          alt={t('origin.location' as any)}
+          class="h-full min-h-[360px] w-full object-cover"
+          loading="lazy"
+          width={600}
+          height={400}
+        />
+        <div class="absolute bottom-4 left-4 rounded-md bg-white/95 px-3 py-1.5 text-sm font-medium text-verde shadow-card">
+          📍 {t('origin.location' as any)}
+        </div>
+      </div>
+
+      <!-- Datos climáticos + suelo -->
+      <div class="flex flex-col gap-6">
+        <div class="card p-6">
+          <h3 class="mb-4 text-lg font-semibold text-verde">{t('origin.climate.title' as any)}</h3>
+          <div class="flex flex-col gap-3">
+            {climateRows.map((row) => (
+              <div class="flex justify-between border-b border-gris-claro pb-2 text-sm">
+                <span class="text-gris-medio">{row.label}</span>
+                <span class="font-medium text-ebano">{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="card p-6">
+          <h3 class="mb-4 text-lg font-semibold text-verde">{t('origin.soil.title' as any)}</h3>
+          <div class="flex flex-col gap-3">
+            {soilRows.map((row) => (
+              <div class="flex justify-between border-b border-gris-claro pb-2 text-sm">
+                <span class="text-gris-medio">{row.label}</span>
+                <span class="font-medium text-ebano">{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ubicación privilegiada + comunidad -->
+    <div class="mt-12 grid gap-8 md:grid-cols-2">
+      <div class=" card p-8">
+        <h3 class="mb-3 text-xl font-semibold text-verde">{t('origin.privilegedLocation' as any)}</h3>
+        <p class="text-ebano/75">{t('origin.privilegedLocation.desc' as any)}</p>
+      </div>
+
+      <div class=" card bg-verde p-8 text-crema">
+        <h3 class="mb-3 text-xl font-semibold text-crema">{t('origin.community' as any)}</h3>
+        <p class="mb-6 text-crema/85">{t('origin.community.desc' as any)}</p>
+        <div class="flex gap-8">
+          <div>
+            <div class="font-display text-3xl font-semibold text-dorado">150+</div>
+            <div class="text-sm text-crema/75">{t('origin.community.families' as any)}</div>
+          </div>
+          <div>
+            <div class="font-display text-3xl font-semibold text-dorado">100+</div>
+            <div class="text-sm text-crema/75">{t('origin.community.producers' as any)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

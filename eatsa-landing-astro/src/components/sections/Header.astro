@@ -1,0 +1,87 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { siteConfig, navItems } from '@data/site';
+import { useTranslations } from '@i18n/ui';
+import Button from '@components/ui/Button.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import CartWidget from '@components/CartWidget.astro';
+
+/**
+ * Header fijo: logo + nav + switcher idioma + CTA + mobile menu.
+ * El script scripts/header-scroll.ts controla hide-on-scroll-down.
+ */
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+---
+
+<header id="site-header" class="fixed left-0 right-0 top-0 z-50 bg-crema/95 backdrop-blur-sm transition-all duration-300">
+  <div class="container-base flex h-16 items-center justify-between sm:h-20">
+    <!-- Logo -->
+    <a href={`/${lang}/`} class="flex items-center gap-2 focus-ring rounded-md">
+      <img src={siteConfig.logo} alt={siteConfig.name} class="h-10 w-auto sm:h-12" width="48" height="48" />
+      <span class="hidden font-display text-lg font-semibold text-verde sm:block">EATSA SAC</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
+      {navItems.map((item) => (
+        <a
+          href={`/${lang}/#${item.id}`}
+          class="text-sm font-medium text-ebano transition-colors hover:text-verde"
+        >
+          {t(item.labelKey as any)}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Acciones: switcher + CTA + hamburger -->
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:block">
+        <LanguageSwitcher lang={lang} />
+      </div>
+
+      <CartWidget />
+
+      <Button
+        variant="primary"
+        class="hidden sm:inline-flex"
+        id="header-price-btn"
+      >
+        {t('header.priceBtn' as any)}
+      </Button>
+
+      <!-- Hamburger (mobile) -->
+      <button
+        id="mobile-menu-toggle"
+        class="flex h-11 w-11 items-center justify-center rounded-btn text-ebano transition-colors hover:bg-crema lg:hidden"
+        aria-label={t('header.menu' as any)}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden border-t border-gris-claro bg-crema px-6 pb-6 pt-4 lg:hidden">
+    <nav class="flex flex-col gap-1" aria-label="Mobile navigation">
+      {navItems.map((item) => (
+        <a
+          href={`/${lang}/#${item.id}`}
+          class="block rounded-btn px-4 py-3 text-base font-medium text-ebano transition-colors hover:bg-verde/5 hover:text-verde"
+        >
+          {t(item.labelKey as any)}
+        </a>
+      ))}
+      <div class="pt-2">
+        <LanguageSwitcher lang={lang} />
+      </div>
+      <Button variant="primary" id="header-price-btn-mobile" class="mt-2 w-full">
+        {t('header.priceBtn' as any)}
+      </Button>
+    </nav>
+  </div>
+</header>

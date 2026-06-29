@@ -1,0 +1,94 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+import { getCollection } from 'astro:content';
+import Container from '@components/ui/Container.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import Badge from '@components/ui/Badge.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * Timeline vertical zigzag: cada paso alterna lado.
+ * Icono en círculo accent, foto + texto-card en lados opuestos.
+ */
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+
+const steps = (await getCollection('process')).sort((a, b) => a.data.number - b.data.number);
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}');
+---
+
+<section id="proceso" class="section-white py-24">
+  <Container>
+    <SectionHeader
+      title={t('process.title' as any)}
+      subtitle={t('process.subtitle' as any)}
+      align="center"
+      class="mb-20"
+    />
+
+    <div class="relative flex flex-col gap-16">
+      {steps.map(async (step) => {
+        const isLeft = step.data.side === 'left';
+        const photoPath = `/src${step.data.photo}`;
+        const iconPath = `/src${step.data.icon}`;
+        const photoFn = images[photoPath];
+        const iconFn = images[iconPath];
+        const resolvedPhoto = photoFn ? await photoFn() : null;
+        const resolvedIcon = iconFn ? await iconFn() : null;
+        
+        return (
+          <div class={` relative flex flex-col items-center gap-8 lg:flex-row ${isLeft ? '' : 'lg:flex-row-reverse'}`}>
+            {/* Foto del paso */}
+            <div class="w-full lg:w-1/2">
+              <div class="card overflow-hidden p-0">
+                {resolvedPhoto && (
+                  <Image
+                    src={resolvedPhoto.default}
+                    alt={t(step.data.titleKey as any)}
+                    class="h-72 w-full object-cover"
+                    loading="lazy"
+                    width={600}
+                    height={288}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Texto del paso */}
+            <div class="w-full lg:w-1/2 lg:px-8">
+              <div class="flex items-start gap-5">
+                <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-verde font-display text-2xl font-bold text-crema shadow-lg shadow-verde/20">
+                  {step.data.number}
+                </span>
+                <div>
+                  <h3 class="text-2xl font-bold text-verde">{t(step.data.titleKey as any)}</h3>
+                  <p class="mt-3 text-base leading-relaxed text-ebano/75">{t(step.data.descKey as any)}</p>
+                </div>
+              </div>
+              <div class="mt-6 flex flex-wrap gap-2">
+                {step.data.tags.map((tag) => (
+                  <Badge variant="attribute" label={t(tag as any)} />
+                ))}
+              </div>
+            </div>
+
+            {/* Icono central (decorativo, posicionado en el medio del layout desktop) */}
+            {resolvedIcon && (
+              <Image
+                src={resolvedIcon.default}
+                alt=""
+                class="hidden h-16 w-16 object-contain opacity-30 lg:block lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
+                loading="lazy"
+                width={64}
+                height={64}
+                aria-hidden="true"
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </Container>
+</section>

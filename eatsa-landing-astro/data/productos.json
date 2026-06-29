@@ -1,0 +1,26 @@
+[
+  {
+    "id": "cacao-fino",
+    "name": "Grano de Cacao Fino de Aroma",
+    "tag": "Exportación",
+    "image": "/assets/hero/cacao-hero.jpg",
+    "status": "activo",
+    "attributes": ["Orgánico", "Comercio Justo"],
+    "specs": [
+      { "label": "Humedad", "value": "7%" },
+      { "label": "Fermentación", "value": "80%" }
+    ]
+  },
+  {
+    "id": "manteca-cacao",
+    "name": "Manteca de Cacao Pura",
+    "tag": "Derivado",
+    "image": "/assets/hero/cacao-hero.jpg",
+    "status": "activo",
+    "attributes": ["Prensado al Frío", "Sin Refinar"],
+    "specs": [
+      { "label": "Punto de Fusión", "value": "34°C" },
+      { "label": "Color", "value": "Amarillo Pálido" }
+    ]
+  }
+]

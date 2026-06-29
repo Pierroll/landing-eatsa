@@ -1,0 +1,45 @@
+---
+import '@/styles/global.css';
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/dm-sans';
+import SEO from '@components/SEO.astro';
+import CartWidget from '@components/CartWidget.astro';
+import CartDrawer from '@components/CartDrawer.astro';
+
+import { siteConfig } from '@data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'es' | 'en';
+}
+
+const {
+  title = siteConfig.name,
+  description = 'Proveedor líder de cacao fino de aroma y productos tropicales premium de la Amazonía peruana.',
+  lang = 'es'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <SEO title={title} description={description} lang={lang} />
+  </head>
+  <body class="bg-crema text-ebano font-body">
+    <slot />
+    
+    <!-- Componentes Globales del Carrito de Cotización -->
+    <CartDrawer />
+
+    <script>
+      import "@/scripts/main.ts";
+    </script>
+  </body>
+</html>

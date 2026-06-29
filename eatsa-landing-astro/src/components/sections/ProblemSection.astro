@@ -1,0 +1,59 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+import { problems } from '@data/site';
+import Container from '@components/ui/Container.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import Stat from '@components/ui/Stat.astro';
+
+/**
+ * Problem Statement: 3 tarjetas con stat porcentual.
+ * El icono se elige por iconType (error/warning).
+ */
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+
+const iconColor: Record<string, string> = {
+  error: 'text-error',
+  warning: 'text-warning',
+};
+---
+
+<section class="section-cream py-28 relative overflow-hidden">
+    <!-- Círculo decorativo de fondo -->
+    <div class="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-verde/3 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-dorado/3 blur-3xl" aria-hidden="true"></div>
+
+  <Container>
+    <SectionHeader
+      title={t('problems.section.title' as any)}
+      subtitle={t('problems.section.subtitle' as any)}
+      align="center"
+      class="mb-16"
+    />
+
+    <div class="grid gap-8 md:grid-cols-3">
+      {problems.map((problem, i) => (
+        <div class={`card p-8 relative overflow-hidden ${i === 1 ? 'lg:-translate-y-4 lg:shadow-elevated' : ''}`}>
+          {/* Barra decorativa superior */}
+          <div class={`absolute top-0 left-0 right-0 h-1 ${i === 0 ? 'bg-error' : i === 1 ? 'bg-warning' : 'bg-verde'}`}></div>
+
+          {/* Icono */}
+          <div class={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-crema ${iconColor[problem.iconType]}`}>
+            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              {i === 0 && <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />}
+              {i === 1 && <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+              {i === 2 && <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />}
+            </svg>
+          </div>
+
+          {/* Stat + Título */}
+          <Stat value={problem.stat} label={t(problem.titleKey as any)} animated />
+
+          {/* Descripción */}
+          <p class="mt-4 text-sm leading-relaxed text-ebano/70">{t(problem.descKey as any)}</p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

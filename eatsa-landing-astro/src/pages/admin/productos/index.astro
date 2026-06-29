@@ -1,0 +1,196 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getProductos } from '@/lib/db';
+
+const productos = await getProductos();
+---
+
+<AdminLayout title="Gestión de Productos">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-2xl font-bold text-verde mb-1">Productos</h1>
+      <p class="text-sm text-gris-medio">Administra el catálogo de EATSA</p>
+    </div>
+    <button id="add-product-btn" class="btn-primary">
+      + Nuevo Producto
+    </button>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gris-claro overflow-hidden">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-crema border-b border-gris-claro text-sm text-gris-medio">
+          <th class="p-4 font-medium">Imagen</th>
+          <th class="p-4 font-medium">ID / Slug</th>
+          <th class="p-4 font-medium">Nombre</th>
+          <th class="p-4 font-medium">Estado</th>
+          <th class="p-4 font-medium text-right">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {productos.length === 0 ? (
+          <tr>
+            <td colspan="5" class="p-8 text-center text-gris-medio">No hay productos registrados.</td>
+          </tr>
+        ) : productos.map(p => (
+          <tr class="border-b border-gris-claro last:border-0 hover:bg-gray-50 transition-colors">
+            <td class="p-4">
+              <img src={p.image} alt={p.name} class="w-16 h-16 object-cover rounded-md border border-gris-claro" />
+            </td>
+            <td class="p-4 text-sm text-gris-medio font-mono">{p.id}</td>
+            <td class="p-4 font-medium text-ebano">
+              {p.name}
+              <div class="text-xs text-gris-medio mt-1">{p.tag}</div>
+            </td>
+            <td class="p-4">
+              <span class={`inline-block px-2 py-1 text-xs rounded-full ${p.status === 'activo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {p.status}
+              </span>
+            </td>
+            <td class="p-4 text-right">
+              <button class="text-sm text-verde hover:text-cacao transition-colors font-medium edit-btn mr-4" data-product={JSON.stringify(p)}>Editar</button>
+              <button class="text-sm text-red-500 hover:text-red-700 transition-colors font-medium delete-btn" data-id={p.id}>Eliminar</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal Completo de Producto -->
+  <div id="product-modal" class="fixed inset-0 bg-ebano/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+      <h2 id="modal-title" class="text-xl font-bold text-verde mb-4">Nuevo Producto</h2>
+      
+      <form id="product-form" class="flex flex-col gap-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-ebano mb-1">ID / Slug</label>
+            <input type="text" name="id" required class="w-full border border-gris-claro rounded-btn p-2" />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-ebano mb-1">Nombre</label>
+            <input type="text" name="name" required class="w-full border border-gris-claro rounded-btn p-2" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-ebano mb-1">Tag (ej. Exportación)</label>
+            <input type="text" name="tag" required class="w-full border border-gris-claro rounded-btn p-2" />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-ebano mb-1">Ruta Imagen</label>
+            <input type="text" name="image" value="/assets/hero/cacao-hero.jpg" required class="w-full border border-gris-claro rounded-btn p-2" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-ebano mb-1">Atributos (separados por coma)</label>
+          <input type="text" name="attributes" placeholder="Orgánico, Comercio Justo" class="w-full border border-gris-claro rounded-btn p-2" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-ebano mb-1">Especificaciones (Una por línea, formato: "Label: Valor")</label>
+          <textarea name="specs" rows="3" placeholder="Humedad: 7%&#10;Fermentación: 80%" class="w-full border border-gris-claro rounded-btn p-2 font-mono text-sm"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-ebano mb-1">Estado</label>
+          <select name="status" class="w-full border border-gris-claro rounded-btn p-2">
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2 mt-4 pt-4 border-t border-gris-claro">
+          <button type="button" id="close-modal-btn" class="btn-secondary">Cancelar</button>
+          <button type="submit" class="btn-primary">Guardar Producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('product-modal');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const addBtn = document.getElementById('add-product-btn');
+    const form = document.getElementById('product-form') as HTMLFormElement;
+    const title = document.getElementById('modal-title');
+
+    const openModal = (data: any = null) => {
+      form.reset();
+      if (data) {
+        title!.textContent = 'Editar Producto';
+        (form.elements.namedItem('id') as HTMLInputElement).value = data.id;
+        (form.elements.namedItem('id') as HTMLInputElement).readOnly = true;
+        (form.elements.namedItem('name') as HTMLInputElement).value = data.name;
+        (form.elements.namedItem('tag') as HTMLInputElement).value = data.tag || '';
+        (form.elements.namedItem('image') as HTMLInputElement).value = data.image;
+        (form.elements.namedItem('attributes') as HTMLInputElement).value = (data.attributes || []).join(', ');
+        
+        const specsText = (data.specs || []).map((s: any) => `${s.label}: ${s.value}`).join('\n');
+        (form.elements.namedItem('specs') as HTMLTextAreaElement).value = specsText;
+        
+        (form.elements.namedItem('status') as HTMLSelectElement).value = data.status;
+      } else {
+        title!.textContent = 'Nuevo Producto';
+        (form.elements.namedItem('id') as HTMLInputElement).readOnly = false;
+      }
+      modal?.classList.remove('hidden');
+    };
+
+    closeBtn?.addEventListener('click', () => modal?.classList.add('hidden'));
+    addBtn?.addEventListener('click', () => openModal());
+    
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const data = JSON.parse((e.currentTarget as HTMLButtonElement).dataset.product || '{}');
+        openModal(data);
+      });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = (e.currentTarget as HTMLButtonElement).dataset.id;
+        if (confirm(`¿Estás seguro de eliminar el producto ${id}?`)) {
+           // Enviar DELETE al API (haremos un update al API route)
+           const res = await fetch(`/api/productos?id=${id}`, { method: 'DELETE' });
+           if (res.ok) window.location.reload();
+           else alert('Error al eliminar');
+        }
+      });
+    });
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries()) as any;
+      
+      // Parsear attributes y specs
+      const attributes = data.attributes ? data.attributes.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
+      const specsLines = data.specs ? data.specs.split('\n').filter(Boolean) : [];
+      const specs = specsLines.map((line: string) => {
+        const parts = line.split(':');
+        return { label: parts[0].trim(), value: (parts[1] || '').trim() };
+      });
+
+      const payload = { ...data, attributes, specs };
+      
+      const res = await fetch('/api/productos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        alert('Error al guardar');
+      }
+    });
+  </script>
+</AdminLayout>

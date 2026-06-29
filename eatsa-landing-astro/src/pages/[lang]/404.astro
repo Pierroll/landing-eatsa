@@ -1,0 +1,16 @@
+---
+// 404 con locale — permite servir la página de error en el idioma del usuario.
+import NotFoundContent from '@components/NotFoundContent.astro';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  return [
+    { params: { lang: 'es' } },
+    { params: { lang: 'en' } },
+  ];
+}) satisfies GetStaticPaths;
+
+const { lang } = Astro.params as { lang: 'es' | 'en' };
+---
+
+<NotFoundContent lang={lang} />

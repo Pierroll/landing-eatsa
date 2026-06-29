@@ -1,0 +1,186 @@
+---
+---
+
+<!-- Fondo oscuro (Backdrop) -->
+<div id="cart-backdrop" class="fixed inset-0 bg-ebano/50 z-40 hidden transition-opacity"></div>
+
+<!-- Drawer lateral -->
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-crema shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+  <!-- Cabecera -->
+  <div class="flex items-center justify-between p-6 border-b border-gris-claro">
+    <h2 class="text-xl font-bold text-verde">Tu Cotización</h2>
+    <button id="close-cart-btn" class="text-gris-medio hover:text-ebano transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Lista de Productos -->
+  <div class="flex-1 overflow-y-auto p-6">
+    <ul id="cart-items-list" class="flex flex-col gap-4">
+      <!-- Los items se inyectarán aquí vía JS -->
+    </ul>
+    
+    <!-- Mensaje cuando está vacío -->
+    <div id="empty-cart-msg" class="text-center py-10 hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gris-claro mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+      <p class="text-gris-medio">Tu carrito de cotización está vacío.</p>
+    </div>
+  </div>
+
+  <!-- Footer (Botón WhatsApp) -->
+  <div class="p-6 border-t border-gris-claro bg-white">
+    <p class="text-sm text-gris-medio mb-4 text-center">
+      Al continuar, se abrirá WhatsApp con el resumen de tu pedido.
+    </p>
+    <a 
+      id="checkout-whatsapp-btn" 
+      href="#" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="btn-primary w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white border-none"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 1.84 6.311L.12 24l5.885-1.545A11.97 11.97 0 0 0 12 24c6.627 0 12-5.373 12-12S18.573 0 11.944 0zm6.065 17.311c-.24.676-1.393 1.258-1.928 1.343-.535.085-1.229.17-3.953-.96-3.298-1.365-5.437-4.717-5.599-4.93-.162-.213-1.339-1.785-1.339-3.411 0-1.626.845-2.428 1.139-2.735.293-.306.634-.383.845-.383.211 0 .422 0 .584.009.176.01.416-.07.653.498.248.596.845 2.062.923 2.215.078.154.13.332.023.545-.107.213-.162.349-.325.536-.162.187-.341.408-.487.536-.162.145-.335.306-.153.621.182.315.811 1.341 1.745 2.17.162.145.487.417.811.758.324.34.697.809 1.152.92.455.111.727-.008.971-.255.244-.247.938-1.09 1.182-1.464.244-.374.487-.315.861-.17.374.145 2.373 1.124 2.779 1.32.406.196.676.298.773.468.098.17.098.988-.142 1.664z"/>
+      </svg>
+      Continuar por WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+  import { cart, removeCartItem, updateCartItemQuantity, getWhatsAppUrl } from '@store/cartStore';
+
+  document.addEventListener('astro:page-load', () => {
+    const drawer = document.getElementById('cart-drawer');
+    const backdrop = document.getElementById('cart-backdrop');
+    const closeBtn = document.getElementById('close-cart-btn');
+    const itemsList = document.getElementById('cart-items-list');
+    const emptyMsg = document.getElementById('empty-cart-msg');
+    const checkoutBtn = document.getElementById('checkout-whatsapp-btn') as HTMLAnchorElement;
+
+    if (!drawer || !backdrop || !closeBtn || !itemsList || !emptyMsg || !checkoutBtn) return;
+
+    let previousFocusedElement: HTMLElement | null = null;
+
+    // Focus trap
+    const getFocusableElements = (): HTMLElement[] => {
+      const selectors = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input, textarea, select';
+      return Array.from(drawer!.querySelectorAll(selectors)) as HTMLElement[];
+    };
+
+    const trapFocus = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable = getFocusableElements();
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    // Cerrar drawer
+    const closeDrawer = () => {
+      drawer.classList.add('translate-x-full');
+      backdrop.classList.add('hidden');
+      drawer.removeEventListener('keydown', trapFocus);
+      // Restaurar foco al elemento que abrió el drawer
+      previousFocusedElement?.focus();
+      previousFocusedElement = null;
+    };
+
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    // Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !drawer.classList.contains('translate-x-full')) {
+        closeDrawer();
+      }
+    });
+
+    // Escuchar evento cart:open para focus trap
+    document.addEventListener('cart:open', () => {
+      previousFocusedElement = document.activeElement as HTMLElement;
+      drawer.classList.remove('translate-x-full');
+      backdrop.classList.remove('hidden');
+      drawer.addEventListener('keydown', trapFocus);
+      // Mover foco al primer elemento focusable del drawer
+      const firstFocusable = getFocusableElements()[0];
+      if (firstFocusable) {
+        setTimeout(() => firstFocusable.focus(), 100);
+      }
+    });
+
+    // Renderizar ítems cuando el store cambie
+    cart.subscribe((cartItems) => {
+      const items = Object.values(cartItems);
+      
+      if (items.length === 0) {
+        itemsList.innerHTML = '';
+        emptyMsg.classList.remove('hidden');
+        checkoutBtn.classList.add('opacity-50', 'pointer-events-none');
+        checkoutBtn.href = '#';
+      } else {
+        emptyMsg.classList.add('hidden');
+        checkoutBtn.classList.remove('opacity-50', 'pointer-events-none');
+        checkoutBtn.href = getWhatsAppUrl();
+
+        // Generar HTML para cada ítem (con animación fade-in)
+        itemsList.innerHTML = items.map((item, i) => `
+          <li class="flex items-center justify-between p-3 bg-white border border-gris-claro rounded-btn shadow-sm animate-fade-in" style="animation-delay: ${i * 40}ms">
+            <div class="flex-1">
+              <h4 class="font-semibold text-ebano text-sm">${item.name}</h4>
+              <div class="flex items-center gap-2 mt-2">
+                <button class="decrease-qty w-6 h-6 flex items-center justify-center bg-gris-claro text-ebano rounded-sm hover:bg-gris-medio" data-id="${item.id}">-</button>
+                <span class="text-sm font-medium w-6 text-center">${item.quantity}</span>
+                <button class="increase-qty w-6 h-6 flex items-center justify-center bg-gris-claro text-ebano rounded-sm hover:bg-gris-medio" data-id="${item.id}">+</button>
+                <span class="text-xs text-gris-medio ml-2">Ton</span>
+              </div>
+            </div>
+            <button class="remove-item text-red-500 hover:text-red-700 ml-4" data-id="${item.id}" title="Eliminar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+            </button>
+          </li>
+        `).join('');
+
+        // Adjuntar event listeners a los botones dinámicos
+        itemsList.querySelectorAll('.decrease-qty').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = (e.currentTarget as HTMLButtonElement).dataset.id!;
+            updateCartItemQuantity(id, cartItems[id].quantity - 1);
+          });
+        });
+
+        itemsList.querySelectorAll('.increase-qty').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = (e.currentTarget as HTMLButtonElement).dataset.id!;
+            updateCartItemQuantity(id, cartItems[id].quantity + 1);
+          });
+        });
+
+        itemsList.querySelectorAll('.remove-item').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = (e.currentTarget as HTMLButtonElement).dataset.id!;
+            removeCartItem(id);
+          });
+        });
+      }
+    });
+  });
+</script>

@@ -1,0 +1,143 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import Badge from '@components/ui/Badge.astro';
+
+
+
+/**
+ * Tarjeta de producto alimentada desde la DB local JSON.
+ */
+interface Props {
+  name: string;
+  tag: string;
+  image: string;
+  specs: Array<{ label: string; value: string }>;
+  attributes: string[];
+  productId: string;
+  seeSpecsKey: TranslationKey;
+  lang: Locale;
+}
+
+const { name, tag, image, specs, attributes, productId, seeSpecsKey, lang } = Astro.props;
+
+const { useTranslations } = await import('@i18n/ui');
+const t = useTranslations(lang);
+
+---
+<article class="card group flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-elevated">
+  <!-- Imagen + badge flotante -->
+  <div class="relative h-52 overflow-hidden bg-gris-claro">
+    <img
+      src={image}
+      alt={name}
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+    />
+    <Badge variant="tag" label={tag} class="absolute right-4 top-4" />
+  </div>
+
+  <!-- Contenido -->
+  <div class="flex flex-1 flex-col gap-4 p-6">
+    <h3 class="text-xl font-semibold text-verde">{name}</h3>
+
+    <!-- Specs técnicas -->
+    <div class="flex flex-col gap-2">
+      {specs.map((spec) => (
+        <div class="flex justify-between border-b border-gris-claro pb-2 text-sm">
+          <span class="text-gris-medio">{spec.label}</span>
+          <span class="font-medium text-ebano">{spec.value}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Badges de atributos -->
+    <div class="flex flex-wrap gap-2">
+      {attributes.map((attr) => (
+        <Badge variant="attribute" label={attr} />
+      ))}
+    </div>
+
+    <!-- Controles de Compra y Especificaciones -->
+    <div class="mt-auto flex flex-col gap-3">
+      <!-- Selector de cantidad -->
+      <div class="flex items-center justify-between border border-gris-claro rounded-btn p-2">
+        <label for={`qty-${productId}`} class="text-sm text-gris-medio font-medium">Cantidad (Ton):</label>
+        <input 
+          type="number" 
+          id={`qty-${productId}`}
+          class="product-qty-input w-20 bg-transparent text-right text-ebano font-semibold outline-none" 
+          min="1" 
+          value="1" 
+          data-product-id={productId}
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <!-- Botón Ver Specs -->
+        <button
+          class="open-spec-modal btn-secondary text-sm w-full !py-2.5"
+          data-product-id={productId}
+        >
+          {t(seeSpecsKey as any)}
+        </button>
+        
+        <!-- Botón Añadir al Carrito -->
+        <button
+          class="add-to-cart-btn btn-primary text-sm w-full !py-2.5"
+          data-product-id={productId}
+          data-product-name={name}
+        >
+          Añadir al Carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  import { addCartItem } from '@store/cartStore';
+
+  document.addEventListener('astro:page-load', () => {
+    // Validación de quantity inputs: no negativos, no absurdos
+    document.querySelectorAll('.product-qty-input').forEach(input => {
+      input.addEventListener('input', () => {
+        const val = parseInt((input as HTMLInputElement).value);
+        if (val < 1) (input as HTMLInputElement).value = '1';
+        if (val > 100) (input as HTMLInputElement).value = '100';
+      });
+      input.addEventListener('blur', () => {
+        if (!(input as HTMLInputElement).value.trim()) (input as HTMLInputElement).value = '1';
+      });
+    });
+
+    const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+    
+    addToCartBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const productId = target.dataset.productId;
+        const productName = target.dataset.productName;
+        
+        const qtyInput = document.querySelector(`#qty-${productId}`) as HTMLInputElement;
+        const quantity = parseInt(qtyInput.value) || 1;
+
+        if (productId && productName && quantity > 0) {
+          addCartItem({
+            id: productId,
+            name: productName,
+            quantity
+          });
+          
+          // Efecto visual simple (opcional)
+          const originalText = target.innerText;
+          target.innerText = '¡Añadido!';
+          target.classList.add('bg-verde-dark');
+          setTimeout(() => {
+            target.innerText = originalText;
+            target.classList.remove('bg-verde-dark');
+          }, 1500);
+        }
+      });
+    });
+  });
+</script>

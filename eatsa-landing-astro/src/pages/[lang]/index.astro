@@ -1,0 +1,66 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@components/sections/Header.astro';
+import Hero from '@components/sections/Hero.astro';
+import OriginSection from '@components/sections/OriginSection.astro';
+import ProductsSection from '@components/sections/ProductsSection.astro';
+import ProblemSection from '@components/sections/ProblemSection.astro';
+import CertificationsSection from '@components/sections/CertificationsSection.astro';
+import ExportCapacity from '@components/sections/ExportCapacity.astro';
+import ProcessSection from '@components/sections/ProcessSection.astro';
+import TestimonialsSection from '@components/sections/TestimonialsSection.astro';
+import ContactSection from '@components/sections/ContactSection.astro';
+import CompanyInfo from '@components/sections/CompanyInfo.astro';
+import FaqSection from '@components/sections/FaqSection.astro';
+import FinalCta from '@components/sections/FinalCta.astro';
+import Footer from '@components/sections/Footer.astro';
+import StickyContactBar from '@components/sections/StickyContactBar.astro';
+import WhatsAppFloat from '@components/sections/WhatsAppFloat.astro';
+import Modal from '@components/Modal.astro';
+import ProductSpecContent from '@components/ProductSpecContent.astro';
+import type { Locale } from '@types';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'es' } },
+    { params: { lang: 'en' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<MainLayout lang={lang as Locale}>
+  <Header lang={lang as Locale} />
+  <main>
+    <Hero lang={lang as Locale} />
+    <OriginSection lang={lang as Locale} />
+    <ProductsSection lang={lang as Locale} />
+    <ProblemSection lang={lang as Locale} />
+    <CertificationsSection lang={lang as Locale} />
+    <ExportCapacity lang={lang as Locale} />
+    <ProcessSection lang={lang as Locale} />
+    <TestimonialsSection lang={lang as Locale} />
+    <ContactSection lang={lang as Locale} />
+    <CompanyInfo lang={lang as Locale} />
+    <FaqSection lang={lang as Locale} />
+    <FinalCta lang={lang as Locale} />
+  </main>
+  <Footer lang={lang as Locale} />
+  <StickyContactBar lang={lang as Locale} />
+  <WhatsAppFloat lang={lang as Locale} />
+
+  <!-- Modals -->
+  <Modal id="spec-modal" titleKey="products.cacao.name" lang={lang as Locale} size="lg">
+    <ProductSpecContent lang={lang as Locale} />
+  </Modal>
+  
+  <Modal id="price-modal" titleKey="hero.requestPrices" lang={lang as Locale} size="md">
+    <div class="text-ebano/80">
+      <p class="mb-4">Para solicitar precios actualizados, por favor complete el formulario de contacto o escríbanos directamente por WhatsApp.</p>
+      <div class="flex flex-col gap-3">
+        <a href="#contacto" class="btn-primary w-full text-center" data-modal-close="price-modal">Ir al formulario</a>
+      </div>
+    </div>
+  </Modal>
+</MainLayout>

@@ -1,0 +1,42 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import Button from '@components/ui/Button.astro';
+import Container from '@components/ui/Container.astro';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const i18n = {
+  es: {
+    code: '404',
+    title: 'Página no encontrada',
+    description: 'La página que buscas no existe o fue movida. Quizá el cacao la empaquetó para exportación.',
+    cta: 'Volver al inicio',
+  },
+  en: {
+    code: '404',
+    title: 'Page not found',
+    description: 'The page you are looking for does not exist or was moved. Maybe the cacao packed it for export.',
+    cta: 'Back to home',
+  },
+} as const;
+
+const t = i18n[lang];
+const homeHref = `/${lang}/`;
+---
+
+<MainLayout lang={lang} title={`${t.title} — EATSA SAC`} description={t.description}>
+  <Container>
+    <section class="flex min-h-[70vh] flex-col items-center justify-center py-24 text-center">
+      <p class="font-display text-8xl font-semibold text-dorado sm:text-9xl">{t.code}</p>
+      <h1 class="mt-6 text-3xl sm:text-4xl">{t.title}</h1>
+      <p class="mt-4 max-w-md text-body-lg text-ebano/75">{t.description}</p>
+      <div class="mt-10">
+        <Button href={homeHref} variant="primary">{t.cta}</Button>
+      </div>
+    </section>
+  </Container>
+</MainLayout>

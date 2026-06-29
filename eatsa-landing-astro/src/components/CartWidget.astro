@@ -1,0 +1,49 @@
+---
+---
+
+<button id="cart-widget-btn" class="relative text-ebano hover:text-verde transition-colors flex items-center justify-center min-h-11 min-w-11 rounded-md focus:outline-none focus:ring-2 focus:ring-verde/50">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="9" cy="21" r="1"></circle>
+    <circle cx="20" cy="21" r="1"></circle>
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+  </svg>
+  <span id="cart-badge" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/4 bg-dorado text-ebano text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-sm hidden">
+    0
+  </span>
+</button>
+
+<script>
+  import { cart } from '@store/cartStore';
+
+  document.addEventListener('astro:page-load', () => {
+    const badge = document.getElementById('cart-badge');
+    const widgetBtn = document.getElementById('cart-widget-btn');
+    const drawer = document.getElementById('cart-drawer');
+    const backdrop = document.getElementById('cart-backdrop');
+
+    if (!badge || !widgetBtn || !drawer || !backdrop) return;
+
+    // Suscribirse a cambios en el carrito usando nanostores
+    cart.subscribe((cartItems) => {
+      const totalItems = Object.values(cartItems).length;
+      
+      if (totalItems > 0) {
+        badge.textContent = totalItems.toString();
+        badge.classList.remove('hidden');
+        // Animación sutil al agregar items
+        badge.classList.add('badge-pop');
+        setTimeout(() => badge.classList.remove('badge-pop'), 400);
+      } else {
+        badge.classList.add('hidden');
+      }
+    });
+
+    // Abrir el drawer
+    widgetBtn.addEventListener('click', () => {
+      drawer.classList.remove('translate-x-full');
+      backdrop.classList.remove('hidden');
+      // Forzar un evento custom para que el drawer se actualice si es necesario
+      document.dispatchEvent(new Event('cart:open'));
+    });
+  });
+</script>

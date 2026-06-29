@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   EATSA SAC — Web Empresarial (Cacao Premium)
+   Hoja global. Las clases de componentes viven aquí como @apply
+   para estandarizar el design system en un único lugar.
+
+   REGLA DE COLORES (no romper):
+   - fondo global = crema (#F7F1E5). Blanco SOLO en tarjetas/testimonios.
+   - dorado SOLO para precios/ofertas. Nunca decorativo.
+   - verde = acción/autoridad (CTA, H1/H2). No en párrafos largos.
+   - azul SOLO en certificaciones/garantías.
+   ============================================================ */
+
+/* ─── Easing curves premium ─── */
+:root {
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa el header fijo al hacer scroll a anclas (#productos, etc.) */
+    scroll-padding-top: 100px;
+  }
+
+  body {
+    @apply bg-crema text-ebano font-body antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-display text-verde;
+  }
+
+  /* Enlaces dentro del texto: siempre cacao + subrayado visible
+     (no solo en hover — contenido institucional/legal debe ser evidente). */
+  .prose a,
+  a.text-link {
+    @apply text-cacao underline underline-offset-2;
+  }
+}
+
+  @layer components {
+    /* ─── Layout ─── */
+    .container-base {
+      @apply mx-auto w-full max-w-[1200px] px-6 sm:px-8 lg:px-12;
+    }
+
+    /* ─── Botones (NUNCA pill — siempre rounded-btn = 8px) ─── */
+    .btn-primary {
+      @apply inline-flex items-center justify-center gap-2 rounded-btn bg-verde px-7 py-3.5
+             text-base font-medium text-crema transition-colors duration-200
+             hover:bg-verde-dark focus:outline-none focus-visible:ring-2
+             focus-visible:ring-verde focus-visible:ring-offset-2 focus-visible:ring-offset-crema;
+      will-change: transform;
+      transition: transform var(--duration-fast) var(--ease-out-quart),
+                  background-color var(--duration-fast) var(--ease-out-quart),
+                  box-shadow var(--duration-fast) var(--ease-out-quart);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    .btn-secondary {
+      @apply inline-flex items-center justify-center gap-2 rounded-btn border-[1.5px]
+             border-verde bg-transparent px-7 py-3.5 text-base font-medium text-verde
+             transition-colors duration-200 hover:bg-verde/5
+             focus:outline-none focus-visible:ring-2 focus-visible:ring-verde
+             focus-visible:ring-offset-2 focus-visible:ring-offset-crema;
+      will-change: transform;
+      transition: transform var(--duration-fast) var(--ease-out-quart),
+                  background-color var(--duration-fast) var(--ease-out-quart);
+    }
+
+    .btn-secondary:hover {
+      transform: scale(1.03);
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.97);
+    }
+
+  /* ─── Tarjetas (rompen el crema intencionalmente) ─── */
+  .card {
+    @apply rounded-xl border border-gris-claro bg-white shadow-card;
+  }
+
+  /* ─── Superficies de sección ─── */
+  .section-cream {
+    @apply bg-crema;
+  }
+
+  .section-white {
+    /* Blanco: excepción intencional para testimonios / tarjetas elevadas */
+    @apply bg-white;
+  }
+
+  .section-verde {
+    /* CTA final, secciones de cierre con autoridad de marca */
+    @apply bg-verde text-crema;
+  }
+
+  .section-azul {
+    /* Único fondo frío: reservado a certificaciones/garantías */
+    @apply bg-azul text-white;
+  }
+
+  /* ─── Roles tipográficos ─── */
+  .text-display {
+    @apply font-display text-verde;
+  }
+
+  .text-price {
+    /* Dorado Antiguo — EXCLUSIVO precios. No reutilizar en otros contextos. */
+    @apply font-display text-dorado;
+  }
+
+  /* ─── Formularios ─── */
+  .form-field {
+    @apply w-full rounded-btn border border-gris-claro bg-white px-4 py-3 text-ebano
+           placeholder:text-gris-medio transition-colors duration-200
+           focus:border-verde focus:outline-none focus:ring-1 focus:ring-verde;
+  }
+
+  .form-field-error {
+    @apply border-error focus:border-error focus:ring-error;
+  }
+
+  /* ─── Animaciones de scroll (controladas por IntersectionObserver → .visible) ─── */
+  .fade-in-up,
+  .fade-in-down,
+  .fade-in-left,
+  .fade-in-right,
+  .scale-in {
+    /* Por defecto opacidad 1 para garantizar que el contenido sea visible. 
+       La animación se encargará de hacer el fade in desde 0 cuando se active. */
+    opacity: 1; 
+    will-change: transform, opacity;
+  }
+
+  .fade-in-up.visible {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+  .fade-in-down.visible {
+    animation: fade-in-down 0.6s ease-out forwards;
+  }
+  .fade-in-left.visible {
+    animation: fade-in-left 0.6s ease-out forwards;
+  }
+  .fade-in-right.visible {
+    animation: fade-in-right 0.6s ease-out forwards;
+  }
+  .scale-in.visible {
+    animation: scale-in 0.6s ease-out forwards;
+  }
+
+  /* ─── Pills de filtro (catálogo) ─── */
+  .filter-pill {
+    @apply min-h-11 rounded-full border border-gris-claro bg-white px-4 py-2 text-sm font-medium
+           text-ebano transition-all duration-200 hover:border-verde hover:text-verde
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-verde
+           focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  }
+
+  .filter-pill.active {
+    @apply border-verde bg-verde text-white hover:bg-verde-dark hover:text-white;
+  }
+
+  /* ─── Fade-in genérico (carrito items, etc) ─── */
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out both;
+  }
+
+  /* ─── Badge animación (carrito) ─── */
+  @keyframes badge-pop {
+    0% { transform: translateX(50%) translateY(-25%) scale(0.6); }
+    50% { transform: translateX(50%) translateY(-25%) scale(1.2); }
+    100% { transform: translateX(50%) translateY(-25%) scale(1); }
+  }
+
+  .badge-pop {
+    animation: badge-pop 0.35s ease-out;
+  }
+
+  /* ─── Transiciones de grid de productos ─── */
+  .product-card-wrapper {
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .product-card-wrapper.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 80ms),
+                transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 80ms);
+  }
+
+  .product-card-wrapper.hidden {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in-up,
+    .fade-in-down,
+    .fade-in-left,
+    .fade-in-right,
+    .scale-in {
+      @apply opacity-100;
+      animation: none !important;
+    }
+
+    .filter-pill,
+    .product-card-wrapper {
+      transition: none !important;
+    }
+
+    .animate-fade-in,
+    .badge-pop {
+      animation: none !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Soporte accesible para usuarios que navegan con teclado */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-verde
+           focus-visible:ring-offset-2 focus-visible:ring-offset-crema;
+  }
+}

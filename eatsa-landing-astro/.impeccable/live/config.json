@@ -1,0 +1,9 @@
+{
+  "framework": "Astro",
+  "files": ["src/layouts/MainLayout.astro"],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true,
+  "devServerCommand": "pnpm run dev",
+  "devServerPort": 4321
+}

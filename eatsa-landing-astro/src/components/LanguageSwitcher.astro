@@ -1,0 +1,29 @@
+---
+import type { Locale } from '@types';
+
+/**
+ * Switcher de idioma (dropdown ES/EN).
+ * Navega a la misma página en el otro idioma.
+ */
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const pathWithoutLang = currentPath.replace(/^\/(es|en)\/?/, '') || '';
+const targetLang: Locale = lang === 'es' ? 'en' : 'es';
+const targetHref = `/${targetLang}/${pathWithoutLang}`;
+---
+
+<a
+  href={targetHref}
+  class="inline-flex items-center gap-1.5 rounded-btn border border-gris-claro bg-white/80 px-3 py-2 text-sm font-medium text-ebano transition-colors hover:border-verde hover:text-verde focus-ring min-h-11"
+  title={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+>
+  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+  </svg>
+  {lang === 'es' ? 'EN' : 'ES'}
+</a>

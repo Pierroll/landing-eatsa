@@ -1,0 +1,59 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+import { getCollection } from 'astro:content';
+import Container from '@components/ui/Container.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * Certificaciones: ÚNICA sección con fondo Azul Apagado (regla del design system).
+ * Texto blanco. Iconos en línea blanca sin relleno.
+ * Respeta el flag enabled de cada certificación.
+ */
+const { lang } = Astro.props as { lang: Locale };
+const t = useTranslations(lang);
+
+const allCerts = await getCollection('certifications');
+const activeCerts = allCerts.filter((c) => c.data.enabled);
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}');
+---
+
+<section id="certificaciones" class="section-azul py-24">
+  <Container>
+    <SectionHeader
+      title={t('certifications.title' as any)}
+      subtitle={t('certifications.subtitle' as any)}
+      align="center"
+      class="mb-16 text-crema [&_h2]:text-white [&_p]:text-white/75"
+    />
+
+    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
+      {activeCerts.map(async (cert, i) => {
+        const imagePath = `/src${cert.data.image}`;
+        const imageFn = images[imagePath];
+        const resolvedImage = imageFn ? await imageFn() : null;
+        
+        return (
+          <div class={` flex flex-col items-center rounded-xl bg-white/5 p-6 text-center transition-colors hover:bg-white/10 ${i % 2 === 0 ? '' : ''}`}>
+            {resolvedImage && (
+              <Image
+                src={resolvedImage.default}
+                alt={t(cert.data.nameKey as any)}
+                class="mb-4 h-16 w-16 rounded-lg object-cover"
+                loading="lazy"
+                width={64}
+                height={64}
+              />
+            )}
+            <h4 class="text-sm font-semibold text-white">{t(cert.data.nameKey as any)}</h4>
+            <p class="mt-1 text-xs text-white/60">{t(cert.data.yearKey as any)}</p>
+          </div>
+        );
+      })}
+    </div>
+  </Container>
+</section>

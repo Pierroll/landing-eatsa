@@ -1,0 +1,16 @@
+---
+import type { Locale, TranslationKey } from '@types';
+import { useTranslations } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div id="product-spec-container" class="animate-fade-in">
+  <!-- El contenido será inyectado dinámicamente por scripts/modal.ts -->
+  <p class="text-sm text-ebano/70">Cargando especificaciones...</p>
+</div>
