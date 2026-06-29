@@ -9,11 +9,21 @@ import { getProductos } from '@/lib/db';
 const { lang } = Astro.props as { lang: Locale };
 const t = useTranslations(lang);
 
-const allProducts = await getProductos();
-// Mostrar solo productos activos
-const activeProducts = allProducts.filter(p => p.status === 'activo');
-// Extraer tags únicos para filtros
-const uniqueTags = [...new Set(activeProducts.map(p => p.tag))];
+// Manejar error de carga de productos
+let loadError = false;
+let activeProducts: Awaited<ReturnType<typeof getProductos>> = [];
+let uniqueTags: string[] = [];
+
+try {
+  const allProducts = await getProductos();
+  // Mostrar solo productos activos
+  activeProducts = allProducts.filter(p => p.status === 'activo');
+  // Extraer tags únicos para filtros
+  uniqueTags = [...new Set(activeProducts.map(p => p.tag))];
+} catch (e) {
+  loadError = true;
+  console.error('[ProductsSection] Error loading products:', e);
+}
 ---
 
 <section id="productos" class="section-white py-24">
@@ -21,7 +31,7 @@ const uniqueTags = [...new Set(activeProducts.map(p => p.tag))];
     <SectionHeader
       title={t('products.title' as any)}
       subtitle={t('products.subtitle' as any)}
-      align="center"
+      align="left"
       class="mb-12"
     />
 
@@ -57,24 +67,49 @@ const uniqueTags = [...new Set(activeProducts.map(p => p.tag))];
     </p>
 
     <!-- Grid de productos -->
-    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto stagger-children" data-products-grid>
-      {activeProducts.length === 0 ? (
-        <p class="text-center col-span-full text-gris-medio py-12">{t('products.empty' as any)}</p>
-      ) : activeProducts.map((product) => (
-        <div class="product-card-wrapper">
-          <ProductCard
-            name={product.name}
-            tag={product.tag}
-            image={product.image}
-            specs={product.specs || []}
-            attributes={product.attributes || []}
-            productId={product.id}
-            seeSpecsKey={'products.seeSpecs' as any}
-            lang={lang}
-          />
+    {loadError ? (
+      <!-- Error state -->
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-error/10">
+          <svg class="h-8 w-8 text-error" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
         </div>
-      ))}
-    </div>
+        <h3 class="text-xl font-semibold text-ebano">{t('products.errorTitle' as any)}</h3>
+        <p class="mt-2 max-w-md text-gris-medio">{t('products.errorDescription' as any)}</p>
+        <a href={`/${lang}/#productos`} class="mt-6 text-sm font-medium text-verde underline underline-offset-4 hover:text-verde-dark transition-colors">
+          {t('products.retry' as any)}
+        </a>
+      </div>
+    ) : activeProducts.length === 0 ? (
+      <!-- Empty state -->
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-cacao/10">
+          <svg class="h-8 w-8 text-cacao" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-ebano">{t('products.emptyTitle' as any)}</h3>
+        <p class="mt-2 max-w-md text-gris-medio">{t('products.emptyDescription' as any)}</p>
+      </div>
+    ) : (
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto stagger-children" data-products-grid>
+        {activeProducts.map((product) => (
+          <div class="product-card-wrapper">
+            <ProductCard
+              name={product.name}
+              tag={product.tag}
+              image={product.image}
+              specs={product.specs || []}
+              attributes={product.attributes || []}
+              productId={product.id}
+              seeSpecsKey={'products.seeSpecs' as any}
+              lang={lang}
+            />
+          </div>
+        ))}
+      </div>
+    )}
   </Container>
 </section>
 

@@ -73,7 +73,7 @@ function initHeroEntrance() {
 
 // ─── Scroll Animations con stagger ───
 function initAnimations() {
-  const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right, .scale-in, .stagger-children');
+  const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right, .scale-in, .stagger-children, .reveal-image');
 
   // Si el usuario prefiere movimiento reducido, revelar todo inmediatamente sin animación
   if (prefersReducedMotion()) {
@@ -117,38 +117,49 @@ document.addEventListener('astro:page-load', () => {
   initAnimations();
 });
 
-// Modals
+// Modals — con data-state para animación
+const openModal = (id: string) => {
+  const modal = document.getElementById(id);
+  if (modal) modal.setAttribute('data-state', 'open');
+};
+
+const closeModal = (id: string) => {
+  const modal = document.getElementById(id);
+  if (modal) modal.setAttribute('data-state', 'closed');
+};
+
 document.querySelectorAll('.open-spec-modal').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const modal = document.getElementById('spec-modal');
-    if (modal) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-  });
+  btn.addEventListener('click', () => openModal('spec-modal'));
 });
 
 document.querySelectorAll('.open-price-modal, #hero-price-btn, #header-price-btn, #final-price-btn, #header-price-btn-mobile').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const modal = document.getElementById('price-modal');
-    if (modal) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-  });
+  btn.addEventListener('click', () => openModal('price-modal'));
 });
 
-document.querySelectorAll('.modal-close-btn').forEach(btn => {
-  btn.addEventListener('click', function(this: HTMLButtonElement) {
-    const modalId = this.getAttribute('data-modal-close');
-    if (modalId) {
-      const modal = document.getElementById(modalId);
-      if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      }
+// Close ANY modal via data-modal-close (botones, links, anchors)
+document.addEventListener('click', (e) => {
+  const trigger = (e.target as HTMLElement).closest('[data-modal-close]');
+  if (!trigger) return;
+
+  const modalId = trigger.getAttribute('data-modal-close');
+  if (!modalId) return;
+
+  const action = trigger.getAttribute('data-action');
+
+  if (action === 'close-and-scroll') {
+    e.preventDefault();
+    closeModal(modalId);
+
+    const target = trigger.getAttribute('data-target') || '';
+    if (target) {
+      setTimeout(() => {
+        const el = document.querySelector(target);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 250);
     }
-  });
+  } else {
+    closeModal(modalId);
+  }
 });
 
 // Mobile menu
@@ -166,15 +177,42 @@ if (mobileMenuToggle && mobileMenu) {
 // Escape key — cierra cualquier modal abierto
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-close-btn').forEach(btn => {
-      const modalId = btn.getAttribute('data-modal-close');
-      if (modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal && !modal.classList.contains('hidden')) {
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
-        }
-      }
+    document.querySelectorAll('[data-state="open"]').forEach(modal => {
+      modal.setAttribute('data-state', 'closed');
     });
   }
 });
+
+// ─── Toast de notificación (añadido al carrito) ───
+let toastTimer: ReturnType<typeof setTimeout> | null = null;
+
+document.addEventListener('cart:added', ((e: CustomEvent) => {
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toast-message');
+  if (!toast || !toastMsg) return;
+
+  const productName = e.detail?.productName || 'Producto';
+
+  // Limpiar timer anterior
+  if (toastTimer) clearTimeout(toastTimer);
+
+  // Resetear clases
+  toast.classList.remove('hiding', 'visible');
+
+  // Forzar reflow para reiniciar animación
+  void toast.offsetWidth;
+
+  toastMsg.textContent = `${productName} añadido a cotización`;
+  toast.classList.add('visible');
+  toast.setAttribute('aria-hidden', 'false');
+
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('visible');
+    toast.classList.add('hiding');
+    toast.setAttribute('aria-hidden', 'true');
+
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('hiding');
+    }, 600);
+  }, 3000);
+}) as EventListener);

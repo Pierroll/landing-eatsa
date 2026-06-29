@@ -34,19 +34,20 @@ const hasTestimonials = activeTestimonials.length > 0;
       />
 
       <div class="grid gap-8 md:grid-cols-3">
-        {activeTestimonials.map((testimonial) => (
-          <article class=" card p-8 shadow-elevated">
+        {activeTestimonials.map((testimonial, i) => (
+          <article class={`card relative overflow-hidden ${i === 0 ? 'md:col-span-2 p-10 border-l-4 border-cacao shadow-elevated' : 'p-8 shadow-sm'}`}>
+            {i === 0 && <div class="absolute top-0 right-0 h-24 w-24 bg-cacao/5 rounded-bl-[100%]" aria-hidden="true"></div>}
             {/* Estrellas */}
             <div class="mb-4 flex gap-1 text-cacao">
               {Array.from({ length: testimonial.data.rating }).map(() => (
-                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <svg class={`${i === 0 ? 'h-5 w-5' : 'h-4 w-4'}`} fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               ))}
             </div>
 
             {/* Cita */}
-            <p class="mb-6 italic text-ebano/80">"{t(testimonial.data.quoteKey as any)}"</p>
+            <p class={`mb-6 italic text-ebano/80 ${i === 0 ? 'text-lg leading-relaxed' : ''}`}>"{t(testimonial.data.quoteKey as any)}"</p>
 
             {/* Autor */}
             <div class="flex items-center gap-3 border-t border-gris-claro pt-4">
@@ -75,7 +76,7 @@ const hasTestimonials = activeTestimonials.length > 0;
                 </div>
               )}
               <div>
-                <p class="font-medium text-ebano">{testimonial.data.name}</p>
+                <p class={`font-medium text-ebano ${i === 0 ? 'text-lg' : ''}`}>{testimonial.data.name}</p>
                 <p class="text-sm text-gris-medio">{testimonial.data.roleKey ? t(testimonial.data.roleKey as any) : ''} · {testimonial.data.company}</p>
               </div>
             </div>

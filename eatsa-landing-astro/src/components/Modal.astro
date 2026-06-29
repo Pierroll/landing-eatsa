@@ -25,12 +25,13 @@ const sizeClass = size === 'lg' ? 'max-w-3xl' : size === 'sm' ? 'max-w-md' : 'ma
 
 <div
   id={id}
-  class="fixed inset-0 z-[100] hidden items-center justify-center bg-ebano/50 p-4 backdrop-blur-sm"
+  class="fixed inset-0 z-[100] items-center justify-center bg-ebano/50 p-4"
+  data-state="closed"
   role="dialog"
   aria-modal="true"
   aria-labelledby={`${id}-title`}
 >
-  <div class={`modal-content w-full ${sizeClass} rounded-xl bg-white p-8 shadow-elevated`}>
+  <div class={`modal-content w-full ${sizeClass} rounded-xl bg-white p-8 shadow-elevated`} data-modal-body>
     <div class="flex items-center justify-between">
       <h3 id={`${id}-title`} class="text-xl text-verde">{t(titleKey)}</h3>
       <button
@@ -48,3 +49,46 @@ const sizeClass = size === 'lg' ? 'max-w-3xl' : size === 'sm' ? 'max-w-md' : 'ma
     </div>
   </div>
 </div>
+
+<style>
+  /* Modal backdrop */
+  div[data-state] {
+    transition: opacity 0.3s var(--ease-out-quint), backdrop-filter 0.3s var(--ease-out-quint);
+    display: flex;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Modal body */
+  div[data-state] [data-modal-body] {
+    transition: transform 0.3s var(--ease-out-quint), opacity 0.3s var(--ease-out-quint);
+  }
+
+  /* Closed state */
+  div[data-state="closed"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  div[data-state="closed"] [data-modal-body] {
+    transform: scale(0.95) translateY(8px);
+    opacity: 0.7;
+  }
+
+  /* Open state */
+  div[data-state="open"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  div[data-state="open"] [data-modal-body] {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    div[data-state] {
+      transition: none !important;
+    }
+    div[data-state] [data-modal-body] {
+      transition: none !important;
+    }
+  }
+</style>

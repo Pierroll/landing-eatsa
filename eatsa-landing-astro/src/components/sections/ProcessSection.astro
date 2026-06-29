@@ -10,7 +10,7 @@ import type { ImageMetadata } from 'astro';
 
 /**
  * Timeline vertical zigzag: cada paso alterna lado.
- * Icono en círculo accent, foto + texto-card en lados opuestos.
+ * Foto + texto-card en lados opuestos, número de paso destacado.
  */
 const { lang } = Astro.props as { lang: Locale };
 const t = useTranslations(lang);
@@ -24,7 +24,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
     <SectionHeader
       title={t('process.title' as any)}
       subtitle={t('process.subtitle' as any)}
-      align="center"
+      align="left"
       class="mb-20"
     />
 
@@ -32,11 +32,8 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
       {steps.map(async (step) => {
         const isLeft = step.data.side === 'left';
         const photoPath = `/src${step.data.photo}`;
-        const iconPath = `/src${step.data.icon}`;
         const photoFn = images[photoPath];
-        const iconFn = images[iconPath];
         const resolvedPhoto = photoFn ? await photoFn() : null;
-        const resolvedIcon = iconFn ? await iconFn() : null;
         
         return (
           <div class={` relative flex flex-col items-center gap-8 lg:flex-row ${isLeft ? '' : 'lg:flex-row-reverse'}`}>
@@ -73,19 +70,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
                 ))}
               </div>
             </div>
-
-            {/* Icono central (decorativo, posicionado en el medio del layout desktop) */}
-            {resolvedIcon && (
-              <Image
-                src={resolvedIcon.default}
-                alt=""
-                class="hidden h-16 w-16 object-contain opacity-30 lg:block lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
-                loading="lazy"
-                width={64}
-                height={64}
-                aria-hidden="true"
-              />
-            )}
           </div>
         );
       })}

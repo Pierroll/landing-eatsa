@@ -26,11 +26,11 @@ const t = useTranslations(lang);
 ---
 <article class="card group flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-elevated">
   <!-- Imagen + badge flotante -->
-  <div class="relative h-52 overflow-hidden bg-gris-claro">
+  <div class="relative h-52 overflow-hidden bg-gris-claro reveal-image">
     <img
       src={image}
       alt={name}
-      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      class="h-full w-full object-cover transition-transform duration-500"
       loading="lazy"
     />
     <Badge variant="tag" label={tag} class="absolute right-4 top-4" />
@@ -127,6 +127,11 @@ const t = useTranslations(lang);
             name: productName,
             quantity
           });
+
+          // Disparar evento para el toast global
+          document.dispatchEvent(new CustomEvent('cart:added', {
+            detail: { productName }
+          }));
           
           // Efecto visual simple (opcional)
           const originalText = target.innerText;

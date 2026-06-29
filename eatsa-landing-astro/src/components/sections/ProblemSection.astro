@@ -32,18 +32,18 @@ const iconColor: Record<string, string> = {
       class="mb-16"
     />
 
-    <div class="grid gap-8 md:grid-cols-3">
-      {problems.map((problem, i) => (
-        <div class={`card p-8 relative overflow-hidden ${i === 1 ? 'lg:-translate-y-4 lg:shadow-elevated' : ''}`}>
-          {/* Barra decorativa superior */}
-          <div class={`absolute top-0 left-0 right-0 h-1 ${i === 0 ? 'bg-error' : i === 1 ? 'bg-warning' : 'bg-verde'}`}></div>
+    <!-- 2 + 1 destacado: dos problemas arriba, el tercero abajo a full-width con mayor jerarquía visual -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+      {problems.slice(0, 2).map((problem, i) => (
+        <div class="card p-8 relative overflow-hidden">
+          <!-- Barra decorativa superior -->
+          <div class={`absolute top-0 left-0 right-0 h-1 ${i === 0 ? 'bg-error' : 'bg-warning'}`}></div>
 
-          {/* Icono */}
+          <!-- Icono -->
           <div class={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-crema ${iconColor[problem.iconType]}`}>
             <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               {i === 0 && <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />}
               {i === 1 && <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
-              {i === 2 && <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />}
             </svg>
           </div>
 
@@ -54,6 +54,26 @@ const iconColor: Record<string, string> = {
           <p class="mt-4 text-sm leading-relaxed text-ebano/70">{t(problem.descKey as any)}</p>
         </div>
       ))}
+
+      <!-- Tercer problema — destacado, full-width, mayor énfasis -->
+      <div class="col-span-2 card p-8 lg:p-10 relative overflow-hidden border-l-4 border-verde bg-gradient-to-br from-crema to-verde/3">
+        <!-- Barra decorativa superior -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-verde"></div>
+
+        <!-- Icono + Contenido en fila en desktop -->
+        <div class="flex flex-col md:flex-row md:items-start md:gap-8">
+          <div class="mb-6 md:mb-0 inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-verde/10 text-verde">
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+
+          <div>
+            <Stat value={problems[2].stat} label={t(problems[2].titleKey as any)} animated />
+            <p class="mt-4 text-base leading-relaxed text-ebano/80">{t(problems[2].descKey as any)}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </Container>
 </section>

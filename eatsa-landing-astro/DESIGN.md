@@ -58,6 +58,10 @@ components:
     textColor: "{colors.neutral-bg}"
     rounded: "{rounded.btn}"
     padding: "14px 28px"
+  button-primary-premium:
+    extends: button-primary
+    border: "2px solid rgba(184, 146, 74, 0.3)"
+    description: "Variante aprobada para CTA de cotización. El borde dorado señala contexto de precio sin violar la regla del dorado como fondo. Ver DESIGN.md: Regla del Dorado (excepción documentada)."
   button-secondary:
     backgroundColor: "transparent"
     textColor: "{colors.primary}"
@@ -120,6 +124,8 @@ La paleta completa está definida en OKLCH implícitamente a través de los valo
 **La Regla del Verde Único.** El verde es el color de acción exclusivo. Nunca se usa en párrafos largos, fondos de sección (excepto CTA final), ni elementos decorativos. Su presencia es siempre funcional.
 
 **La Regla del Dorado como Moneda.** El dorado solo aparece en contextos de precio/valor económico. Si no es un monto, no es dorado.
+
+**Excepción aprobada — Borde dorado en CTA de cotización.** El botón `.btn-premium` usa un borde `border-dorado/30` sobre fondo `bg-verde` para señalar el contexto de precio sin usar dorado como fondo ni como color decorativo. Esta es la ÚNICA excepción documentada a la Regla del Dorado.
 
 **La Regla Azul Frío.** El azul (#5C7A8A) es la única superficie fría permitida. Reservada a certificaciones. Cualquier otro uso rompe la calidez del sistema.
 
