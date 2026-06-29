@@ -34,7 +34,7 @@ const sizeClass = size === 'lg' ? 'max-w-3xl' : size === 'sm' ? 'max-w-md' : 'ma
     <div class="flex items-center justify-between">
       <h3 id={`${id}-title`} class="text-xl text-verde">{t(titleKey)}</h3>
       <button
-        class="modal-close-btn rounded-full p-1 text-gris-medio transition-colors hover:bg-crema hover:text-ebano"
+        class="modal-close-btn min-h-11 min-w-11 flex items-center justify-center rounded-btn text-gris-medio transition-colors hover:bg-crema hover:text-ebano"
         aria-label={t('modal.close' as TranslationKey)}
         data-modal-close={id}
       >

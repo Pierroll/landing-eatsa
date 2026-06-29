@@ -5,11 +5,11 @@
 <div id="cart-backdrop" class="fixed inset-0 bg-ebano/50 z-40 hidden transition-opacity"></div>
 
 <!-- Drawer lateral -->
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-crema shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-crema shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col" role="dialog" aria-modal="true" aria-label="Carrito de cotización">
   <!-- Cabecera -->
   <div class="flex items-center justify-between p-6 border-b border-gris-claro">
     <h2 class="text-xl font-bold text-verde">Tu Cotización</h2>
-    <button id="close-cart-btn" class="text-gris-medio hover:text-ebano transition-colors">
+    <button id="close-cart-btn" class="min-h-11 min-w-11 flex items-center justify-center rounded-btn text-gris-medio hover:text-ebano hover:bg-crema transition-colors" aria-label="Cerrar carrito">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>

@@ -36,7 +36,7 @@ const year = new Date().getFullYear();
         <ul class="flex flex-col gap-2 text-sm">
           {navItems.map((item) => (
             <li>
-              <a href={`/${lang}/#${item.id}`} class="text-crema/70 transition-colors hover:text-dorado">
+              <a href={`/${lang}/#${item.id}`} class="text-crema/70 transition-colors hover:text-verde">
                 {t(item.labelKey as any)}
               </a>
             </li>
@@ -50,10 +50,10 @@ const year = new Date().getFullYear();
           {t('footer.categories' as any)}
         </h4>
         <ul class="flex flex-col gap-2 text-sm">
-          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-dorado">{t('products.cacao.name' as any)}</a></li>
-          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-dorado">{t('products.cafe.name' as any)}</a></li>
-          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-dorado">{t('products.nibs.name' as any)}</a></li>
-          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-dorado">{t('products.chocolate.name' as any)}</a></li>
+          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-verde">{t('products.cacao.name' as any)}</a></li>
+          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-verde">{t('products.cafe.name' as any)}</a></li>
+          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-verde">{t('products.nibs.name' as any)}</a></li>
+          <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-verde">{t('products.chocolate.name' as any)}</a></li>
         </ul>
       </div>
 
@@ -65,10 +65,10 @@ const year = new Date().getFullYear();
         <ul class="flex flex-col gap-2 text-sm">
           {siteConfig.emails.map((email) => (
             <li>
-              <a href={`mailto:${email.address}`} class="text-crema/70 transition-colors hover:text-dorado">{email.address}</a>
+              <a href={`mailto:${email.address}`} class="text-crema/70 transition-colors hover:text-verde">{email.address}</a>
             </li>
           ))}
-          <li><a href={`/${lang}/#contacto`} class="text-crema/70 underline-offset-2 hover:text-dorado hover:underline">{t('contact.form.submit' as any)}</a></li>
+          <li><a href={`/${lang}/#contacto`} class="text-crema/70 underline-offset-2 hover:text-verde hover:underline">{t('contact.form.submit' as any)}</a></li>
         </ul>
       </div>
     </div>

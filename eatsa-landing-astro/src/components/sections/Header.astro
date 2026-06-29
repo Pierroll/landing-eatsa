@@ -27,7 +27,7 @@ const t = useTranslations(lang);
       {navItems.map((item) => (
         <a
           href={`/${lang}/#${item.id}`}
-          class="text-sm font-medium text-ebano transition-colors hover:text-verde"
+          class="text-sm font-medium text-ebano transition-colors hover:text-verde focus:outline-none focus-visible:ring-2 focus-visible:ring-verde focus-visible:ring-offset-2 focus-visible:ring-offset-crema rounded-md"
         >
           {t(item.labelKey as any)}
         </a>
@@ -71,7 +71,7 @@ const t = useTranslations(lang);
       {navItems.map((item) => (
         <a
           href={`/${lang}/#${item.id}`}
-          class="block rounded-btn px-4 py-3 text-base font-medium text-ebano transition-colors hover:bg-verde/5 hover:text-verde"
+          class="block rounded-btn px-4 py-3 text-base font-medium text-ebano transition-colors hover:bg-verde/5 hover:text-verde focus:outline-none focus-visible:ring-2 focus-visible:ring-verde focus-visible:ring-offset-2 focus-visible:ring-offset-crema"
         >
           {t(item.labelKey as any)}
         </a>
