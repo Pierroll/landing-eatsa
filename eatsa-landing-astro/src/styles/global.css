@@ -152,19 +152,19 @@
   }
 
   .fade-in-up.visible {
-    animation: fade-in-up 0.6s ease-out forwards;
+    animation: fade-in-up 0.6s var(--ease-out-quint) forwards;
   }
   .fade-in-down.visible {
-    animation: fade-in-down 0.6s ease-out forwards;
+    animation: fade-in-down 0.6s var(--ease-out-quint) forwards;
   }
   .fade-in-left.visible {
-    animation: fade-in-left 0.6s ease-out forwards;
+    animation: fade-in-left 0.6s var(--ease-out-quint) forwards;
   }
   .fade-in-right.visible {
-    animation: fade-in-right 0.6s ease-out forwards;
+    animation: fade-in-right 0.6s var(--ease-out-quint) forwards;
   }
   .scale-in.visible {
-    animation: scale-in 0.6s ease-out forwards;
+    animation: scale-in 0.6s var(--ease-out-quint) forwards;
   }
 
   /* ─── Pills de filtro (catálogo) ─── */
@@ -186,7 +186,7 @@
   }
 
   .animate-fade-in {
-    animation: fade-in 0.3s ease-out both;
+    animation: fade-in 0.3s var(--ease-out-quint) both;
   }
 
   /* ─── Badge animación (carrito) ─── */
@@ -197,12 +197,12 @@
   }
 
   .badge-pop {
-    animation: badge-pop 0.35s ease-out;
+    animation: badge-pop 0.35s var(--ease-out-quint);
   }
 
   /* ─── Transiciones de grid de productos ─── */
   .product-card-wrapper {
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transition: opacity 0.3s var(--ease-out-quint), transform 0.3s var(--ease-out-quint);
     opacity: 0;
     transform: translateY(12px);
   }

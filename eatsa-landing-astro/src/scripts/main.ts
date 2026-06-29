@@ -162,3 +162,19 @@ if (mobileMenuToggle && mobileMenu) {
     mobileMenu.classList.toggle('hidden');
   });
 }
+
+// Escape key — cierra cualquier modal abierto
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+      const modalId = btn.getAttribute('data-modal-close');
+      if (modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal && !modal.classList.contains('hidden')) {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+      }
+    });
+  }
+});
