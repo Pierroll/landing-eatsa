@@ -39,7 +39,7 @@ const certifications = defineCollection({
   schema: z.object({
     id: z.string(),
     nameKey: z.string(),
-    image: z.string(),
+    icon: z.string(),
     yearKey: z.string(),
     /** Si la certificación está activa (comentadas en REFERENCE.html → false) */
     enabled: z.boolean().default(true),

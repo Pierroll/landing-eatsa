@@ -1,12 +1,10 @@
 ---
-import type { Locale, TranslationKey } from '@types';
+import type { Locale } from '@types';
 import { useTranslations } from '@i18n/ui';
 import { getCollection } from 'astro:content';
 import Container from '@components/ui/Container.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
-
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import { ShieldCheck, Award, Leaf, Globe, Truck } from 'lucide-astro';
 
 /**
  * Certificaciones: ÚNICA sección con fondo Azul Apagado (regla del design system).
@@ -19,10 +17,16 @@ const t = useTranslations(lang);
 const allCerts = await getCollection('certifications');
 const activeCerts = allCerts.filter((c) => c.data.enabled);
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}');
+const IconMap: Record<string, any> = {
+  ShieldCheck,
+  Award,
+  Leaf,
+  Globe,
+  Truck
+};
 ---
 
-<section id="certificaciones" class="section-azul py-24 sm:py-32">
+<section id="certificaciones" class="section-azul py-24 sm:py-32 overflow-hidden">
   <Container>
     <SectionHeader
       title={t('certifications.title' as any)}
@@ -32,25 +36,16 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
     />
 
     <div class="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-5">
-      {activeCerts.map(async (cert, i) => {
-        const imagePath = `/src${cert.data.image}`;
-        const imageFn = images[imagePath];
-        const resolvedImage = imageFn ? await imageFn() : null;
+      {activeCerts.map((cert) => {
+        const IconComponent = IconMap[cert.data.icon] || ShieldCheck;
         
         return (
-          <div class={` flex flex-col items-center rounded-xl bg-white/5 p-6 text-center transition-colors hover:bg-white/10 ${i % 2 === 0 ? '' : ''}`}>
-            {resolvedImage && (
-              <Image
-                src={resolvedImage.default}
-                alt={t(cert.data.nameKey as any)}
-                class="mb-4 h-16 w-16 rounded-lg object-cover"
-                loading="lazy"
-                width={64}
-                height={64}
-              />
-            )}
-            <h4 class="text-sm font-semibold text-white">{t(cert.data.nameKey as any)}</h4>
-            <p class="mt-1 text-xs text-white/60">{t(cert.data.yearKey as any)}</p>
+          <div class="certification-card group flex flex-col items-center justify-center rounded-xl bg-white/10 p-8 text-center transition-all duration-300 hover:bg-white/20">
+            <div class="mb-4 rounded-full bg-white/20 p-4 group-hover:bg-verde group-hover:scale-110 transition-all duration-300">
+              <IconComponent class="h-8 w-8 text-white" />
+            </div>
+            <h3 class="text-lg font-semibold text-white">{t(cert.data.nameKey as any)}</h3>
+            <p class="mt-2 text-sm text-white/80">{t(cert.data.yearKey as any)}</p>
           </div>
         );
       })}

@@ -28,7 +28,8 @@ export const ui = {
 
     // ─── Origen ────────────────────────────────────────────────────
     'origin.title': 'Nuestro Origen',
-    'origin.subtitle': 'Ubicados estratégicamente en la provincia cacaotera más importante de la región, donde las condiciones climáticas perfectas crean productos de calidad excepcional.',
+    'origin.subtitle': 'A 490 metros sobre el nivel del mar, entre ríos y bosques amazónicos, nace el cacao que lleva el sabor de San Martín al mundo.',
+    'origin.cta': 'Conoce nuestro proceso',
     'origin.location': 'Nuevo Progreso — Tocache — San Martín',
     'origin.climate.title': 'Datos Climáticos',
     'origin.climate.altitude': 'Altitud',
@@ -278,7 +279,8 @@ export const ui = {
 
     // ─── Origin ────────────────────────────────────────────────────
     'origin.title': 'Our Origin',
-    'origin.subtitle': 'Strategically located in the most important cacao-growing province of the region, where perfect climatic conditions create products of exceptional quality.',
+    'origin.subtitle': 'At 490 meters above sea level, between Amazonian rivers and forests, grows the cacao that brings the taste of San Martín to the world.',
+    'origin.cta': 'Learn about our process',
     'origin.location': 'Nuevo Progreso — Tocache — San Martín',
     'origin.climate.title': 'Climate Data',
     'origin.climate.altitude': 'Altitude',

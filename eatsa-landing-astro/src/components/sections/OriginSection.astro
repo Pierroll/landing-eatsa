@@ -5,14 +5,17 @@ import Container from '@components/ui/Container.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
 import { Image } from 'astro:assets';
 import mapImg from '../../assets/company/mapa-tocache.png';
+import imgHarvest from '../../assets/process/paso-1-cosecha.jpeg';
+import imgProcess from '../../assets/process/paso-2-procesamiento.jpeg';
+import { Thermometer, CloudRain, Mountain } from 'lucide-astro';
 
 const { lang } = Astro.props as { lang: Locale };
 const t = useTranslations(lang);
 
-const climateRows = [
-  { label: t('origin.climate.altitude' as any), value: t('origin.climate.altitude.value' as any) },
-  { label: t('origin.climate.temperature' as any), value: t('origin.climate.temperature.value' as any) },
-  { label: t('origin.climate.precipitation' as any), value: t('origin.climate.precipitation.value' as any) },
+const climateIcons = [
+  { icon: Mountain, label: t('origin.climate.altitude' as any), value: t('origin.climate.altitude.value' as any) },
+  { icon: Thermometer, label: t('origin.climate.temperature' as any), value: t('origin.climate.temperature.value' as any) },
+  { icon: CloudRain, label: t('origin.climate.precipitation' as any), value: t('origin.climate.precipitation.value' as any) },
 ];
 
 const soilRows = [
@@ -34,37 +37,48 @@ const soilRows = [
       />
     </div>
 
-    <div class="grid items-stretch gap-8 lg:grid-cols-2">
-      <!-- Mapa -->
-      <div class="card relative overflow-hidden p-0">
-        <Image
-          src={mapImg}
-          alt={t('origin.location' as any)}
-          class="h-full min-h-[360px] w-full object-cover"
-          loading="lazy"
-          width={600}
-          height={400}
-        />
-        <div class="absolute bottom-4 left-4 rounded-md bg-white/95 px-3 py-1.5 text-sm font-medium text-verde shadow-card flex items-center gap-1.5">
-          <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          {t('origin.location' as any)}
+    <div class="grid items-stretch gap-8 lg:grid-cols-2 mb-12">
+      <!-- Galería (Reemplaza el mapa gigante) -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="card overflow-hidden p-0">
+          <Image
+            src={imgHarvest}
+            alt="Cosecha de Cacao"
+            class="h-full min-h-[250px] w-full object-cover blur-hover-img"
+            loading="lazy"
+            width={400}
+            height={500}
+          />
+        </div>
+        <div class="card overflow-hidden p-0">
+          <Image
+            src={imgProcess}
+            alt="Procesamiento de Cacao"
+            class="h-full min-h-[250px] w-full object-cover blur-hover-img"
+            loading="lazy"
+            width={400}
+            height={500}
+          />
         </div>
       </div>
 
       <!-- Datos climáticos + suelo -->
       <div class="flex flex-col gap-6">
         <div class="card p-6">
-          <h3 class="mb-4 text-lg font-semibold text-verde">{t('origin.climate.title' as any)}</h3>
-          <div class="flex flex-col gap-3">
-            {climateRows.map((row) => (
-              <div class="flex justify-between border-b border-gris-claro pb-2 text-sm">
-                <span class="text-gris-medio">{row.label}</span>
-                <span class="font-medium text-ebano">{row.value}</span>
-              </div>
-            ))}
+          <h3 class="mb-6 text-lg font-semibold text-verde">{t('origin.climate.title' as any)}</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {climateIcons.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div class="flex flex-col items-center text-center p-4 rounded-lg bg-gris-claro/20 border border-gris-claro/50">
+                  <div class="mb-3 rounded-full bg-verde/10 p-3 text-verde">
+                    <Icon class="h-6 w-6" />
+                  </div>
+                  <span class="text-sm text-gris-medio mb-1">{item.label}</span>
+                  <span class="font-medium text-ebano">{item.value}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -83,26 +97,67 @@ const soilRows = [
     </div>
 
     <!-- Ubicación privilegiada + comunidad -->
-    <div class="mt-12 grid gap-8 md:grid-cols-2">
-      <div class=" card p-8">
-        <h3 class="mb-3 text-xl font-semibold text-verde">{t('origin.privilegedLocation' as any)}</h3>
-        <p class="text-ebano/85">{t('origin.privilegedLocation.desc' as any)}</p>
+    <div class="grid gap-8 md:grid-cols-2 mb-12">
+      <!-- Ubicación Privilegiada con Mapa Pequeño -->
+      <div class="card overflow-hidden flex flex-col">
+        <div class="p-8 pb-6 flex-1">
+          <h3 class="mb-3 text-xl font-semibold text-verde">{t('origin.privilegedLocation' as any)}</h3>
+          <p class="text-ebano/85">{t('origin.privilegedLocation.desc' as any)}</p>
+        </div>
+        <!-- Mapa Pequeño -->
+        <div class="h-48 w-full border-t border-gris-claro relative">
+          <Image
+            src={mapImg}
+            alt={t('origin.location' as any)}
+            class="h-full w-full object-cover"
+            loading="lazy"
+            width={600}
+            height={200}
+          />
+        </div>
       </div>
 
-      <div class=" card bg-verde p-8 text-crema">
-        <h3 class="mb-3 text-xl font-semibold text-crema">{t('origin.community' as any)}</h3>
-        <p class="mb-6 text-crema/85">{t('origin.community.desc' as any)}</p>
-        <div class="flex flex-wrap gap-8">
-          <div>
-            <div class="font-display text-3xl font-semibold text-crema">150+</div>
-            <div class="text-sm text-crema/85">{t('origin.community.families' as any)}</div>
-          </div>
-          <div>
-            <div class="font-display text-3xl font-semibold text-crema">100+</div>
-            <div class="text-sm text-crema/85">{t('origin.community.producers' as any)}</div>
+      <!-- Comunidad (con foto de fondo) -->
+      <div class="card relative overflow-hidden bg-verde p-8 text-crema flex flex-col justify-between group">
+        <!-- Imagen oscurecida de fondo -->
+        <div class="absolute inset-0 z-0">
+          <Image
+            src={imgHarvest}
+            alt="Familias productoras"
+            class="h-full w-full object-cover opacity-10 transition-opacity duration-500 group-hover:opacity-25"
+            loading="lazy"
+            width={600}
+            height={400}
+          />
+          <div class="absolute inset-0 bg-verde/90 mix-blend-multiply"></div>
+        </div>
+
+        <div class="relative z-10">
+          <h3 class="mb-3 text-xl font-semibold text-crema">{t('origin.community' as any)}</h3>
+          <p class="mb-6 text-crema/85">{t('origin.community.desc' as any)}</p>
+          <div class="flex flex-wrap gap-8 mt-auto">
+            <div>
+              <div class="font-display text-3xl font-semibold text-crema">150+</div>
+              <div class="text-sm text-crema/85">{t('origin.community.families' as any)}</div>
+            </div>
+            <div>
+              <div class="font-display text-3xl font-semibold text-crema">100+</div>
+              <div class="text-sm text-crema/85">{t('origin.community.producers' as any)}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- CTA Final de Sección -->
+    <div class="flex justify-center mt-12">
+      <a href="#proceso" class="btn-primary text-base sm:text-lg px-8 py-4 flex items-center gap-2 group shadow-lg hover:shadow-xl transition-all">
+        {t('origin.cta' as any)}
+        <svg class="h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+
   </Container>
 </section>

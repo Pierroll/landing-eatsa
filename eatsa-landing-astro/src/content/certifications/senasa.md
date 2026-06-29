@@ -1,7 +1,7 @@
 ---
 id: senasa
 nameKey: certifications.senasa.name
-image: /assets/certifications/senasa.jpg
+icon: Truck
 yearKey: certifications.senasa.year
 enabled: true
 ---

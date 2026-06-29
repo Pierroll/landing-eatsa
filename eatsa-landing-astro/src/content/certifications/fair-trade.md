@@ -1,7 +1,7 @@
 ---
 id: fair-trade
 nameKey: certifications.fairtrade.name
-image: /assets/certifications/fair-trade.jpg
+icon: Award
 yearKey: certifications.fairtrade.year
 enabled: true
 ---
