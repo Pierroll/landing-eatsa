@@ -22,7 +22,7 @@ const activeCerts = allCerts.filter((c) => c.data.enabled);
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}');
 ---
 
-<section id="certificaciones" class="section-azul py-24">
+<section id="certificaciones" class="section-azul py-24 sm:py-32">
   <Container>
     <SectionHeader
       title={t('certifications.title' as any)}
@@ -31,7 +31,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
       class="mb-16 text-crema [&_h2]:text-white [&_p]:text-white/75"
     />
 
-    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-5">
       {activeCerts.map(async (cert, i) => {
         const imagePath = `/src${cert.data.image}`;
         const imageFn = images[imagePath];

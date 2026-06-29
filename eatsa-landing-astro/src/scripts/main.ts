@@ -1,3 +1,6 @@
+import { initStatCounters } from './stat-counter';
+import { initHeroParallax } from './parallax';
+
 // Reduced motion detection
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -80,10 +83,11 @@ function initHeroEntrance() {
 
 // ─── Scroll Animations con stagger ───
 function initAnimations() {
-  const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right, .scale-in, .stagger-children, .reveal-image');
+  const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right, .scale-in, .stagger-children, .reveal-image, .text-reveal-wrapper');
 
   // Si el usuario prefiere movimiento reducido, revelar todo inmediatamente sin animación
   if (prefersReducedMotion()) {
+    document.querySelectorAll('.text-reveal').forEach(el => el.classList.add('visible'));
     animatedElements.forEach(el => el.classList.add('visible'));
     return;
   }
@@ -96,8 +100,11 @@ function initAnimations() {
   const animationObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Si el elemento tiene hijos con stagger
-        if (entry.target.classList.contains('stagger-children')) {
+        // Si es el wrapper de text reveal, animamos su hijo
+        if (entry.target.classList.contains('text-reveal-wrapper')) {
+          const child = entry.target.querySelector('.text-reveal');
+          if (child) child.classList.add('visible');
+        } else if (entry.target.classList.contains('stagger-children')) {
           const children = Array.from(entry.target.children);
           children.forEach((child, i) => {
             (child as HTMLElement).style.setProperty('--i', String(i));
@@ -113,15 +120,35 @@ function initAnimations() {
   animatedElements.forEach(el => animationObserver.observe(el));
 }
 
+// ─── Spotlight Mouse Tracking ───
+function initSpotlight() {
+  const cards = document.querySelectorAll('.spotlight-card');
+  cards.forEach(card => {
+    (card as HTMLElement).addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = (card as HTMLElement).getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+      (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+}
+
 // En Astro, los scripts empaquetados se ejecutan cuando el DOM ya está listo (tipo module).
 // Por lo tanto, no necesitamos esperar a DOMContentLoaded, simplemente lo ejecutamos:
 initHeroEntrance();
 initAnimations();
+initSpotlight();
+initStatCounters();
+initHeroParallax();
 
 // Si usamos View Transitions en algún momento, también lo necesitamos en page-load:
 document.addEventListener('astro:page-load', () => {
   initHeroEntrance();
   initAnimations();
+  initSpotlight();
+  initStatCounters();
+  initHeroParallax();
 });
 
 // Modals — con data-state para animación

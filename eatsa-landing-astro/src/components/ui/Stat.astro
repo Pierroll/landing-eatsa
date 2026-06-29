@@ -2,22 +2,25 @@
 import { cn } from '@lib/utils';
 import type { StatProps } from '@types';
 
-const { value, label, animated = false, class: className } = Astro.props as StatProps;
+const { value, label, animated = false, colorTheme = 'light', class: className } = Astro.props as StatProps;
 
 // Si animated=true, stat-counter.ts leerá el data-target y animará el count-up
 // al entrar en viewport. El valor final se preserva como fallback accesible.
 const classes = cn('flex flex-col gap-1', className);
 const valueStr = String(value);
+
+const numColor = colorTheme === 'dark' ? 'text-crema' : 'text-verde';
+const labelColor = colorTheme === 'dark' ? 'text-crema/75' : 'text-gris-medio';
 ---
 
 <div class={classes}>
   <span
-    class="font-display text-3xl font-semibold text-verde sm:text-4xl"
+    class={`font-display text-3xl font-semibold sm:text-4xl ${numColor}`}
     data-stat-number
     data-animated={animated ? 'true' : 'false'}
     data-target={valueStr}
   >
     {valueStr}
   </span>
-  <span class="text-sm text-gris-medio">{label}</span>
+  <span class={`text-sm ${labelColor}`}>{label}</span>
 </div>

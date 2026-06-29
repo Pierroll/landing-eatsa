@@ -32,11 +32,16 @@
   }
 
   body {
-    @apply bg-crema text-ebano font-body antialiased;
+    @apply bg-crema text-ebano font-body antialiased text-base sm:text-lg leading-relaxed;
   }
 
   h1, h2, h3 {
     @apply font-display text-verde;
+  }
+
+  /* Filtro fotográfico global unificador (calidez y saturación sutil) */
+  img:not(.no-filter) {
+    filter: saturate(1.1) sepia(0.05);
   }
 
   /* Enlaces dentro del texto: siempre cacao + subrayado visible
@@ -118,7 +123,7 @@
       pointer-events: none;
       transition: opacity 0.6s var(--ease-out-quint),
                   transform 0.6s var(--ease-out-quint);
-      transform: translateX(-50%) translateY(8px);
+      transform: translateX(-50%) translateY(8px) scale(0.95);
       max-width: calc(100vw - 2rem);
       white-space: nowrap;
       overflow: hidden;
@@ -127,44 +132,45 @@
 
     .toast-base.visible {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translateX(-50%) translateY(0) scale(1);
       pointer-events: auto;
     }
 
     .toast-base.hiding {
       opacity: 0;
-      transform: translateX(-50%) translateY(8px);
+      transform: translateX(-50%) translateY(8px) scale(0.95);
     }
 
     @media (min-width: 640px) {
       .toast-base {
         @apply left-auto right-6;
-        transform: translateY(8px);
+        transform: translateY(8px) scale(0.95);
       }
       .toast-base.visible {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
       .toast-base.hiding {
-        transform: translateY(8px);
+        transform: translateY(8px) scale(0.95);
       }
     }
 
   /* ─── Tarjetas (rompen el crema intencionalmente) ─── */
   .card {
     @apply rounded-xl border border-gris-claro bg-white shadow-card;
-    will-change: transform;
-    transition: transform var(--duration-normal) var(--ease-out-quint),
-                box-shadow var(--duration-normal) var(--ease-out-quint);
+    will-change: transform, box-shadow;
+    transition: transform 200ms var(--ease-out-quint),
+                box-shadow 200ms var(--ease-out-quint);
   }
 
   @media (hover: hover) and (pointer: fine) {
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0px 8px 24px rgba(46, 38, 31, 0.1);
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(46, 38, 31, 0.15); /* Más pronunciada */
     }
 
     .card:hover img {
       transform: scale(1.05);
+      transition: transform 300ms var(--ease-out-quint);
     }
   }
 
@@ -375,3 +381,78 @@
            focus-visible:ring-offset-2 focus-visible:ring-offset-crema;
   }
 }
+
+  /* ─── Spotlight Card (Linear/Vercel Effect) ─── */
+  .spotlight-card {
+    position: relative;
+    border-radius: 12px;
+    background: white;
+    /* La tarjeta gestiona el overflow, pero el border radial será pseudo-elemento */
+  }
+
+  .spotlight-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px; /* 1px border */
+    border-radius: 13px;
+    padding: 1px;
+    background: radial-gradient(
+      400px circle at var(--mouse-x) var(--mouse-y),
+      rgba(202, 230, 202, 0.4), /* Verde claro */
+      transparent 40%
+    );
+    z-index: -1;
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+
+  /* ─── Blur Hover Image Effect ─── */
+  .blur-hover-img {
+    transition: transform 300ms var(--ease-out-quint), filter 300ms ease;
+  }
+
+  .card:hover .blur-hover-img {
+    transform: scale(1.05);
+    /* Micro desenfoque al iniciar hover, engaño óptico */
+    filter: blur(2px);
+    /* Forzamos que se quite el blur rápido */
+    animation: clear-blur 300ms forwards;
+  }
+
+  @keyframes clear-blur {
+    to {
+      filter: blur(0);
+    }
+  }
+
+  /* ─── Text Reveal (Cinematic Slide from Mask) ─── */
+  .text-reveal-wrapper {
+    overflow: hidden; /* Corta el texto que está debajo */
+    display: inline-block;
+    padding-bottom: 0.2em; /* Evita cortar letras como g, p, q */
+    margin-bottom: -0.2em;
+  }
+
+  .text-reveal {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform 0.8s var(--ease-out-quint), opacity 0.8s var(--ease-out-quint);
+  }
+
+  .text-reveal.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .text-reveal {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+  }

@@ -35,6 +35,7 @@ export interface StatProps {
   label: string;
   /** Si true, el número se anima (count-up) al entrar en viewport */
   animated?: boolean;
+  colorTheme?: 'light' | 'dark';
   class?: string;
 }
 

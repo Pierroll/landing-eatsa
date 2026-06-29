@@ -22,14 +22,14 @@ const soilRows = [
 ];
 ---
 
-<section id="origen" class="section-cream py-24">
+<section id="origen" class="section-cream py-24 sm:py-32">
   <Container>
     <div class="flex flex-col items-center text-center">
       <SectionHeader
         eyebrow={t('origin.location' as any)}
         title={t('origin.title' as any)}
         subtitle={t('origin.subtitle' as any)}
-        align="left"
+        align="center"
         class="mb-16"
       />
     </div>
@@ -86,20 +86,20 @@ const soilRows = [
     <div class="mt-12 grid gap-8 md:grid-cols-2">
       <div class=" card p-8">
         <h3 class="mb-3 text-xl font-semibold text-verde">{t('origin.privilegedLocation' as any)}</h3>
-        <p class="text-ebano/75">{t('origin.privilegedLocation.desc' as any)}</p>
+        <p class="text-ebano/85">{t('origin.privilegedLocation.desc' as any)}</p>
       </div>
 
       <div class=" card bg-verde p-8 text-crema">
         <h3 class="mb-3 text-xl font-semibold text-crema">{t('origin.community' as any)}</h3>
         <p class="mb-6 text-crema/85">{t('origin.community.desc' as any)}</p>
-        <div class="flex gap-8">
+        <div class="flex flex-wrap gap-8">
           <div>
             <div class="font-display text-3xl font-semibold text-crema">150+</div>
-            <div class="text-sm text-crema/75">{t('origin.community.families' as any)}</div>
+            <div class="text-sm text-crema/85">{t('origin.community.families' as any)}</div>
           </div>
           <div>
             <div class="font-display text-3xl font-semibold text-crema">100+</div>
-            <div class="text-sm text-crema/75">{t('origin.community.producers' as any)}</div>
+            <div class="text-sm text-crema/85">{t('origin.community.producers' as any)}</div>
           </div>
         </div>
       </div>

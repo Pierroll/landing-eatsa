@@ -24,7 +24,7 @@ export default {
         // Neutros cálidos (los grises fríos rompen la calidez del sistema)
         gris: {
           claro: '#E8E1D3', // bordes y divisores sutiles sobre crema
-          medio: '#9A8E7A', // texto placeholder, metadatos, fechas
+          medio: '#7A6F5D', // texto placeholder, metadatos, fechas (Oscurecido para contraste WCAG AA)
         },
 
         // Semánticos (mantienen coherencia cálida incluso en error)

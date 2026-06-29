@@ -18,6 +18,10 @@ const classes = cn('max-w-2xl', alignClass, className);
   {eyebrow && (
     <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-cacao">{eyebrow}</p>
   )}
-  <h2 class="text-4xl font-bold text-verde sm:text-5xl lg:text-6xl !leading-[1.1]">{title}</h2>
+  <h2 class="text-4xl font-bold text-verde sm:text-5xl lg:text-6xl !leading-[1.1]">
+    <span class="text-reveal-wrapper">
+      <span class="text-reveal">{title}</span>
+    </span>
+  </h2>
   {subtitle && <p class="mt-6 text-lg text-ebano/70 sm:text-xl max-w-xl leading-relaxed">{subtitle}</p>}
 </div>

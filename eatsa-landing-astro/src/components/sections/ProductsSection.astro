@@ -26,14 +26,15 @@ try {
 }
 ---
 
-<section id="productos" class="section-white py-24">
+<section id="productos" class="section-white py-24 sm:py-32">
   <Container>
-    <SectionHeader
-      title={t('products.title' as any)}
-      subtitle={t('products.subtitle' as any)}
-      align="left"
-      class="mb-12"
-    />
+    <div class="mb-12">
+      <SectionHeader
+        title={t('products.title' as any)}
+        subtitle={t('products.subtitle' as any)}
+        align="left"
+      />
+    </div>
 
     <!-- Toolbar: filtros + search + sort -->
     <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-products-toolbar>
@@ -94,8 +95,8 @@ try {
       </div>
     ) : (
       <div class="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto stagger-children" data-products-grid>
-        {activeProducts.map((product) => (
-          <div class="product-card-wrapper w-full sm:w-[calc(50%-1rem)] lg:w-[340px]">
+        {activeProducts.map((product, index) => (
+          <div class="product-card-wrapper w-full sm:w-[calc(50%-1rem)] lg:w-[340px]" style={`--i: ${index}`}>
             <ProductCard
               name={product.name}
               tag={product.tag}
