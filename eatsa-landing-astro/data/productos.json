@@ -3,7 +3,7 @@
     "id": "cacao-fino",
     "name": "Grano de Cacao Fino de Aroma",
     "tag": "Exportación",
-    "image": "/assets/hero/cacao-hero.webp",
+    "image": "/products/cacao-fino-aroma.png",
     "status": "activo",
     "attributes": ["Orgánico", "Comercio Justo"],
     "specs": [
@@ -12,15 +12,39 @@
     ]
   },
   {
-    "id": "manteca-cacao",
-    "name": "Manteca de Cacao Pura",
-    "tag": "Derivado",
-    "image": "/assets/hero/cacao-hero.webp",
+    "id": "cafe-altura",
+    "name": "Café de Altura",
+    "tag": "Exportación",
+    "image": "/products/cafe-altura.png",
     "status": "activo",
-    "attributes": ["Prensado al Frío", "Sin Refinar"],
+    "attributes": ["Orgánico", "Tueste Medio"],
     "specs": [
-      { "label": "Punto de Fusión", "value": "34°C" },
-      { "label": "Color", "value": "Amarillo Pálido" }
+      { "label": "Altitud", "value": "1500m" },
+      { "label": "Variedad", "value": "Arábica" }
+    ]
+  },
+  {
+    "id": "nibs-cacao",
+    "name": "Nibs de Cacao",
+    "tag": "Derivado",
+    "image": "/products/nibs-cacao.jpeg",
+    "status": "activo",
+    "attributes": ["Superfood", "Sin Azúcar"],
+    "specs": [
+      { "label": "Origen", "value": "Amazonía" },
+      { "label": "Tostado", "value": "Ligero" }
+    ]
+  },
+  {
+    "id": "chocolate-cacao",
+    "name": "Chocolate Oscuro Artesanal",
+    "tag": "Derivado",
+    "image": "/products/chocolate-cacao.jpg",
+    "status": "activo",
+    "attributes": ["70% Cacao", "Artesanal"],
+    "specs": [
+      { "label": "Ingredientes", "value": "Cacao, Panela" },
+      { "label": "Peso", "value": "100g" }
     ]
   }
 ]

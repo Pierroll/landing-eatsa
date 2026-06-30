@@ -26,7 +26,7 @@ const t = useTranslations(lang);
     <nav class="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
       {navItems.map((item) => (
         <a
-          href={`/${lang}/#${item.id}`}
+          href={item.id === 'productos' ? `/${lang}/productos/` : `/${lang}/#${item.id}`}
           class="text-sm font-medium text-ebano transition-colors hover:text-verde focus:outline-none focus-visible:ring-2 focus-visible:ring-verde focus-visible:ring-offset-2 focus-visible:ring-offset-crema rounded-md"
         >
           {t(item.labelKey as any)}
@@ -70,7 +70,7 @@ const t = useTranslations(lang);
     <nav class="flex flex-col gap-1" aria-label="Mobile navigation">
       {navItems.map((item) => (
         <a
-          href={`/${lang}/#${item.id}`}
+          href={item.id === 'productos' ? `/${lang}/productos/` : `/${lang}/#${item.id}`}
           class="block rounded-btn px-4 py-3 text-base font-medium text-ebano transition-colors hover:bg-verde/5 hover:text-verde focus:outline-none focus-visible:ring-2 focus-visible:ring-verde focus-visible:ring-offset-2 focus-visible:ring-offset-crema"
         >
           {t(item.labelKey as any)}

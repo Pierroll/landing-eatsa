@@ -1,18 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@components/sections/Header.astro';
-import Hero from '@components/sections/Hero.astro';
-import OriginSection from '@components/sections/OriginSection.astro';
 import ProductsSection from '@components/sections/ProductsSection.astro';
-import ProblemSection from '@components/sections/ProblemSection.astro';
-import CertificationsSection from '@components/sections/CertificationsSection.astro';
-import ExportCapacity from '@components/sections/ExportCapacity.astro';
-import ProcessSection from '@components/sections/ProcessSection.astro';
-import TestimonialsSection from '@components/sections/TestimonialsSection.astro';
-import ContactSection from '@components/sections/ContactSection.astro';
-import CompanyInfo from '@components/sections/CompanyInfo.astro';
-import FaqSection from '@components/sections/FaqSection.astro';
-import FinalCta from '@components/sections/FinalCta.astro';
 import Footer from '@components/sections/Footer.astro';
 import StickyContactBar from '@components/sections/StickyContactBar.astro';
 import WhatsAppFloat from '@components/sections/WhatsAppFloat.astro';
@@ -35,22 +24,13 @@ const whatsappNumber = whatsappPhone ? whatsappPhone.number.replace(/[^0-9]/g, '
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola, quisiera recibir los precios actualizados de sus productos.')}`;
 ---
 
-<MainLayout lang={lang as Locale}>
+<MainLayout lang={lang as Locale} title={lang === 'es' ? 'Catálogo de Productos - Eatsa' : 'Products Catalog - Eatsa'}>
   <Header lang={lang as Locale} />
-  <main>
-    <Hero lang={lang as Locale} />
-    <OriginSection lang={lang as Locale} />
-    <ProductsSection lang={lang as Locale} featuredOnly={true} />
-    <ProblemSection lang={lang as Locale} />
-    <CertificationsSection lang={lang as Locale} />
-    <ExportCapacity lang={lang as Locale} />
-    <ProcessSection lang={lang as Locale} />
-    <TestimonialsSection lang={lang as Locale} />
-    <ContactSection lang={lang as Locale} />
-    <CompanyInfo lang={lang as Locale} />
-    <FaqSection lang={lang as Locale} />
-    <FinalCta lang={lang as Locale} />
+  
+  <main class="pt-24 lg:pt-32">
+    <ProductsSection lang={lang as Locale} featuredOnly={false} />
   </main>
+
   <Footer lang={lang as Locale} />
   <StickyContactBar lang={lang as Locale} />
   <WhatsAppFloat lang={lang as Locale} />
@@ -62,19 +42,17 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
   
   <Modal id="price-modal" titleKey="hero.requestPrices" lang={lang as Locale} size="md">
     <div class="text-ebano/80">
-      <p class="mb-6">Elige cómo deseas recibir los precios actualizados:</p>
+      <p class="mb-6">{lang === 'es' ? 'Elige cómo deseas recibir los precios actualizados:' : 'Choose how you want to receive updated prices:'}</p>
       <div class="flex flex-col gap-3">
-        <button
+        <a
+          href={`/${lang}/#contacto`}
           class="btn-primary w-full flex items-center justify-center gap-2"
-          data-action="close-and-scroll"
-          data-target="#contacto"
-          data-modal-close="price-modal"
         >
           <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
-          Ir al formulario de contacto
-        </button>
+          {lang === 'es' ? 'Ir al formulario de contacto' : 'Go to contact form'}
+        </a>
         <a
           href={whatsappLink}
           target="_blank"
@@ -85,7 +63,7 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
           <svg class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
-          Consultar por WhatsApp
+          {lang === 'es' ? 'Consultar por WhatsApp' : 'Contact via WhatsApp'}
         </a>
       </div>
     </div>

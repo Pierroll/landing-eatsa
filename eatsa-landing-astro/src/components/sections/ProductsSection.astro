@@ -6,7 +6,12 @@ import SectionHeader from '@components/ui/SectionHeader.astro';
 import ProductCard from '@components/ProductCard.astro';
 import { getProductos } from '@/lib/db';
 
-const { lang } = Astro.props as { lang: Locale };
+interface Props {
+  lang: Locale;
+  featuredOnly?: boolean;
+}
+
+const { lang, featuredOnly = false } = Astro.props as Props;
 const t = useTranslations(lang);
 
 // Manejar error de carga de productos
@@ -17,7 +22,11 @@ let uniqueTags: string[] = [];
 try {
   const allProducts = await getProductos();
   // Mostrar solo productos activos
-  activeProducts = allProducts.filter(p => p.status === 'activo');
+  let filtered = allProducts.filter(p => p.status === 'activo');
+  if (featuredOnly) {
+    filtered = filtered.slice(0, 3);
+  }
+  activeProducts = filtered;
   // Extraer tags únicos para filtros
   uniqueTags = [...new Set(activeProducts.map(p => p.tag))];
 } catch (e) {
@@ -37,30 +46,32 @@ try {
     </div>
 
     <!-- Toolbar: filtros + search + sort -->
-    <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-products-toolbar>
-      <!-- Filtros por tag (pills) -->
-      <div class="flex flex-wrap gap-2" data-filter-pills>
-        <button class="filter-pill active" data-filter="all">{t('products.filterAll' as any)}</button>
-        {uniqueTags.map(tag => (
-          <button class="filter-pill" data-filter={tag}>{tag}</button>
-        ))}
-      </div>
+    {!featuredOnly && (
+      <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-products-toolbar>
+        <!-- Filtros por tag (pills) -->
+        <div class="flex flex-wrap gap-2" data-filter-pills>
+          <button class="filter-pill active" data-filter="all">{t('products.filterAll' as any)}</button>
+          {uniqueTags.map(tag => (
+            <button class="filter-pill" data-filter={tag}>{tag}</button>
+          ))}
+        </div>
 
-      <!-- Search + sort -->
-      <div class="flex items-center gap-3">
-        <input
-          type="search"
-          class="form-field w-48 sm:w-56"
-          placeholder={t('products.searchPlaceholder' as any)}
-          data-search-input
-        />
-        <select class="form-field w-auto" data-sort-select>
-          <option value="default">{t('products.sortLabel' as any)}</option>
-          <option value="name-asc">{t('products.sortAZ' as any)}</option>
-          <option value="name-desc">{t('products.sortZA' as any)}</option>
-        </select>
+        <!-- Search + sort -->
+        <div class="flex items-center gap-3">
+          <input
+            type="search"
+            class="form-field w-48 sm:w-56"
+            placeholder={t('products.searchPlaceholder' as any)}
+            data-search-input
+          />
+          <select class="form-field w-auto" data-sort-select>
+            <option value="default">{t('products.sortLabel' as any)}</option>
+            <option value="name-asc">{t('products.sortAZ' as any)}</option>
+            <option value="name-desc">{t('products.sortZA' as any)}</option>
+          </select>
+        </div>
       </div>
-    </div>
+    )}
 
     <!-- Mensaje sin resultados (filtros) -->
     <p class="hidden text-center text-gris-medio py-16 col-span-full" data-no-results>
@@ -109,6 +120,17 @@ try {
             />
           </div>
         ))}
+      </div>
+    )}
+
+    {featuredOnly && !loadError && activeProducts.length > 0 && (
+      <div class="mt-16 flex justify-center fade-in-up">
+        <a href={`/${lang}/productos`} class="btn-primary group flex items-center gap-2">
+          Ver todo el catálogo
+          <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
       </div>
     )}
   </Container>
