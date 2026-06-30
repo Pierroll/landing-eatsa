@@ -65,9 +65,9 @@
              focus:outline-none focus-visible:ring-2
              focus-visible:ring-verde focus-visible:ring-offset-2 focus-visible:ring-offset-crema;
       will-change: transform;
-      transition: transform var(--duration-fast) var(--ease-out-quart),
-                  background-color var(--duration-fast) var(--ease-out-quart),
-                  box-shadow var(--duration-fast) var(--ease-out-quart);
+      transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+                  background-color 160ms ease,
+                  box-shadow 160ms ease;
     }
 
     .btn-primary:active {
@@ -76,8 +76,8 @@
 
     @media (hover: hover) and (pointer: fine) {
       .btn-primary:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 24px rgba(46, 38, 31, 0.15);
+        transform: scale(1.02);
+        box-shadow: 0 8px 24px rgba(46, 38, 31, 0.12);
       }
     }
 
@@ -87,8 +87,8 @@
              focus:outline-none focus-visible:ring-2 focus-visible:ring-verde
              focus-visible:ring-offset-2 focus-visible:ring-offset-crema;
       will-change: transform;
-      transition: transform var(--duration-fast) var(--ease-out-quart),
-                  background-color var(--duration-fast) var(--ease-out-quart);
+      transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+                  background-color 160ms ease;
     }
 
     .btn-secondary:active {
@@ -97,7 +97,8 @@
 
     @media (hover: hover) and (pointer: fine) {
       .btn-secondary:hover {
-        transform: scale(1.03);
+        transform: scale(1.02);
+        background-color: rgba(45, 91, 62, 0.04);
       }
     }
 
@@ -111,7 +112,7 @@
 
     @media (hover: hover) and (pointer: fine) {
       .btn-premium:hover {
-        box-shadow: 0 8px 24px rgba(46, 38, 31, 0.2), 0 0 0 2px rgba(184, 146, 74, 0.3);
+        box-shadow: 0 8px 24px rgba(46, 38, 31, 0.15), 0 0 0 2px rgba(184, 146, 74, 0.3);
       }
     }
 
@@ -121,9 +122,9 @@
              rounded-btn bg-ebano px-5 py-3 text-sm text-crema opacity-0 shadow-elevated;
       font-family: 'DM Sans Variable', sans-serif;
       pointer-events: none;
-      transition: opacity 0.6s var(--ease-out-quint),
-                  transform 0.6s var(--ease-out-quint);
-      transform: translateX(-50%) translateY(8px) scale(0.95);
+      transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1),
+                  transform 400ms cubic-bezier(0.32, 0.72, 0, 1);
+      transform: translateX(-50%) translateY(100%);
       max-width: calc(100vw - 2rem);
       white-space: nowrap;
       overflow: hidden;
@@ -132,25 +133,35 @@
 
     .toast-base.visible {
       opacity: 1;
-      transform: translateX(-50%) translateY(0) scale(1);
+      transform: translateX(-50%) translateY(0);
       pointer-events: auto;
+
+      @starting-style {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+      }
     }
 
     .toast-base.hiding {
       opacity: 0;
-      transform: translateX(-50%) translateY(8px) scale(0.95);
+      transform: translateX(-50%) translateY(100%);
     }
 
     @media (min-width: 640px) {
       .toast-base {
         @apply left-auto right-6;
-        transform: translateY(8px) scale(0.95);
+        transform: translateY(100%);
       }
       .toast-base.visible {
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
+
+        @starting-style {
+          opacity: 0;
+          transform: translateY(100%);
+        }
       }
       .toast-base.hiding {
-        transform: translateY(8px) scale(0.95);
+        transform: translateY(100%);
       }
     }
 
@@ -228,27 +239,31 @@
   }
 
   .fade-in-up.visible {
-    animation: fade-in-up 0.6s var(--ease-out-quint) forwards;
+    animation: fade-in-up 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .fade-in-down.visible {
-    animation: fade-in-down 0.6s var(--ease-out-quint) forwards;
+    animation: fade-in-down 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .fade-in-left.visible {
-    animation: fade-in-left 0.6s var(--ease-out-quint) forwards;
+    animation: fade-in-left 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .fade-in-right.visible {
-    animation: fade-in-right 0.6s var(--ease-out-quint) forwards;
+    animation: fade-in-right 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .scale-in.visible {
-    animation: scale-in 0.6s var(--ease-out-quint) forwards;
+    animation: scale-in 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
 
   /* ─── Pills de filtro (catálogo) ─── */
   .filter-pill {
     @apply min-h-11 rounded-full border border-gris-claro bg-white px-4 py-2 text-sm font-medium
-           text-ebano transition-all duration-200 hover:border-verde hover:text-verde
+           text-ebano hover:border-verde hover:text-verde
            focus:outline-none focus-visible:ring-2 focus-visible:ring-verde
            focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+                background-color 160ms ease,
+                color 160ms ease,
+                border-color 160ms ease;
   }
 
   .filter-pill.active {
@@ -278,7 +293,7 @@
 
   /* ─── Transiciones de grid de productos ─── */
   .product-card-wrapper {
-    transition: opacity 0.3s var(--ease-out-quint), transform 0.3s var(--ease-out-quint);
+    transition: opacity 150ms cubic-bezier(0.23, 1, 0.32, 1), transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
     opacity: 0;
     transform: translateY(12px);
   }
@@ -286,8 +301,8 @@
   .product-card-wrapper.visible {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 80ms),
-                transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 80ms);
+    transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i, 0) * 50ms),
+                transform 300ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i, 0) * 50ms);
   }
 
   .product-card-wrapper.hidden {

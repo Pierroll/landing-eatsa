@@ -37,9 +37,9 @@ const soilRows = [
       />
     </div>
 
-    <div class="grid items-stretch gap-8 lg:grid-cols-2 mb-12">
+    <div class="grid items-stretch gap-8 lg:grid-cols-2 mb-12 stagger-children">
       <!-- Galería (Reemplaza el mapa gigante) -->
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-2 gap-4 fade-in-up">
         <div class="card overflow-hidden p-0">
           <Image
             src={imgHarvest}
@@ -63,7 +63,7 @@ const soilRows = [
       </div>
 
       <!-- Datos climáticos + suelo -->
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-6 fade-in-up">
         <div class="card p-6">
           <h3 class="mb-6 text-lg font-semibold text-verde">{t('origin.climate.title' as any)}</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -97,9 +97,9 @@ const soilRows = [
     </div>
 
     <!-- Ubicación privilegiada + comunidad -->
-    <div class="grid gap-8 md:grid-cols-2 mb-12">
+    <div class="grid gap-8 md:grid-cols-2 mb-12 stagger-children">
       <!-- Ubicación Privilegiada con Mapa Pequeño -->
-      <div class="card overflow-hidden flex flex-col">
+      <div class="card overflow-hidden flex flex-col fade-in-up">
         <div class="p-8 pb-6 flex-1">
           <h3 class="mb-3 text-xl font-semibold text-verde">{t('origin.privilegedLocation' as any)}</h3>
           <p class="text-ebano/85">{t('origin.privilegedLocation.desc' as any)}</p>
@@ -118,7 +118,7 @@ const soilRows = [
       </div>
 
       <!-- Comunidad (con foto de fondo) -->
-      <div class="card relative overflow-hidden bg-verde p-8 text-crema flex flex-col justify-between group">
+      <div class="card relative overflow-hidden bg-verde p-8 text-crema flex flex-col justify-between group fade-in-up">
         <!-- Imagen oscurecida de fondo -->
         <div class="absolute inset-0 z-0">
           <Image

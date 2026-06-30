@@ -19,7 +19,7 @@ const t = useTranslations(lang);
   <Container>
     <div class="grid gap-12 lg:grid-cols-2">
       <!-- Datos de contacto -->
-      <div class="">
+      <div class="fade-in-right">
         <h2 class="mb-6 text-3xl">{t('contact.info.title' as any)}</h2>
         <p class="mb-8 text-ebano/75">{t('contact.info.subtitle' as any)}</p>
 
@@ -78,11 +78,11 @@ const t = useTranslations(lang);
       </div>
 
       {/* Mapa / imagen del frontis */}
-      <div class=" card overflow-hidden p-0">
+      <div class="card overflow-hidden p-0 fade-in-left reveal-image">
         <Image
           src={frontisImg}
           alt={siteConfig.name}
-          class="h-full min-h-[400px] w-full object-cover"
+          class="h-full min-h-[400px] w-full object-cover blur-hover-img"
           loading="lazy"
           width={600}
           height={500}

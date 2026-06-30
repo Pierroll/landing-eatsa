@@ -28,7 +28,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
       class="mb-20"
     />
 
-    <div class="relative flex flex-col gap-16">
+    <div class="relative flex flex-col gap-16 stagger-children">
       {steps.map(async (step) => {
         const isLeft = step.data.side === 'left';
         const photoPath = `/src${step.data.photo}`;
@@ -36,15 +36,15 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
         const resolvedPhoto = photoFn ? await photoFn() : null;
         
         return (
-          <div class={` relative flex flex-col items-center gap-8 lg:flex-row ${isLeft ? '' : 'lg:flex-row-reverse'}`}>
+          <div class={` relative flex flex-col items-center gap-8 lg:flex-row ${isLeft ? '' : 'lg:flex-row-reverse'} ${isLeft ? 'fade-in-right' : 'fade-in-left'}`}>
             {/* Foto del paso */}
             <div class="w-full lg:w-1/2">
-              <div class="card overflow-hidden p-0">
+              <div class="card overflow-hidden p-0 reveal-image">
                 {resolvedPhoto && (
                   <Image
                     src={resolvedPhoto.default}
                     alt={t(step.data.titleKey as any)}
-                    class="h-72 w-full object-cover"
+                    class="h-72 w-full object-cover blur-hover-img"
                     loading="lazy"
                     width={600}
                     height={288}
@@ -60,7 +60,9 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
                   {step.data.number}
                 </span>
                 <div>
-                  <h3 class="text-2xl font-bold text-verde">{t(step.data.titleKey as any)}</h3>
+                  <h3 class="text-2xl font-bold text-verde text-reveal-wrapper">
+                    <span class="text-reveal">{t(step.data.titleKey as any)}</span>
+                  </h3>
                   <p class="mt-3 text-base leading-relaxed text-ebano/75">{t(step.data.descKey as any)}</p>
                 </div>
               </div>

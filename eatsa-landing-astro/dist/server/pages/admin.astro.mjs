@@ -1,7 +1,7 @@
 /* empty css                                 */
 import { c as createComponent, r as renderComponent, d as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_Bg-g91To.mjs';
 import 'kleur/colors';
-import { $ as $$AdminLayout } from '../chunks/AdminLayout_CH-801Fc.mjs';
+import { $ as $$AdminLayout } from '../chunks/AdminLayout_C-CbQ7NA.mjs';
 export { renderers } from '../renderers.mjs';
 
 const prerender = false;

@@ -25,13 +25,15 @@ const checks = [
 
   <Container class="relative z-10">
     <div class="mx-auto max-w-3xl text-center">
-      <h2 class="mb-4 text-4xl font-bold text-crema sm:text-5xl lg:text-6xl">{t('cta.title' as any)}</h2>
-      <p class="mb-10 text-lg text-crema/75 sm:text-xl">{t('cta.subtitle' as any)}</p>
+      <h2 class="mb-4 text-4xl font-bold text-crema sm:text-5xl lg:text-6xl text-reveal-wrapper">
+        <span class="text-reveal">{t('cta.title' as any)}</span>
+      </h2>
+      <p class="mb-10 text-lg text-crema/75 sm:text-xl fade-in-up">{t('cta.subtitle' as any)}</p>
 
       <!-- Checks con más espaciado y presencia -->
-      <ul class="mb-12 flex flex-wrap justify-center gap-x-8 gap-y-3">
+      <ul class="mb-12 flex flex-wrap justify-center gap-x-8 gap-y-3 stagger-children">
         {checks.map((check) => (
-          <li class="flex items-center gap-3 text-base text-crema/90">
+          <li class="flex items-center gap-3 text-base text-crema/90 fade-in-up">
             <span class="flex h-6 w-6 items-center justify-center rounded-full bg-verde/20">
               <svg class="h-3.5 w-3.5 text-verde" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -43,7 +45,7 @@ const checks = [
       </ul>
 
       <!-- CTAs con más peso -->
-      <div class="flex flex-wrap items-center justify-center gap-6">
+      <div class="flex flex-wrap items-center justify-center gap-6 fade-in-up">
         <Button variant="primary" id="final-price-btn" class="btn-premium !px-10 !py-4 text-lg shadow-lg shadow-verde/20">
           {t('cta.button' as any)}
         </Button>
