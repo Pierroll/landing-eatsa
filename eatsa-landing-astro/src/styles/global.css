@@ -35,8 +35,13 @@
     @apply bg-crema text-ebano font-body antialiased text-base sm:text-lg leading-relaxed;
   }
 
+  p, li {
+    text-wrap: pretty;
+  }
+
   h1, h2, h3 {
     @apply font-display text-verde;
+    text-wrap: balance;
   }
 
   /* Filtro fotográfico global unificador (calidez y saturación sutil) */

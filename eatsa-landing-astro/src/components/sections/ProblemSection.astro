@@ -51,12 +51,12 @@ const iconColor: Record<string, string> = {
           <Stat value={problem.stat} label={t(problem.titleKey as any)} animated />
 
           {/* Descripción */}
-          <p class="mt-4 text-sm leading-relaxed text-ebano/70">{t(problem.descKey as any)}</p>
+          <p class="mt-4 text-sm leading-relaxed text-ebano/70 line-clamp-3 md:line-clamp-none">{t(problem.descKey as any)}</p>
         </div>
       ))}
 
       <!-- Tercer problema — destacado, full-width, mayor énfasis -->
-      <div class="col-span-2 card p-8 lg:p-10 relative overflow-hidden border-l-4 border-verde bg-gradient-to-br from-crema to-verde/3 fade-in-up">
+      <div class="md:col-span-2 card p-8 lg:p-10 relative overflow-hidden border-l-4 border-verde bg-gradient-to-br from-crema to-verde/3 fade-in-up">
         <!-- Barra decorativa superior -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-verde"></div>
 
@@ -70,7 +70,7 @@ const iconColor: Record<string, string> = {
 
           <div>
             <Stat value={problems[2].stat} label={t(problems[2].titleKey as any)} animated />
-            <p class="mt-4 text-base leading-relaxed text-ebano/80">{t(problems[2].descKey as any)}</p>
+            <p class="mt-4 text-base leading-relaxed text-ebano/80 line-clamp-3 md:line-clamp-none">{t(problems[2].descKey as any)}</p>
           </div>
         </div>
       </div>
