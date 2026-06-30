@@ -85,23 +85,33 @@ const productLabels: Record<string, TranslationKey> = {
           </div>
         </div>
 
-        <div>
-          <div class="pl-5 border-l-2 border-verde">
-            <h3 class="font-semibold text-lg text-ebano mb-1">{t('contact.trust.box.title' as any)}</h3>
-            <p class="text-ebano/70 text-sm leading-relaxed max-w-sm">{t('contact.trust.box.desc' as any)}</p>
-          </div>
+        <div class="card p-6 bg-white/60 border border-verde/10 shadow-sm relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-1 h-full bg-verde transition-all duration-300"></div>
+          <h3 class="font-semibold text-lg text-verde mb-2 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {t('contact.trust.box.title' as any)}
+          </h3>
+          <p class="text-ebano/75 text-sm leading-relaxed mb-6">{t('contact.trust.box.desc' as any)}</p>
 
-          <div class="mt-8 flex flex-wrap gap-3">
-            <span class="inline-block bg-white text-ebano/80 px-4 py-2 rounded-full text-xs font-medium border border-gris-claro shadow-sm transition-transform duration-200 hover:scale-[1.03] hover:border-verde hover:text-verde">{t('contact.trust.badge1' as any)}</span>
-            <span class="inline-block bg-white text-ebano/80 px-4 py-2 rounded-full text-xs font-medium border border-gris-claro shadow-sm transition-transform duration-200 hover:scale-[1.03] hover:border-cacao hover:text-cacao">{t('contact.trust.badge2' as any)}</span>
-            <span class="inline-block bg-white text-ebano/80 px-4 py-2 rounded-full text-xs font-medium border border-gris-claro shadow-sm transition-transform duration-200 hover:scale-[1.03] hover:border-ebano hover:text-ebano">{t('contact.trust.badge3' as any)}</span>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 bg-verde/5 text-verde px-3 py-1.5 rounded-md text-xs font-medium border border-verde/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-verde"></span> {t('contact.trust.badge1' as any)}
+            </span>
+            <span class="inline-flex items-center gap-1.5 bg-cacao/5 text-cacao px-3 py-1.5 rounded-md text-xs font-medium border border-cacao/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-cacao"></span> {t('contact.trust.badge2' as any)}
+            </span>
+            <span class="inline-flex items-center gap-1.5 bg-ebano/5 text-ebano px-3 py-1.5 rounded-md text-xs font-medium border border-ebano/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-ebano"></span> {t('contact.trust.badge3' as any)}
+            </span>
           </div>
         </div>
       </div>
 
       <!-- Columna derecha: formulario -->
-      <div class="card p-8 shadow-elevated">
-        <form id="contact-form" action="/api/contact" method="POST" class="flex flex-col gap-5" novalidate>
+      <div class="card p-8 shadow-elevated flex flex-col justify-center">
+        <form id="contact-form" action="/api/contact" method="POST" class="flex flex-col gap-4" novalidate>
           <input
             type="text"
             name="company_website"
@@ -110,52 +120,40 @@ const productLabels: Record<string, TranslationKey> = {
             aria-hidden="true"
           />
 
-          <div class="grid gap-5 sm:grid-cols-2">
+          <div class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="full_name" class="mb-1.5 block text-sm font-medium text-ebano">
+              <label for="full_name" class="mb-1 block text-sm font-medium text-ebano">
                 {t('contact.form.name' as any)} *
               </label>
               <input id="full_name" name="full_name" type="text" required class="form-field" />
             </div>
             <div>
-              <label for="company" class="mb-1.5 block text-sm font-medium text-ebano">
+              <label for="company" class="mb-1 block text-sm font-medium text-ebano">
                 {t('contact.form.company' as any)} *
               </label>
               <input id="company" name="company" type="text" required class="form-field" />
             </div>
           </div>
 
-          <div class="grid gap-5 sm:grid-cols-2">
+          <div class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="email" class="mb-1.5 block text-sm font-medium text-ebano">
+              <label for="email" class="mb-1 block text-sm font-medium text-ebano">
                 {t('contact.form.email' as any)} *
               </label>
               <input id="email" name="email" type="email" required class="form-field" />
             </div>
             <div>
-              <label for="phone" class="mb-1.5 block text-sm font-medium text-ebano">
+              <label for="phone" class="mb-1 block text-sm font-medium text-ebano">
                 {t('contact.form.phone' as any)}
               </label>
               <input id="phone" name="phone" type="tel" class="form-field" />
             </div>
           </div>
 
-          <div>
-            <span class="mb-2 block text-sm font-medium text-ebano">
-              {t('contact.form.products' as any)}
-            </span>
-            <div class="grid grid-cols-2 gap-3">
-              {contactForm.productOptions.map((p) => (
-                <label class="flex cursor-pointer items-center gap-3 rounded-btn border border-gris-claro bg-white px-4 py-2.5 text-sm transition-all duration-200 hover:border-verde hover:bg-verde/5 active:scale-[0.98]">
-                  <input type="checkbox" name="products" value={p} class="accent-verde h-4 w-4 rounded border-gris-claro text-verde focus:ring-verde" />
-                  <span class="font-medium text-ebano/90">{t(productLabels[p] as any)}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+
 
           <div>
-            <label for="message" class="mb-1.5 block text-sm font-medium text-ebano">
+            <label for="message" class="mb-1 block text-sm font-medium text-ebano">
               {t('contact.form.message' as any)} *
             </label>
             <textarea id="message" name="message" rows="3" required class="form-field resize-none"></textarea>
@@ -192,7 +190,7 @@ const productLabels: Record<string, TranslationKey> = {
         
         // Mostrar mensaje de error con animación
         feedback.textContent = 'Por favor, rellena los campos obligatorios del formulario primero.';
-        feedback.className = 'block rounded-btn p-3 text-sm font-medium bg-error/10 text-error border border-error/20 animate-in fade-in slide-in-from-top-2';
+        feedback.className = 'block rounded-btn p-3 text-sm font-medium bg-error/10 text-error border border-error/20 animate-fade-in-down';
         
         // Hacer focus en el primer campo inválido para buena UX
         const firstInvalid = form.querySelector(':invalid') as HTMLElement;

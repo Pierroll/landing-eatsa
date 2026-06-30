@@ -243,19 +243,40 @@
   }
 
   .fade-in-up.visible {
-    animation: fade-in-up 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: fade-in-up 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .fade-in-down.visible {
-    animation: fade-in-down 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: fade-in-down 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .fade-in-left.visible {
-    animation: fade-in-left 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: fade-in-left 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .fade-in-right.visible {
-    animation: fade-in-right 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: fade-in-right 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   .scale-in.visible {
-    animation: scale-in 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: scale-in 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in-down {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in-left {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fade-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
   }
 
   /* ─── Pills de filtro (catálogo) ─── */
@@ -477,24 +498,7 @@
   }
 
   /* ─── Certifications Section Animations ─── */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
+  /* Removemos animación hardcodeada porque ahora usamos fade-in-up con stagger-children */
   .certification-card {
-    opacity: 0;
-    animation: fadeInUp 600ms ease-out forwards;
+    transition: transform 300ms ease, background-color 300ms ease;
   }
-
-  .certification-card:nth-child(1) { animation-delay: 100ms; }
-  .certification-card:nth-child(2) { animation-delay: 200ms; }
-  .certification-card:nth-child(3) { animation-delay: 300ms; }
-  .certification-card:nth-child(4) { animation-delay: 400ms; }
-  .certification-card:nth-child(5) { animation-delay: 500ms; }

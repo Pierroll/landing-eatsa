@@ -16,7 +16,17 @@ const { lang } = Astro.props as { lang: Locale };
 const t = useTranslations(lang);
 
 const steps = (await getCollection('process')).sort((a, b) => a.data.number - b.data.number);
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}');
+import imgStep1 from '../../assets/process/paso-1-cosecha.jpeg';
+import imgStep2 from '../../assets/process/paso-2-procesamiento.jpeg';
+import imgStep3 from '../../assets/process/paso-3-calidad.png';
+import imgStep4 from '../../assets/process/paso-4-exportacion.png';
+
+const processImages: Record<string, ImageMetadata> = {
+  '/assets/process/paso-1-cosecha.jpeg': imgStep1,
+  '/assets/process/paso-2-procesamiento.jpeg': imgStep2,
+  '/assets/process/paso-3-calidad.png': imgStep3,
+  '/assets/process/paso-4-exportacion.png': imgStep4,
+};
 ---
 
 <section id="proceso" class="section-white py-24 sm:py-32">
@@ -31,18 +41,17 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{j
     <div class="relative flex flex-col gap-16 stagger-children">
       {steps.map(async (step) => {
         const isLeft = step.data.side === 'left';
-        const photoPath = `/src${step.data.photo}`;
-        const photoFn = images[photoPath];
-        const resolvedPhoto = photoFn ? await photoFn() : null;
+        const photoKey = step.data.photo;
+        const resolvedPhoto = processImages[photoKey];
         
         return (
           <div class={` relative flex flex-col items-center gap-8 lg:flex-row ${isLeft ? '' : 'lg:flex-row-reverse'} ${isLeft ? 'fade-in-right' : 'fade-in-left'}`}>
             {/* Foto del paso */}
             <div class="w-full lg:w-1/2">
-              <div class="card overflow-hidden p-0 reveal-image">
+              <div class="card overflow-hidden p-0">
                 {resolvedPhoto && (
                   <Image
-                    src={resolvedPhoto.default}
+                    src={resolvedPhoto}
                     alt={t(step.data.titleKey as any)}
                     class="h-72 w-full object-cover blur-hover-img"
                     loading="lazy"

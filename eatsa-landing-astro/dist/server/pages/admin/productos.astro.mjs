@@ -1,7 +1,7 @@
 /* empty css                                    */
 import { c as createComponent, r as renderComponent, d as renderTemplate, m as maybeRenderHead, g as addAttribute } from '../../chunks/astro/server_Bg-g91To.mjs';
 import 'kleur/colors';
-import { $ as $$AdminLayout } from '../../chunks/AdminLayout_DV8qQVEY.mjs';
+import { $ as $$AdminLayout } from '../../chunks/AdminLayout_DZwGbGC0.mjs';
 import { g as getProductos } from '../../chunks/db_DsWhjv-W.mjs';
 export { renderers } from '../../renderers.mjs';
 

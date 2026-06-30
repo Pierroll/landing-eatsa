@@ -17,7 +17,7 @@ const t = useTranslations(lang);
 const allTestimonials = await getCollection('testimonials');
 const activeTestimonials = allTestimonials.filter((t) => t.data.enabled);
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}');
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/testimonials/**/*.{jpeg,jpg,png,gif,webp,svg}');
 
 // Si no hay testimonios activos, la sección completa se omite.
 const hasTestimonials = activeTestimonials.length > 0;
