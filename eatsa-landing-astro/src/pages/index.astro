@@ -1,3 +1,429 @@
 ---
-return Astro.redirect('/es/');
+import MainLayout from '@/layouts/MainLayout.astro';
+import { getLangFromUrl, useTranslations } from '@/i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
+
+<MainLayout lang={lang}>
+  <!-- Fixed Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-primary">
+    <div class="container mx-auto px-4 py-2">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3">
+          <img src="/logo23.svg" alt="EATSA" class="w-[8.75rem] h-[7.5rem]" />
+          <h1 class="text-3xl font-bold text-white whitespace-nowrap">EATSA SAC</h1>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex items-center space-x-12">
+          <a href="#productos" class="text-lg text-white/80 hover:text-white transition-colors">{t('nav.products')}</a>
+          <a href="#origen" class="text-lg text-white/80 hover:text-white transition-colors">{t('nav.origin')}</a>
+          <a href="#certificaciones" class="text-lg text-white/80 hover:text-white transition-colors">{t('nav.certifications')}</a>
+          <a href="#proceso" class="text-lg text-white/80 hover:text-white transition-colors">{t('nav.process')}</a>
+          <a href="#contacto" class="text-lg text-white/80 hover:text-white transition-colors">{t('nav.contact')}</a>
+        </nav>
+
+        <!-- Language & CTA -->
+        <div class="flex items-center space-x-4">
+          <button id="header-price-btn" class="btn-inverted open-price-modal">{t('header.priceBtn')}</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0">
+      <img 
+        src="/images/downloaded/1.jpg" 
+        alt="Plantación de cacao en la selva amazónica peruana" 
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/60 to-transparent"></div>
+    </div>
+    
+    <div class="relative z-10 container mx-auto px-4 text-center md:text-left">
+      <div class="max-w-4xl">
+        <h1 class="text-4xl md:text-6xl font-playfair font-bold text-white mb-6 leading-tight">
+          {t('hero.title')}
+          <span class="block text-accent">{t('hero.subtitle')}</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl">
+          {t('hero.description')}
+        </p>
+        
+        <!-- Trust Bar -->
+        <div class="flex flex-wrap justify-center md:justify-start gap-8 mb-8 text-white hero-stats">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-accent stat-number">10+</div>
+            <div class="text-sm">{t('hero.experience')}</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-accent stat-number">100+</div>
+            <div class="text-sm">{t('hero.producers')}</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-accent stat-number">100+</div>
+            <div class="text-sm">{t('hero.tonsPerMonth')}</div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <button id="hero-price-btn" class="btn-accent text-lg px-8 py-4 open-price-modal">
+            {t('hero.requestPrices')}
+          </button>
+          <a href="#productos" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all text-center">
+            {t('hero.seeProducts')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amazon Origin Section -->
+  <section id="origen" class="py-20 bg-surface">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+          {t('origin.title')}
+        </h2>
+        <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+          {t('origin.subtitle')}
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Interactive Map -->
+        <div class="relative">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="h-96 bg-gradient-to-br from-primary/20 to-accent/20 relative">
+              <img src="/images/downloaded/nuevop.png" 
+                   alt="Vista aérea de Nuevo Progreso, Tocache" 
+                   class="w-full h-full object-cover opacity-80" />
+              
+              <!-- Location Marker -->
+              <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div class="relative">
+                  <div class="w-6 h-6 bg-accent rounded-full border-4 border-white shadow-lg animate-pulse"></div>
+                  <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded shadow-lg text-sm font-semibold whitespace-nowrap">
+                    Nuevo Progreso - Tocache - San Martín
+                  </div>
+                </div>
+              </div>
+
+              <!-- Climate Data -->
+              <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3">
+                <div class="text-xs font-semibold text-primary mb-1">Datos Climáticos</div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between">
+                    <span>Altitud:</span>
+                    <span class="font-semibold">490 m.s.n.m.</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Temperatura:</span>
+                    <span class="font-semibold">21-33°C</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Precipitación:</span>
+                    <span class="font-semibold">Alta</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Soil Quality -->
+              <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3">
+                <div class="text-xs font-semibold text-primary mb-1">Calidad del Suelo</div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between">
+                    <span>pH:</span>
+                    <span class="font-semibold">6.0-6.5</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Materia Orgánica:</span>
+                    <span class="font-semibold">Alta</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Drenaje:</span>
+                    <span class="font-semibold">Excelente</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Origin Details -->
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-2xl font-playfair font-bold text-primary mb-4">Ubicación Privilegiada</h3>
+            <p class="text-text-secondary mb-6">
+              Nuevo Progreso se encuentra en el corazón de la selva amazónica peruana, una zona privilegiada para el cultivo de cacao fino de aroma.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-white p-4 rounded-lg shadow">
+                <div class="text-2xl font-bold text-accent mb-1">8°45'S</div>
+                <div class="text-sm text-text-secondary">Latitud Sur</div>
+              </div>
+              <div class="bg-white p-4 rounded-lg shadow">
+                <div class="text-2xl font-bold text-accent mb-1">76°32'W</div>
+                <div class="text-sm text-text-secondary">Longitud Oeste</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-2xl font-playfair font-bold text-primary mb-4">Compromiso Comunitario</h3>
+            <p class="text-text-secondary mb-4">
+              Trabajamos directamente con más de 150 familias productoras locales, garantizando prácticas sostenibles y comercio justo.
+            </p>
+            
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-primary">150+ Familias</div>
+                <div class="text-sm text-text-secondary">Productores asociados</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Showcase -->
+  <section id="productos" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-playfair font-bold text-primary mb-6">
+          {t('products.title')}
+        </h2>
+        <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+          {t('products.subtitle')}
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Cacao Fino de Aroma -->
+        <div class="product-card bg-white border-2 border-accent rounded-lg overflow-hidden shadow-lg">
+          <div class="relative">
+            <img src="/images/downloaded/image.png" 
+                 alt="Granos de cacao fino de aroma" 
+                 class="w-full h-48 object-cover" />
+            <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+              Premium
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-primary mb-3">Cacao Fino de Aroma</h3>
+            <div class="space-y-2 text-sm text-text-secondary mb-4">
+              <div class="flex justify-between">
+                <span>Humedad:</span>
+                <span class="font-semibold">≤ 7%</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Fermentación:</span>
+                <span class="font-semibold">≥ 80%</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Defectos:</span>
+                <span class="font-semibold">≤ 3%</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Fair Trade</span>
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">HACCP</span>
+            </div>
+            <button class="w-full btn-primary open-spec-modal" data-product-id="cacao-fino-aroma">
+              {t('products.seeSpecs')}
+            </button>
+          </div>
+        </div>
+
+        <!-- Café de Altura -->
+        <div class="product-card bg-white border-2 border-accent rounded-lg overflow-hidden shadow-lg">
+          <div class="relative">
+            <img src="/images/downloaded/image2.png" 
+                 alt="Granos de café de altura" 
+                 class="w-full h-48 object-cover" />
+            <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+              Altura
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-primary mb-3">Café de Altura</h3>
+            <div class="space-y-2 text-sm text-text-secondary mb-4">
+              <div class="flex justify-between">
+                <span>Altitud:</span>
+                <span class="font-semibold">1200-1800m</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Humedad:</span>
+                <span class="font-semibold">≤ 12%</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Puntaje SCA:</span>
+                <span class="font-semibold">≥ 84</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Rainforest</span>
+            </div>
+            <button class="w-full btn-primary open-spec-modal" data-product-id="cafe-altura">
+              {t('products.seeSpecs')}
+            </button>
+          </div>
+        </div>
+
+        <!-- Nibs de Cacao -->
+        <div class="product-card bg-white border-2 border-accent rounded-lg overflow-hidden shadow-lg">
+          <div class="relative">
+            <img src="/images/downloaded/nibs.jpeg" 
+                 alt="Nibs de cacao tostados" 
+                 class="w-full h-48 object-cover" />
+            <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+              Premium
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-primary mb-3">Nibs de Cacao</h3>
+            <div class="space-y-2 text-sm text-text-secondary mb-4">
+              <div class="flex justify-between">
+                <span>Humedad:</span>
+                <span class="font-semibold">≤ 3%</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Tamaño:</span>
+                <span class="font-semibold">2-8mm</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Pureza:</span>
+                <span class="font-semibold">≥ 99%</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Tostado</span>
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">HACCP</span>
+            </div>
+            <button class="w-full btn-primary open-spec-modal" data-product-id="nibs-cacao">
+              {t('products.seeSpecs')}
+            </button>
+          </div>
+        </div>
+
+        <!-- Chocolate de Cacao -->
+        <div class="product-card bg-white border-2 border-accent rounded-lg overflow-hidden shadow-lg">
+          <div class="relative">
+            <img src="/images/downloaded/chocolate.jpg" 
+                 alt="Chocolate artesanal peruano" 
+                 class="w-full h-48 object-cover" />
+            <div class="absolute top-4 right-4 bg-accent text-primary px-2 py-1 rounded text-sm font-bold">
+              Artesanal
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-primary mb-3">Chocolate de Cacao</h3>
+            <div class="space-y-2 text-sm text-text-secondary mb-4">
+              <div class="flex justify-between">
+                <span>Contenido Cacao:</span>
+                <span class="font-semibold">70-85%</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Presentación:</span>
+                <span class="font-semibold">Barras/Bulk</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Origen:</span>
+                <span class="font-semibold">100% Peruano</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Orgánico</span>
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Single Origin</span>
+              <span class="bg-success/10 text-success px-2 py-1 rounded text-xs">Fair Trade</span>
+            </div>
+            <button class="w-full btn-primary open-spec-modal" data-product-id="chocolate-cacao">
+              {t('products.seeSpecs')}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Placeholder for remaining sections (will add in next iteration) -->
+  <div class="py-20 bg-surface text-center">
+    <p class="text-text-secondary">Más secciones en desarrollo...</p>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href') as string);
+        if (target) {
+          const headerOffset = 100;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Header scroll effect
+    let lastScroll = 0;
+    const header = document.querySelector('header');
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (header) {
+        if (currentScroll > 100) {
+          header.classList.add('shadow-lg', 'bg-primary/98');
+          header.style.transform = currentScroll > lastScroll ? 'translateY(-100%)' : 'translateY(0)';
+        } else {
+          header.classList.remove('shadow-lg', 'bg-primary/98');
+          header.style.transform = 'translateY(0)';
+        }
+
+        header.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const animationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-down, .product-card');
+    animatedElements.forEach(el => animationObserver.observe(el));
+  </script>
+</MainLayout>
