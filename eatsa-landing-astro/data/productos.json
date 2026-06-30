@@ -3,7 +3,7 @@
     "id": "cacao-fino",
     "name": "Grano de Cacao Fino de Aroma",
     "tag": "Exportación",
-    "image": "/assets/hero/cacao-hero.jpg",
+    "image": "/assets/hero/cacao-hero.webp",
     "status": "activo",
     "attributes": ["Orgánico", "Comercio Justo"],
     "specs": [
@@ -15,7 +15,7 @@
     "id": "manteca-cacao",
     "name": "Manteca de Cacao Pura",
     "tag": "Derivado",
-    "image": "/assets/hero/cacao-hero.jpg",
+    "image": "/assets/hero/cacao-hero.webp",
     "status": "activo",
     "attributes": ["Prensado al Frío", "Sin Refinar"],
     "specs": [

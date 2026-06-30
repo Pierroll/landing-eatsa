@@ -5,15 +5,11 @@ import { contactForm } from '@data/site';
 import Container from '@components/ui/Container.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
 import Button from '@components/ui/Button.astro';
+import { Phone, Mail, Clock } from 'lucide-astro';
 
 /**
  * Formulario B2B de contacto.
  * POSTea a /api/contact (API route server-side con Resend).
- *
- * 🛡️ HONEYPOT: el campo `company_website` NO usa type="hidden" (los bots avanzados
- *    leen eso). Se oculta vía CSS absolute off-screen para que parezca un campo
- *    real a un bot que parsea HTML, pero es invisible/inaccesible para humanos.
- *    La validación correspondiente vive en src/pages/api/contact.ts.
  */
 const { lang } = Astro.props as { lang: Locale };
 const t = useTranslations(lang);
@@ -35,18 +31,10 @@ const countryLabels: Record<string, { es: string; en: string }> = {
 };
 
 const volumeLabels: Record<string, TranslationKey> = {
-  '1-5': 'contact.form.volume', // reutiliza label base; el value va en option text
+  '1-5': 'contact.form.volume',
   '5-20': 'contact.form.volume',
   '20-50': 'contact.form.volume',
   '50+': 'contact.form.volume',
-};
-
-const businessLabels: Record<string, { es: string; en: string }> = {
-  manufacturer: { es: 'Fabricante', en: 'Manufacturer' },
-  importer: { es: 'Importador', en: 'Importer' },
-  retailer: { es: 'Minorista', en: 'Retailer' },
-  processor: { es: 'Procesador', en: 'Processor' },
-  other: { es: 'Otro', en: 'Other' },
 };
 
 const productLabels: Record<string, TranslationKey> = {
@@ -59,20 +47,61 @@ const productLabels: Record<string, TranslationKey> = {
 
 <section id="contacto" class="section-cream py-24">
   <Container>
-    <div class="grid gap-12 lg:grid-cols-2">
-      <!-- Columna izquierda: header + info -->
-      <div>
-        <SectionHeader
-          title={t('contact.title' as any)}
-          subtitle={t('contact.subtitle' as any)}
-          align="left"
-        />
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <!-- Columna izquierda: header + info de confianza -->
+      <div class="flex flex-col justify-between h-full fade-in-up stagger-children lg:pr-8 py-4">
+        <div>
+          <SectionHeader
+            title={t('contact.title' as any)}
+            subtitle={t('contact.subtitle' as any)}
+            align="left"
+          />
+        </div>
+
+        <div class="flex flex-col gap-8 my-8">
+          <a href="tel:+51952418325" class="group flex items-center gap-4 transition-all duration-200 active:scale-[0.98]">
+            <div class="p-3 bg-white border border-gris-claro text-verde rounded-full shadow-sm transition-transform duration-200 group-hover:scale-110 group-hover:border-verde">
+              <Phone class="w-5 h-5" />
+            </div>
+            <div>
+              <p class="font-medium text-ebano text-lg">{t('contact.trust.phone' as any)}</p>
+            </div>
+          </a>
+          <a href="mailto:ventas@amazonicatropical.com" class="group flex items-center gap-4 transition-all duration-200 active:scale-[0.98]">
+            <div class="p-3 bg-white border border-gris-claro text-cacao rounded-full shadow-sm transition-transform duration-200 group-hover:scale-110 group-hover:border-cacao">
+              <Mail class="w-5 h-5" />
+            </div>
+            <div>
+              <p class="font-medium text-ebano text-lg">{t('contact.trust.email' as any)}</p>
+            </div>
+          </a>
+          <div class="flex items-center gap-4">
+            <div class="p-3 bg-white border border-gris-claro text-ebano/70 rounded-full shadow-sm">
+              <Clock class="w-5 h-5" />
+            </div>
+            <div>
+              <p class="font-medium text-ebano text-lg">{t('contact.trust.hours' as any)}</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="pl-5 border-l-2 border-verde">
+            <h3 class="font-semibold text-lg text-ebano mb-1">{t('contact.trust.box.title' as any)}</h3>
+            <p class="text-ebano/70 text-sm leading-relaxed max-w-sm">{t('contact.trust.box.desc' as any)}</p>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <span class="inline-block bg-white text-ebano/80 px-4 py-2 rounded-full text-xs font-medium border border-gris-claro shadow-sm transition-transform duration-200 hover:scale-[1.03] hover:border-verde hover:text-verde">{t('contact.trust.badge1' as any)}</span>
+            <span class="inline-block bg-white text-ebano/80 px-4 py-2 rounded-full text-xs font-medium border border-gris-claro shadow-sm transition-transform duration-200 hover:scale-[1.03] hover:border-cacao hover:text-cacao">{t('contact.trust.badge2' as any)}</span>
+            <span class="inline-block bg-white text-ebano/80 px-4 py-2 rounded-full text-xs font-medium border border-gris-claro shadow-sm transition-transform duration-200 hover:scale-[1.03] hover:border-ebano hover:text-ebano">{t('contact.trust.badge3' as any)}</span>
+          </div>
+        </div>
       </div>
 
       <!-- Columna derecha: formulario -->
-      <div class=" card p-8">
-        <form id="contact-form" action="/api/contact" method="POST" class="flex flex-col gap-4" novalidate>
-          {/* Honeypot — oculto vía CSS, NO type="hidden" */}
+      <div class="card p-8 shadow-elevated">
+        <form id="contact-form" action="/api/contact" method="POST" class="flex flex-col gap-5" novalidate>
           <input
             type="text"
             name="company_website"
@@ -81,7 +110,7 @@ const productLabels: Record<string, TranslationKey> = {
             aria-hidden="true"
           />
 
-          <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-5 sm:grid-cols-2">
             <div>
               <label for="full_name" class="mb-1.5 block text-sm font-medium text-ebano">
                 {t('contact.form.name' as any)} *
@@ -96,7 +125,7 @@ const productLabels: Record<string, TranslationKey> = {
             </div>
           </div>
 
-          <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-5 sm:grid-cols-2">
             <div>
               <label for="email" class="mb-1.5 block text-sm font-medium text-ebano">
                 {t('contact.form.email' as any)} *
@@ -111,81 +140,78 @@ const productLabels: Record<string, TranslationKey> = {
             </div>
           </div>
 
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label for="country" class="mb-1.5 block text-sm font-medium text-ebano">
-                {t('contact.form.country' as any)} *
-              </label>
-              <select id="country" name="country" required class="form-field">
-                <option value="">—</option>
-                {contactForm.countries.map((code) => (
-                  <option value={code}>{countryLabels[code]?.[lang] ?? code}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label for="business_type" class="mb-1.5 block text-sm font-medium text-ebano">
-                {t('contact.form.businessType' as any)}
-              </label>
-              <select id="business_type" name="business_type" class="form-field">
-                <option value="">—</option>
-                {contactForm.businessTypes.map((bt) => (
-                  <option value={bt}>{businessLabels[bt]?.[lang] ?? bt}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Productos de interés (checkboxes) */}
           <div>
             <span class="mb-2 block text-sm font-medium text-ebano">
               {t('contact.form.products' as any)}
             </span>
-            <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div class="grid grid-cols-2 gap-3">
               {contactForm.productOptions.map((p) => (
-                <label class="flex cursor-pointer items-center gap-2 rounded-btn border border-gris-claro bg-crema px-3 py-2 text-sm transition-colors hover:border-verde">
-                  <input type="checkbox" name="products" value={p} class="accent-verde" />
-                  {t(productLabels[p] as any)}
+                <label class="flex cursor-pointer items-center gap-3 rounded-btn border border-gris-claro bg-white px-4 py-2.5 text-sm transition-all duration-200 hover:border-verde hover:bg-verde/5 active:scale-[0.98]">
+                  <input type="checkbox" name="products" value={p} class="accent-verde h-4 w-4 rounded border-gris-claro text-verde focus:ring-verde" />
+                  <span class="font-medium text-ebano/90">{t(productLabels[p] as any)}</span>
                 </label>
               ))}
             </div>
           </div>
 
-          {/* Volumen */}
-          <div>
-            <label for="volume" class="mb-1.5 block text-sm font-medium text-ebano">
-              {t('contact.form.volume' as any)}
-            </label>
-            <select id="volume" name="volume" class="form-field">
-              <option value="">—</option>
-              {contactForm.volumes.map((v) => (
-                <option value={v}>{v} t/mes</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Mensaje */}
           <div>
             <label for="message" class="mb-1.5 block text-sm font-medium text-ebano">
               {t('contact.form.message' as any)} *
             </label>
-            <textarea id="message" name="message" rows="4" required class="form-field resize-none"></textarea>
+            <textarea id="message" name="message" rows="3" required class="form-field resize-none"></textarea>
           </div>
 
-          {/* Términos */}
-          <label class="flex cursor-pointer items-start gap-2 text-sm text-ebano/80">
-            <input type="checkbox" name="terms" required class="mt-0.5 accent-verde" />
-            {t('contact.form.terms' as any)}
+          <label class="flex cursor-pointer items-start gap-3 text-sm text-ebano/70">
+            <input type="checkbox" name="terms" required class="mt-0.5 accent-verde h-4 w-4 rounded border-gris-claro text-verde focus:ring-verde" />
+            <span class="leading-snug">{t('contact.form.terms' as any)}</span>
           </label>
 
-          {/* Feedback + submit */}
           <div id="form-feedback" class="hidden rounded-btn p-3 text-sm" role="alert"></div>
 
-          <Button type="submit" variant="primary" class="w-full">
-            {t('contact.form.submit' as any)}
-          </Button>
+          <div class="mt-2 flex flex-col gap-3">
+            <Button type="submit" variant="primary" class="w-full">
+              {t('contact.form.submit' as any)}
+            </Button>
+            <p class="text-center text-xs font-medium text-ebano/50">{t('contact.form.disclaimer' as any)}</p>
+          </div>
         </form>
       </div>
     </div>
   </Container>
 </section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const feedback = document.getElementById('form-feedback') as HTMLDivElement;
+
+  if (form && feedback) {
+    form.addEventListener('submit', (e) => {
+      // Validar formulario en el cliente
+      if (!form.checkValidity()) {
+        e.preventDefault(); // Evitar envío
+        
+        // Mostrar mensaje de error con animación
+        feedback.textContent = 'Por favor, rellena los campos obligatorios del formulario primero.';
+        feedback.className = 'block rounded-btn p-3 text-sm font-medium bg-error/10 text-error border border-error/20 animate-in fade-in slide-in-from-top-2';
+        
+        // Hacer focus en el primer campo inválido para buena UX
+        const firstInvalid = form.querySelector(':invalid') as HTMLElement;
+        if (firstInvalid) {
+          firstInvalid.focus();
+        }
+      } else {
+        // Si todo está bien y quieres prevenir el reload para manejar con fetch (opcional),
+        // aquí podrías hacer el fetch(). Por ahora, dejamos que siga el comportamiento nativo
+        // o si ya tenías un listener, esto no lo interfiere siempre que sea válido.
+        feedback.className = 'hidden';
+      }
+    });
+
+    // Opcional: quitar error al modificar los inputs
+    form.addEventListener('input', () => {
+      if (form.checkValidity() && !feedback.classList.contains('hidden')) {
+        feedback.className = 'hidden';
+      }
+    });
+  }
+</script>
