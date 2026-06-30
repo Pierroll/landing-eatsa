@@ -177,6 +177,11 @@
                 box-shadow 200ms var(--ease-out-quint);
   }
 
+  .card img {
+    will-change: transform;
+    transition: transform 400ms var(--ease-out-quint);
+  }
+
   @media (hover: hover) and (pointer: fine) {
     .card:hover {
       transform: scale(1.02);
@@ -185,7 +190,6 @@
 
     .card:hover img {
       transform: scale(1.05);
-      transition: transform 300ms var(--ease-out-quint);
     }
   }
 
@@ -236,9 +240,7 @@
   .fade-in-left,
   .fade-in-right,
   .scale-in {
-    /* Por defecto opacidad 1 para garantizar que el contenido sea visible. 
-       La animación se encargará de hacer el fade in desde 0 cuando se active. */
-    opacity: 1; 
+    opacity: 0;
     will-change: transform, opacity;
   }
 
@@ -451,16 +453,16 @@
   }
 
   /* ─── Blur Hover Image Effect ─── */
-  .blur-hover-img {
-    transition: transform 300ms var(--ease-out-quint), filter 300ms ease;
+  img.blur-hover-img, .blur-hover-img {
+    transition: transform 500ms var(--ease-out-quint), filter 500ms var(--ease-out-quint);
   }
 
   .card:hover .blur-hover-img {
     transform: scale(1.05);
     /* Micro desenfoque al iniciar hover, engaño óptico */
     filter: blur(2px);
-    /* Forzamos que se quite el blur rápido */
-    animation: clear-blur 300ms forwards;
+    /* Forzamos que se quite el blur suavemente */
+    animation: clear-blur 400ms forwards ease-out;
   }
 
   @keyframes clear-blur {
