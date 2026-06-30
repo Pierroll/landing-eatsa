@@ -6,13 +6,13 @@ import '@astrojs/internal-helpers/path';
 import 'cookie';
 
 const onRequest$1 = defineMiddleware(async ({ request, cookies, redirect, url }, next) => {
-  if (url.pathname.startsWith("/admin") && url.pathname !== "/admin/login") {
+  if (url.pathname.startsWith("/admin") && !url.pathname.includes("/admin/login")) {
     const token = cookies.get("admin_session")?.value;
     if (!token) {
       return redirect("/admin/login");
     }
     try {
-      const secret = "super_secret_eatsa_key_2026";
+      const secret = "qWxC0D4L+Sh4XTqQ9GQawQegv8N7A6Uus7tM0ds41vs=";
       await jwtVerify(token, new TextEncoder().encode(secret));
       return next();
     } catch (error) {

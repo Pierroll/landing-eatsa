@@ -22,7 +22,13 @@ async function saveProducto(producto) {
   } else {
     productos.push(producto);
   }
+  await fs.mkdir(dataDir, { recursive: true });
   await fs.writeFile(productosFile, JSON.stringify(productos, null, 2), "utf-8");
 }
+async function deleteProducto(id) {
+  const productos = await getProductos();
+  const filtrados = productos.filter((p) => p.id !== id);
+  await fs.writeFile(productosFile, JSON.stringify(filtrados, null, 2), "utf-8");
+}
 
-export { getProductos as g, saveProducto as s };
+export { deleteProducto as d, getProductos as g, saveProducto as s };

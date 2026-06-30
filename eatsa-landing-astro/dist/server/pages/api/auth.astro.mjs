@@ -9,9 +9,15 @@ const POST = async ({ request, cookies }) => {
     const username = data.get("username");
     const password = data.get("password");
     const envUser = "admin";
-    const envHash = "";
-    const secret = "super_secret_eatsa_key_2026";
+    const envHash = "$2b$10$jk4ntlBQsFJAL/U.V1245ufmgfI2tP6kwD56VRpG9e8DvBmdL/mEO";
+    const secret = "qWxC0D4L+Sh4XTqQ9GQawQegv8N7A6Uus7tM0ds41vs=";
+    console.log("--- DEBUG AUTH ---");
+    console.log("Req User:", username);
+    console.log("Env User:", envUser);
+    console.log("Req Pass:", password);
+    console.log("Env Hash:", envHash);
     if (!username || !password || username !== envUser) {
+      console.log("Falla validación inicial");
       return new Response(JSON.stringify({ error: "Credenciales inválidas" }), { status: 401 });
     }
     const isValid = await bcrypt.compare(password.toString(), envHash);

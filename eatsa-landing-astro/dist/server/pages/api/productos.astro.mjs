@@ -1,4 +1,4 @@
-import { s as saveProducto } from '../../chunks/db_DJSxRCfF.mjs';
+import { d as deleteProducto, s as saveProducto } from '../../chunks/db_DsWhjv-W.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const prerender = false;
@@ -8,25 +8,31 @@ const POST = async ({ request, cookies }) => {
   }
   try {
     const data = await request.json();
-    if (!data.id || !data.name) {
-      return new Response(JSON.stringify({ error: "Faltan campos obligatorios" }), { status: 400 });
-    }
-    const producto = {
-      id: data.id,
-      name: data.name,
-      price: data.price ? Number(data.price) : null,
-      image: data.image || "/assets/placeholder.jpg",
-      status: data.status === "activo" ? "activo" : "inactivo"
-    };
-    await saveProducto(producto);
-    return new Response(JSON.stringify({ success: true, producto }), { status: 200 });
+    await saveProducto(data);
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Error al procesar" }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Error al guardar producto" }), { status: 500 });
+  }
+};
+const DELETE = async ({ request, cookies, url }) => {
+  if (!cookies.has("admin_session")) {
+    return new Response(JSON.stringify({ error: "No autorizado" }), { status: 401 });
+  }
+  try {
+    const id = url.searchParams.get("id");
+    if (!id) {
+      return new Response(JSON.stringify({ error: "ID requerido" }), { status: 400 });
+    }
+    await deleteProducto(id);
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: "Error al eliminar producto" }), { status: 500 });
   }
 };
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
+  DELETE,
   POST,
   prerender
 }, Symbol.toStringTag, { value: 'Module' }));
