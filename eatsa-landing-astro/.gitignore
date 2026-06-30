@@ -1,2 +1,6 @@
 # Local AI runtime state
 .atl/
+.agents/
+skills-lock.json
+.opencode/
+.impeccable/
