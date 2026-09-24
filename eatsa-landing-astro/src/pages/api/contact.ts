@@ -50,7 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
   const data: ContactForm = parsed.data;
 
   // ─── 3. Honeypot: si viene relleno → es bot. Respondemos 200 para no delatarnos. ───
-  if (data.company_website && data.company_website.length > 0) {
+  if (data.bot_trap_field && data.bot_trap_field.length > 0) {
     return json({ success: true, message: 'Gracias por tu mensaje.' }, 200);
   }
 

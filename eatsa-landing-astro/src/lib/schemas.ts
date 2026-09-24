@@ -27,19 +27,19 @@ export const productOptions = [
 export const contactFormSchema = z.object({
   full_name: z.string().min(2).max(100),
   company: z.string().min(2).max(120),
-  country: z.enum(countryCodes),
+  country: z.enum(countryCodes).optional().default('OTHER'),
   email: z.email('Email inválido').max(120),
   phone: z.string().max(40).optional().or(z.literal('')),
   position: z.string().max(80).optional().or(z.literal('')),
   products: z.array(z.enum(productOptions)).optional().default([]),
   volume: z.enum(volumeRanges).optional().or(z.literal('')),
   business_type: z.enum(businessTypes).optional().or(z.literal('')),
-  message: z.string().min(10).max(2000),
-  terms: z.literal(true, { message: 'Debes aceptar los términos' }),
+  message: z.string().min(2, 'El mensaje es muy corto.').max(2000),
+  terms: z.preprocess((val) => val === 'on' || val === true, z.literal(true, { message: 'Debes aceptar los términos' })),
 
   // Honeypot anti-spam: debe llegar VACÍO. Si llega relleno → es un bot.
   // El campo se renderiza oculto vía CSS en ContactSection.astro (no type="hidden").
-  company_website: z.string().max(0).or(z.literal('')).optional().default(''),
+  bot_trap_field: z.string().max(0).or(z.literal('')).optional().default(''),
 });
 
 export type ContactForm = z.infer<typeof contactFormSchema>;
