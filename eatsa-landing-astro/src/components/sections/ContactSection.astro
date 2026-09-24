@@ -1,7 +1,7 @@
 ---
 import type { Locale, TranslationKey } from '@types';
 import { useTranslations } from '@i18n/ui';
-import { contactForm } from '@data/site';
+import { contactForm, siteConfig } from '@data/site';
 import Container from '@components/ui/Container.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
 import Button from '@components/ui/Button.astro';
@@ -59,14 +59,17 @@ const productLabels: Record<string, TranslationKey> = {
         </div>
 
         <div class="flex flex-col gap-5 sm:gap-8 my-8">
-          <a href="tel:+51980228368" class="group flex items-center gap-4 transition-all duration-200 active:scale-[0.98]">
-            <div class="p-3 bg-white border border-gris-claro text-verde rounded-full shadow-sm transition-transform duration-200 group-hover:scale-110 group-hover:border-verde">
-              <Phone class="w-5 h-5" />
-            </div>
-            <div>
-              <p class="font-medium text-ebano text-lg">{t('contact.trust.phone' as any)}</p>
-            </div>
-          </a>
+          {siteConfig.phones.map((phone) => (
+            <a href={`tel:${phone.number.replace(/[^0-9+]/g, '')}`} class="group flex items-center gap-4 transition-all duration-200 active:scale-[0.98]">
+              <div class="p-3 bg-white border border-gris-claro text-verde rounded-full shadow-sm transition-transform duration-200 group-hover:scale-110 group-hover:border-verde">
+                <Phone class="w-5 h-5" />
+              </div>
+              <div class="flex flex-col">
+                <p class="font-medium text-ebano text-lg">{phone.number}</p>
+                <p class="text-sm text-gris-medio">{t(phone.roleKey as any)}</p>
+              </div>
+            </a>
+          ))}
           <a href="mailto:comercial@amazonicatropical.com" class="group flex items-center gap-4 transition-all duration-200 active:scale-[0.98]">
             <div class="p-3 bg-white border border-gris-claro text-cacao rounded-full shadow-sm transition-transform duration-200 group-hover:scale-110 group-hover:border-cacao">
               <Mail class="w-5 h-5" />
