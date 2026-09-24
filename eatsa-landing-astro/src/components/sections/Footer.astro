@@ -16,10 +16,10 @@ const year = new Date().getFullYear();
 
 <footer class="bg-ebano pt-16 pb-28 lg:pb-16 text-crema/80">
   <Container>
-    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+    <div class="grid gap-10 text-center md:text-left md:grid-cols-2 lg:grid-cols-4">
       {/* Columna 1: Empresa */}
-      <div>
-        <div class="mb-4 flex items-center gap-2">
+      <div class="flex flex-col items-center md:items-start">
+        <div class="mb-4 flex items-center justify-center md:justify-start gap-2">
           <img src={siteConfig.logo} alt={siteConfig.name} class="h-8 w-auto" width="32" height="32" />
           <span class="font-display text-lg font-semibold text-crema">EATSA SAC</span>
         </div>
@@ -33,7 +33,7 @@ const year = new Date().getFullYear();
         <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-crema">
           {t('footer.quickLinks' as any)}
         </h4>
-        <ul class="flex flex-col gap-2 text-sm">
+        <ul class="flex flex-col items-center md:items-start gap-2 text-sm">
           {navItems.map((item) => (
             <li>
               <a href={`/${lang}/#${item.id}`} class="text-crema/70 transition-colors hover:text-verde">
@@ -49,7 +49,7 @@ const year = new Date().getFullYear();
         <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-crema">
           {t('footer.categories' as any)}
         </h4>
-        <ul class="flex flex-col gap-2 text-sm">
+        <ul class="flex flex-col items-center md:items-start gap-2 text-sm">
           <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-verde">{t('products.cacao.name' as any)}</a></li>
           <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-verde">{t('products.cafe.name' as any)}</a></li>
           <li><a href={`/${lang}/#productos`} class="text-crema/70 transition-colors hover:text-verde">{t('products.nibs.name' as any)}</a></li>
@@ -62,7 +62,7 @@ const year = new Date().getFullYear();
         <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-crema">
           {t('footer.legal' as any)}
         </h4>
-        <ul class="flex flex-col gap-2 text-sm">
+        <ul class="flex flex-col items-center md:items-start gap-2 text-sm">
           {siteConfig.emails.map((email) => (
             <li>
               <a href={`mailto:${email.address}`} class="text-crema/70 transition-colors hover:text-verde">{email.address}</a>
