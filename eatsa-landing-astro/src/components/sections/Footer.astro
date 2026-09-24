@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-ebano py-16 text-crema/80">
+<footer class="bg-ebano pt-16 pb-28 lg:pb-16 text-crema/80">
   <Container>
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
       {/* Columna 1: Empresa */}
@@ -74,9 +74,9 @@ const year = new Date().getFullYear();
     </div>
 
     {/* Bottom bar */}
-    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-crema/10 pt-8 text-xs text-crema/50 sm:flex-row">
-      <p>© {year} {siteConfig.legalName}. {t('footer.rights' as any)}</p>
-      <div class="flex gap-4">
+    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-crema/10 pt-8 text-xs text-crema/50 sm:flex-row text-center sm:text-left">
+      <p>© {year} {siteConfig.legalName}. <br class="sm:hidden" />{t('footer.rights' as any)}</p>
+      <div class="flex gap-4 justify-center">
         <a href={`/${lang}/`} class="transition-colors hover:text-crema">{t('footer.privacy' as any)}</a>
         <a href={`/${lang}/`} class="transition-colors hover:text-crema">{t('footer.terms' as any)}</a>
       </div>
