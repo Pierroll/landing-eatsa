@@ -162,15 +162,41 @@ const closeModal = (id: string) => {
   if (modal) modal.setAttribute('data-state', 'closed');
 };
 
-document.querySelectorAll('.open-spec-modal').forEach(btn => {
-  btn.addEventListener('click', () => openModal('spec-modal'));
-});
+function initInteractivity() {
+  document.querySelectorAll('.open-spec-modal').forEach(btn => {
+    btn.addEventListener('click', () => openModal('spec-modal'));
+  });
 
-document.querySelectorAll('.open-price-modal, #hero-price-btn, #header-price-btn, #final-price-btn, #header-price-btn-mobile').forEach(btn => {
-  btn.addEventListener('click', () => openModal('price-modal'));
+  document.querySelectorAll('.open-price-modal, #hero-price-btn, #header-price-btn, #final-price-btn, #header-price-btn-mobile').forEach(btn => {
+    btn.addEventListener('click', () => openModal('price-modal'));
+  });
+
+  // Mobile menu
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileMenuToggle && mobileMenu) {
+    // Evitar múltiples listeners si se llama varias veces (aunque Astro reemplaza el DOM)
+    mobileMenuToggle.removeEventListener('click', (window as any).__toggleMobileMenu || (() => {}));
+    
+    (window as any).__toggleMobileMenu = () => {
+      const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+      mobileMenuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+      mobileMenu.classList.toggle('hidden');
+    };
+    
+    mobileMenuToggle.addEventListener('click', (window as any).__toggleMobileMenu);
+  }
+}
+
+// Ejecutar en la carga inicial y en cada navegación de ViewTransitions
+initInteractivity();
+document.addEventListener('astro:page-load', () => {
+  initInteractivity();
 });
 
 // Close ANY modal via data-modal-close (botones, links, anchors)
+// Este listener va en el document, así que no se pierde entre páginas
 document.addEventListener('click', (e) => {
   const trigger = (e.target as HTMLElement).closest('[data-modal-close]');
   if (!trigger) return;
@@ -195,18 +221,6 @@ document.addEventListener('click', (e) => {
     closeModal(modalId);
   }
 });
-
-// Mobile menu
-const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-const mobileMenu = document.getElementById('mobile-menu');
-
-if (mobileMenuToggle && mobileMenu) {
-  mobileMenuToggle.addEventListener('click', () => {
-    const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
-    mobileMenuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
-    mobileMenu.classList.toggle('hidden');
-  });
-}
 
 // Escape key — cierra cualquier modal abierto
 document.addEventListener('keydown', (e) => {
