@@ -176,8 +176,8 @@ export const ui = {
     // ─── Formulario de Contacto ────────────────────────────────────
     'contact.title': 'Solicitar Muestra',
     'contact.subtitle': 'Complete el formulario y nuestro equipo comercial se pondrá en contacto en menos de 24 horas.',
-    'contact.trust.phone': '+51 952 418 325',
-    'contact.trust.email': 'ventas@amazonicatropical.com',
+    'contact.trust.phone': '+51 980 228 368',
+    'contact.trust.email': 'comercial@amazonicatropical.com',
     'contact.trust.hours': 'Menos de 24 horas, todos los días',
     'contact.trust.box.title': 'Confían en nosotros',
     'contact.trust.box.desc': 'Más de 50 importadores y distribuidores en Europa y Asia trabajan con nuestros productos.',
@@ -441,8 +441,8 @@ export const ui = {
     // ─── Contact Form ──────────────────────────────────────────────
     'contact.title': 'Request Sample',
     'contact.subtitle': 'Complete the form and our commercial team will contact you within 24 hours.',
-    'contact.trust.phone': '+51 952 418 325',
-    'contact.trust.email': 'sales@amazonicatropical.com',
+    'contact.trust.phone': '+51 980 228 368',
+    'contact.trust.email': 'comercial@amazonicatropical.com',
     'contact.trust.hours': 'Under 24 hours, every day',
     'contact.trust.box.title': 'They trust us',
     'contact.trust.box.desc': 'More than 50 importers and distributors in Europe and Asia work with our products.',
