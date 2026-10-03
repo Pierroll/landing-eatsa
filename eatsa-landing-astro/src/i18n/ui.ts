@@ -19,7 +19,7 @@ export const ui = {
     // ─── Hero ──────────────────────────────────────────────────────
     'hero.title': 'Cacao Fino de Aroma',
     'hero.subtitle': 'Directo de la Amazonía Peruana',
-    'hero.description': 'Trazabilidad completa, certificaciones internacionales y calidad garantizada para importadores y fabricantes de chocolate de todo el mundo.',
+    'hero.description': 'En Amazónica Tropical (EATSA SAC) nos dedicamos al acopio, procesamiento y exportación de Cacao, Café y otros productos agrícolas desde Tocache, Perú. Conectamos el esfuerzo de cientos de productores locales de la Amazonía con mercados internacionales, garantizando trato directo, precios justos y una calidad excepcional en cada grano.',
     'hero.experience': 'Años de Experiencia',
     'hero.producers': 'Productores',
     'hero.tonsPerMonth': 'Toneladas/Mes',
@@ -284,7 +284,7 @@ export const ui = {
     // ─── Hero ──────────────────────────────────────────────────────
     'hero.title': 'Fine Aroma Cacao',
     'hero.subtitle': 'Direct from the Peruvian Amazon',
-    'hero.description': 'Complete traceability, international certifications, and guaranteed quality for importers and chocolate manufacturers worldwide.',
+    'hero.description': 'At Amazónica Tropical (EATSA SAC), we specialize in the collection, processing, and export of Cacao, Coffee, and other agricultural products from Tocache, Peru. We connect the effort of hundreds of local Amazonian producers with international markets, guaranteeing direct trade, fair prices, and exceptional quality in every bean.',
     'hero.experience': 'Years of Experience',
     'hero.producers': 'Producers',
     'hero.tonsPerMonth': 'Tons/Month',
