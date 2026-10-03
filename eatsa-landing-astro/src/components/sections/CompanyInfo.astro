@@ -78,15 +78,20 @@ const t = useTranslations(lang);
       </div>
 
       {/* Mapa / imagen del frontis */}
-      <div class="card overflow-hidden p-0 fade-in-left">
+      <div class="card overflow-hidden p-0 fade-in-left flex flex-col h-full">
         <Image
           src={frontisImg}
           alt={siteConfig.name}
-          class="w-full h-auto object-contain blur-hover-img"
+          class="w-full h-auto object-contain blur-hover-img shrink-0"
           loading="lazy"
           width={1251}
           height={973}
         />
+        <!-- Decorative banner inferior para rellenar el espacio -->
+        <div class="flex-1 w-full min-h-[5rem] bg-verde relative overflow-hidden flex items-center justify-end pr-[25%] sm:pr-[35%]">
+          <div class="h-[150%] w-10 bg-white/30 -skew-x-[35deg] mr-6"></div>
+          <div class="h-[150%] w-10 bg-white/30 -skew-x-[35deg]"></div>
+        </div>
       </div>
     </div>
   </Container>
