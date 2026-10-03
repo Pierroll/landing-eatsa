@@ -4,7 +4,6 @@ import { useTranslations } from '@i18n/ui';
 import Container from '@components/ui/Container.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
 import { Image } from 'astro:assets';
-import mapImg from '../../assets/company/mapa-tocache.png';
 import imgHarvest from '../../assets/process/paso-1-cosecha.jpeg';
 import imgProcess from '../../assets/process/paso-2-procesamiento.jpeg';
 import { Thermometer, CloudRain, Mountain } from 'lucide-astro';
@@ -25,7 +24,7 @@ const soilRows = [
 ];
 ---
 
-<section id="origen" class="section-cream py-24 sm:py-32">
+<section id="origen" class="section-cream pt-16 pb-24 sm:pt-20 sm:pb-32">
   <Container>
     <div class="flex flex-col items-center text-center">
       <SectionHeader
@@ -33,124 +32,106 @@ const soilRows = [
         title={t('origin.title' as any)}
         subtitle={t('origin.subtitle' as any)}
         align="center"
-        class="mb-16"
+        class="mb-12"
       />
     </div>
 
-    <div class="grid items-stretch gap-8 lg:grid-cols-2 mb-12 stagger-children">
-      <!-- Galería (Reemplaza el mapa gigante) -->
-      <div class="grid grid-cols-2 gap-4 fade-in-up">
-        <div class="card overflow-hidden p-0">
-          <Image
-            src={imgHarvest}
-            alt="Cosecha de Cacao"
-            class="h-full min-h-[250px] w-full object-cover blur-hover-img"
-            loading="lazy"
-            width={400}
-            height={500}
-          />
-        </div>
-        <div class="card overflow-hidden p-0">
-          <Image
-            src={imgProcess}
-            alt="Procesamiento de Cacao"
-            class="h-full min-h-[250px] w-full object-cover blur-hover-img"
-            loading="lazy"
-            width={400}
-            height={500}
-          />
+    <!-- BENTO GRID LAYOUT -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-[minmax(200px,auto)] stagger-children">
+      
+      <!-- 1. MAPA (Personaje Principal) -->
+      <div class="card p-0 overflow-hidden relative lg:col-span-2 lg:row-span-2 min-h-[450px] fade-in-up">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126601.52848130836!2d-76.5746777!3d-8.1887375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c50a499d3e87%3A0x6bfb1b36585141c2!2sTocache%2C%20Peru!5e0!3m2!1sen!2sus!4v1714495537554!5m2!1sen!2sus" 
+          class="absolute top-0 left-0 w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación de origen en Tocache"
+        ></iframe>
+        <!-- Floating Info Card over Map -->
+        <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-elevated border border-white/20 transition-transform duration-300 hover:-translate-y-1">
+          <h3 class="text-xl font-bold text-verde mb-2">{t('origin.privilegedLocation' as any)}</h3>
+          <p class="text-sm text-ebano/80 leading-relaxed">{t('origin.privilegedLocation.desc' as any)}</p>
         </div>
       </div>
 
-      <!-- Datos climáticos + suelo -->
-      <div class="flex flex-col gap-6 fade-in-up">
-        <div class="card p-6">
-          <h3 class="mb-6 text-lg font-semibold text-verde">{t('origin.climate.title' as any)}</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {climateIcons.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div class="flex flex-col items-center text-center p-4 rounded-lg bg-gris-claro/20 border border-gris-claro/50">
-                  <div class="mb-3 rounded-full bg-verde/10 p-3 text-verde">
-                    <Icon class="h-6 w-6" />
-                  </div>
-                  <span class="text-sm text-gris-medio mb-1">{item.label}</span>
-                  <span class="font-medium text-ebano">{item.value}</span>
+      <!-- 2. DATOS CLIMÁTICOS -->
+      <div class="card p-6 flex flex-col justify-center bg-white shadow-sm border border-gris-claro/50 fade-in-up">
+        <h3 class="mb-5 text-base font-bold uppercase tracking-wider text-verde">{t('origin.climate.title' as any)}</h3>
+        <div class="flex flex-col gap-4">
+          {climateIcons.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div class="flex items-center gap-4">
+                <div class="rounded-full bg-verde/10 p-2.5 text-verde shrink-0">
+                  <Icon class="h-5 w-5" />
                 </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div class="card p-6">
-          <h3 class="mb-4 text-lg font-semibold text-verde">{t('origin.soil.title' as any)}</h3>
-          <div class="flex flex-col gap-3">
-            {soilRows.map((row) => (
-              <div class="flex justify-between border-b border-gris-claro pb-2 text-sm">
-                <span class="text-gris-medio">{row.label}</span>
-                <span class="font-medium text-ebano">{row.value}</span>
+                <div class="flex flex-col">
+                  <span class="text-xs text-gris-medio uppercase tracking-wide">{item.label}</span>
+                  <span class="font-semibold text-ebano text-sm">{item.value}</span>
+                </div>
               </div>
-            ))}
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- 3. DATOS DE SUELO -->
+      <div class="card p-6 flex flex-col justify-center bg-cacao/5 border border-cacao/10 shadow-sm fade-in-up">
+        <h3 class="mb-5 text-base font-bold uppercase tracking-wider text-cacao">{t('origin.soil.title' as any)}</h3>
+        <div class="flex flex-col gap-3">
+          {soilRows.map((row) => (
+            <div class="flex justify-between items-center border-b border-cacao/10 pb-2 last:border-0 last:pb-0">
+              <span class="text-sm text-cacao/80 font-medium">{row.label}</span>
+              <span class="font-bold text-ebano text-sm">{row.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- 4. GALERÍA DE PROCESO (2 Columnas Abajo del Mapa) -->
+      <div class="card p-0 overflow-hidden lg:col-span-2 grid grid-cols-2 group fade-in-up">
+        <div class="relative overflow-hidden h-48 sm:h-auto">
+          <Image src={imgHarvest} alt="Cosecha" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" width={400} height={300} />
+          <div class="absolute inset-0 bg-gradient-to-t from-ebano/80 to-transparent flex items-end p-4">
+            <span class="text-white font-medium text-sm">Cosecha Selectiva</span>
+          </div>
+        </div>
+        <div class="relative overflow-hidden h-48 sm:h-auto">
+          <Image src={imgProcess} alt="Procesamiento" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" width={400} height={300} />
+          <div class="absolute inset-0 bg-gradient-to-t from-ebano/80 to-transparent flex items-end p-4">
+            <span class="text-white font-medium text-sm">Fermentación y Secado</span>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Ubicación privilegiada + comunidad -->
-    <div class="grid gap-8 md:grid-cols-2 mb-12 stagger-children">
-      <!-- Ubicación Privilegiada con Mapa Pequeño -->
-      <div class="card overflow-hidden flex flex-col fade-in-up">
-        <div class="p-8 pb-6 flex-1">
-          <h3 class="mb-3 text-xl font-semibold text-verde">{t('origin.privilegedLocation' as any)}</h3>
-          <p class="text-ebano/85">{t('origin.privilegedLocation.desc' as any)}</p>
-        </div>
-        <!-- Mapa Interactivo (Google Maps iframe) -->
-        <div class="h-64 w-full border-t border-gris-claro relative bg-gris-claro">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126601.52848130836!2d-76.5746777!3d-8.1887375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c50a499d3e87%3A0x6bfb1b36585141c2!2sTocache%2C%20Peru!5e0!3m2!1sen!2sus!4v1714495537554!5m2!1sen!2sus" 
-            class="absolute top-0 left-0 w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Ubicación de origen en Tocache"
-          ></iframe>
-        </div>
-      </div>
-
-      <!-- Comunidad (con foto de fondo) -->
-      <div class="card relative overflow-hidden bg-verde p-8 text-crema flex flex-col justify-between group fade-in-up">
-        <!-- Imagen oscurecida de fondo -->
+      <!-- 5. COMUNIDAD -->
+      <div class="card relative overflow-hidden bg-verde p-6 sm:p-8 text-crema flex flex-col justify-center group fade-in-up lg:col-span-1">
         <div class="absolute inset-0 z-0">
-          <Image
-            src={imgHarvest}
-            alt="Familias productoras"
-            class="h-full w-full object-cover opacity-10 transition-opacity duration-500 group-hover:opacity-25"
-            loading="lazy"
-            width={600}
-            height={400}
-          />
-          <div class="absolute inset-0 bg-verde/90 mix-blend-multiply"></div>
+          <Image src={imgHarvest} alt="Familias productoras" class="h-full w-full object-cover opacity-10 transition-opacity duration-500 group-hover:opacity-20" loading="lazy" width={400} height={400} />
+          <div class="absolute inset-0 bg-verde/95 mix-blend-multiply"></div>
         </div>
-
         <div class="relative z-10">
-          <h3 class="mb-3 text-xl font-semibold text-crema">{t('origin.community' as any)}</h3>
-          <p class="mb-6 text-crema/85">{t('origin.community.desc' as any)}</p>
-          <div class="flex flex-wrap gap-8 mt-auto">
+          <h3 class="mb-2 text-xl font-bold text-white">{t('origin.community' as any)}</h3>
+          <p class="mb-6 text-sm text-crema/90 leading-relaxed">{t('origin.community.desc' as any)}</p>
+          <div class="flex gap-6">
             <div>
-              <div class="font-display text-3xl font-semibold text-crema">150+</div>
-              <div class="text-sm text-crema/85">{t('origin.community.families' as any)}</div>
+              <div class="font-display text-4xl font-bold text-white mb-1">150+</div>
+              <div class="text-xs font-medium uppercase tracking-wider text-crema/80">{t('origin.community.families' as any)}</div>
             </div>
             <div>
-              <div class="font-display text-3xl font-semibold text-crema">100+</div>
-              <div class="text-sm text-crema/85">{t('origin.community.producers' as any)}</div>
+              <div class="font-display text-4xl font-bold text-white mb-1">100+</div>
+              <div class="text-xs font-medium uppercase tracking-wider text-crema/80">{t('origin.community.producers' as any)}</div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
 
     <!-- CTA Final de Sección -->
-    <div class="flex justify-center mt-12">
+    <div class="flex justify-center mt-12 fade-in-up">
       <a href="#proceso" class="btn-primary text-base sm:text-lg px-8 py-4 flex items-center gap-2 group shadow-lg hover:shadow-xl transition-all">
         {t('origin.cta' as any)}
         <svg class="h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
