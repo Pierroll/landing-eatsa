@@ -104,16 +104,16 @@ const soilRows = [
           <h3 class="mb-3 text-xl font-semibold text-verde">{t('origin.privilegedLocation' as any)}</h3>
           <p class="text-ebano/85">{t('origin.privilegedLocation.desc' as any)}</p>
         </div>
-        <!-- Mapa Pequeño -->
-        <div class="h-48 w-full border-t border-gris-claro relative">
-          <Image
-            src={mapImg}
-            alt={t('origin.location' as any)}
-            class="h-full w-full object-cover"
-            loading="lazy"
-            width={600}
-            height={200}
-          />
+        <!-- Mapa Interactivo (Google Maps iframe) -->
+        <div class="h-64 w-full border-t border-gris-claro relative bg-gris-claro">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126601.52848130836!2d-76.5746777!3d-8.1887375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c50a499d3e87%3A0x6bfb1b36585141c2!2sTocache%2C%20Peru!5e0!3m2!1sen!2sus!4v1714495537554!5m2!1sen!2sus" 
+            class="absolute top-0 left-0 w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Ubicación de origen en Tocache"
+          ></iframe>
         </div>
       </div>
 
