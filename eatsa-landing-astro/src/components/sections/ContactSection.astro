@@ -47,7 +47,7 @@ const productLabels: Record<string, TranslationKey> = {
 
 <section id="contacto" class="section-cream py-16 lg:py-24">
   <Container>
-    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+    <div class="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16">
       <!-- Columna izquierda: header + info de confianza -->
       <div class="flex flex-col justify-between h-full fade-in-up stagger-children lg:pr-8 py-4">
         <div>
@@ -114,13 +114,13 @@ const productLabels: Record<string, TranslationKey> = {
 
       <!-- Columna derecha: formulario -->
       <div class="card shadow-elevated flex flex-col justify-between overflow-hidden p-0 relative">
-        <!-- Top decorative banner (2 líneas gruesas, centro-izquierda) -->
-        <div class="h-24 w-full bg-verde relative overflow-hidden flex items-center justify-start pl-[25%] sm:pl-[35%]">
-          <div class="h-[150%] w-10 bg-white/30 -skew-x-[35deg] mr-6"></div>
-          <div class="h-[150%] w-10 bg-white/30 -skew-x-[35deg]"></div>
+        <!-- Top decorative banner -->
+        <div class="h-12 sm:h-16 lg:h-24 w-full bg-verde relative overflow-hidden flex items-center justify-start pl-[15%] sm:pl-[25%]">
+          <div class="h-[200%] w-8 sm:w-10 bg-white/20 -skew-x-[35deg] mr-4 sm:mr-6 transition-transform hover:scale-110"></div>
+          <div class="h-[200%] w-8 sm:w-10 bg-white/20 -skew-x-[35deg] transition-transform hover:scale-110"></div>
         </div>
         
-        <div class="p-8 sm:p-10 flex-1 flex flex-col justify-center">
+        <div class="p-6 sm:p-10 flex-1 flex flex-col justify-center">
           <form id="contact-form" action="/api/contact" method="POST" class="flex flex-col gap-4" novalidate>
           <input
             type="text"
@@ -186,10 +186,10 @@ const productLabels: Record<string, TranslationKey> = {
         </form>
         </div>
         
-        <!-- Bottom decorative banner (2 líneas gruesas, centro-derecha) -->
-        <div class="h-24 w-full bg-verde relative overflow-hidden flex items-center justify-end pr-[25%] sm:pr-[35%]">
-          <div class="h-[150%] w-10 bg-white/30 -skew-x-[35deg] mr-6"></div>
-          <div class="h-[150%] w-10 bg-white/30 -skew-x-[35deg]"></div>
+        <!-- Bottom decorative banner -->
+        <div class="h-12 sm:h-16 lg:h-24 w-full bg-verde relative overflow-hidden flex items-center justify-end pr-[15%] sm:pr-[25%]">
+          <div class="h-[200%] w-8 sm:w-10 bg-white/20 -skew-x-[35deg] mr-4 sm:mr-6"></div>
+          <div class="h-[200%] w-8 sm:w-10 bg-white/20 -skew-x-[35deg]"></div>
         </div>
       </div>
     </div>

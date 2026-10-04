@@ -35,7 +35,7 @@ const hasTestimonials = activeTestimonials.length > 0;
 
       <div class="grid gap-8 md:grid-cols-3 stagger-children">
         {activeTestimonials.map((testimonial, i) => (
-          <article class={`card relative overflow-hidden fade-in-up ${i === 0 ? 'md:col-span-2 p-10 border-l-4 border-cacao shadow-elevated' : 'p-8 shadow-sm'}`}>
+          <article class={`card relative overflow-hidden fade-in-up ${i === 0 ? 'md:col-span-2 p-10 border border-cacao/20 bg-white shadow-elevated' : 'p-8 shadow-sm border border-gris-claro/50'}`}>
             {i === 0 && <div class="absolute top-0 right-0 h-24 w-24 bg-cacao/5 rounded-bl-[100%]" aria-hidden="true"></div>}
             {/* Estrellas */}
             <div class="mb-4 flex gap-1 text-cacao">
